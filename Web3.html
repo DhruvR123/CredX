@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CredX - Smart Credit Card Discovery</title>
+    <title>CredX - Smart Credit Card Discovery Platform</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap');
 
@@ -31,17 +31,87 @@
             color: var(--text-primary);
             font-family: var(--sans);
             overflow-x: hidden;
+            line-height: 1.6;
         }
 
-        /* Navigation - ADDED HEADER BUTTON */
+        /* Page Container */
+        .page {
+            display: none;
+            min-height: 100vh;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* Moving Background Effects */
+        .background-effects {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .floating-shape {
+            position: absolute;
+            background: rgba(0, 102, 255, 0.03);
+            border-radius: 50%;
+            animation: float 20s linear infinite;
+        }
+
+        .floating-shape:nth-child(1) {
+            width: 100px;
+            height: 100px;
+            top: 20%;
+            left: -10%;
+            animation-delay: 0s;
+        }
+
+        .floating-shape:nth-child(2) {
+            width: 150px;
+            height: 150px;
+            top: 60%;
+            left: -15%;
+            animation-delay: -5s;
+        }
+
+        .floating-shape:nth-child(3) {
+            width: 80px;
+            height: 80px;
+            top: 40%;
+            left: -8%;
+            animation-delay: -10s;
+        }
+
+        .floating-shape:nth-child(4) {
+            width: 120px;
+            height: 120px;
+            top: 80%;
+            left: -12%;
+            animation-delay: -15s;
+        }
+
+        @keyframes float {
+            0% { transform: translateX(-100px) translateY(0px) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateX(calc(100vw + 100px)) translateY(-100px) rotate(360deg); opacity: 0; }
+        }
+
+        /* Navigation */
         nav {
             position: fixed;
             top: 0;
             width: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            backdrop-filter: blur(10px);
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(20px);
             z-index: 1000;
             border-bottom: 1px solid var(--border);
+            transition: all 0.3s ease;
         }
 
         .nav-container {
@@ -67,6 +137,12 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
         }
 
         .logo::before {
@@ -80,54 +156,79 @@
             list-style: none;
         }
 
-        .nav-menu a {
+        .nav-menu button {
             color: var(--text-secondary);
-            text-decoration: none;
+            background: none;
+            border: none;
             font-weight: 500;
-            transition: color 0.3s ease;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 0.5rem 0;
         }
 
-        .nav-menu a:hover {
+        .nav-menu button:hover {
             color: var(--accent-blue);
+            transform: translateY(-2px);
         }
 
-        /* Header Button - NEW */
+        .nav-menu button::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-blue);
+            transition: width 0.3s ease;
+        }
+
+        .nav-menu button:hover::after {
+            width: 100%;
+        }
+
+        /* Header CTA Button */
         .header-cta-btn {
-            display: inline-flex;
-            align-items: center;
             padding: 0.75rem 1.5rem;
             background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-cyan) 100%);
             color: white;
-            text-decoration: none;
+            border: none;
             border-radius: 8px;
             font-weight: 600;
             font-size: 0.9rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 10px rgba(0, 102, 255, 0.3);
-            gap: 0.5rem;
-            border: none;
             cursor: pointer;
-            font-family: var(--sans);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 102, 255, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
         .header-cta-btn:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 4px 15px rgba(0, 102, 255, 0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 102, 255, 0.4);
         }
 
-        .header-cta-btn:active {
-            transform: translateY(0);
+        /* Form Header - Simplified (no back button) */
+        .form-header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
         /* Hero Section */
         .hero {
-            background: var(--bg-dark);
             min-height: 100vh;
             display: flex;
             align-items: center;
             position: relative;
             overflow: hidden;
             padding-top: 100px;
+            z-index: 1;
         }
 
         .hero-bg {
@@ -136,17 +237,46 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle at 30% 50%, rgba(0, 102, 255, 0.15) 0%, transparent 50%);
-            z-index: 1;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(0, 102, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(0, 191, 255, 0.1) 0%, transparent 50%);
+            z-index: -1;
+        }
+
+        .hero-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent 0%, rgba(0, 102, 255, 0.05) 50%, transparent 100%);
+            animation: gradientShift 8s ease-in-out infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(2deg) scale(1.02); }
         }
 
         .hero-content {
-            position: relative;
-            z-index: 2;
             max-width: 1200px;
             margin: 0 auto;
             padding: 2rem;
             text-align: center;
+            animation: heroFadeIn 1.5s ease-out;
+            z-index: 2;
+        }
+
+        @keyframes heroFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .hero-title {
@@ -158,6 +288,12 @@
             background-clip: text;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            animation: titleGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes titleGlow {
+            0%, 100% { filter: brightness(1); }
+            50% { filter: brightness(1.1); }
         }
 
         .hero-description {
@@ -166,13 +302,27 @@
             line-height: 1.6;
             max-width: 600px;
             margin: 0 auto 3rem;
+            animation: fadeInUp 1.5s ease-out 0.3s both;
         }
 
-        /* About Section */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Section Styling */
         .section {
             padding: 6rem 2rem;
             max-width: 1200px;
             margin: 0 auto;
+            position: relative;
+            z-index: 1;
         }
 
         .section-header {
@@ -203,7 +353,7 @@
             margin: 0 auto;
         }
 
-        /* How It Works */
+        /* How It Works Grid */
         .steps-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -217,11 +367,30 @@
             border-radius: 16px;
             border: 1px solid var(--border);
             text-align: center;
-            transition: transform 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .step-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 102, 255, 0.1), transparent);
+            transition: left 0.5s ease;
         }
 
         .step-card:hover {
             transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 102, 255, 0.1);
+            border-color: var(--accent-blue);
+        }
+
+        .step-card:hover::before {
+            left: 100%;
         }
 
         .step-number {
@@ -230,12 +399,18 @@
             justify-content: center;
             width: 60px;
             height: 60px;
-            background: var(--accent-blue);
+            background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-cyan) 100%);
             color: white;
             border-radius: 50%;
             font-size: 1.5rem;
             font-weight: 700;
             margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .step-card:hover .step-number {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(0, 102, 255, 0.5);
         }
 
         .step-title {
@@ -260,11 +435,26 @@
 
         .feature-item {
             text-align: center;
+            padding: 2rem;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .feature-item:hover {
+            background: rgba(0, 102, 255, 0.05);
+            transform: translateY(-5px);
         }
 
         .feature-icon {
             font-size: 3rem;
             margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .feature-item:hover .feature-icon {
+            transform: scale(1.1);
+            filter: drop-shadow(0 0 10px rgba(0, 102, 255, 0.3));
         }
 
         .feature-title {
@@ -285,6 +475,17 @@
             padding: 4rem 2rem;
             text-align: center;
             border-top: 1px solid var(--border);
+            position: relative;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent-blue), transparent);
         }
 
         .cta-title {
@@ -310,25 +511,37 @@
             padding: 1.5rem 3rem;
             background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-cyan) 100%);
             color: white;
-            text-decoration: none;
+            border: none;
             border-radius: 12px;
             font-weight: 600;
             font-size: 1.2rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 20px rgba(0, 102, 255, 0.3);
-            gap: 0.75rem;
-            border: none;
             cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 8px 30px rgba(0, 102, 255, 0.3);
+            gap: 0.75rem;
             font-family: var(--sans);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .start-search-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
         }
 
         .start-search-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 30px rgba(0, 102, 255, 0.4);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 102, 255, 0.4);
         }
 
-        .start-search-btn:active {
-            transform: translateY(0);
+        .start-search-btn:hover::before {
+            left: 100%;
         }
 
         /* Footer */
@@ -350,7 +563,467 @@
             line-height: 1.6;
         }
 
+        /* FORM PAGE STYLES */
+        .form-page {
+            min-height: 100vh;
+            padding-top: 80px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .form-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .form-welcome {
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .form-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            animation: bounceIn 1s ease-out;
+        }
+
+        @keyframes bounceIn {
+            0% { opacity: 0; transform: scale(0.3); }
+            50% { opacity: 1; transform: scale(1.1); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        .form-title {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-cyan) 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .form-subtitle {
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .progress-container {
+            margin: 3rem 0;
+            text-align: center;
+        }
+
+        .progress-bar {
+            width: 100%;
+            max-width: 400px;
+            height: 8px;
+            background: var(--border);
+            border-radius: 4px;
+            margin: 1rem auto;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-cyan) 100%);
+            width: 0%;
+            transition: width 0.5s ease;
+            border-radius: 4px;
+        }
+
+        .progress-text {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        .form-step {
+            display: none;
+            animation: slideInRight 0.5s ease-out;
+        }
+
+        .form-step.active {
+            display: block;
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .step-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .step-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .step-description {
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+
+        .form-options {
+            display: grid;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .option-card {
+            background: var(--bg-card);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .option-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 102, 255, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .option-card:hover {
+            border-color: var(--accent-blue);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 102, 255, 0.15);
+        }
+
+        .option-card:hover::before {
+            left: 100%;
+        }
+
+        .option-card.selected {
+            border-color: var(--accent-blue);
+            background: rgba(0, 102, 255, 0.1);
+        }
+
+        .category-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+        }
+
+        .category-card {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .category-icon {
+            font-size: 2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .option-card:hover .category-icon {
+            transform: scale(1.1);
+        }
+
+        .category-content h3 {
+            color: var(--text-primary);
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .category-content p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 3rem;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: var(--sans);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-cyan) 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(0, 102, 255, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 102, 255, 0.4);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Results Section */
+        .results-section {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .results-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .results-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent-blue);
+            margin-bottom: 1rem;
+        }
+
+        .user-profile {
+            background: var(--bg-card);
+            padding: 2rem;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            margin-bottom: 2rem;
+        }
+
+        .profile-title {
+            color: var(--text-primary);
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .profile-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .profile-item {
+            color: var(--text-secondary);
+        }
+
+        .profile-item strong {
+            color: var(--text-primary);
+        }
+
+        .card-recommendations {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .card-result {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-result::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 102, 255, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .card-result:hover {
+            border-color: var(--accent-blue);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 102, 255, 0.1);
+        }
+
+        .card-result:hover::before {
+            left: 100%;
+        }
+
+        .card-rank {
+            display: inline-block;
+            background: var(--accent-blue);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: between;
+            align-items: start;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .card-info h3 {
+            color: var(--text-primary);
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-bank {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .card-fee {
+            text-align: right;
+            flex-shrink: 0;
+        }
+
+        .fee-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .fee-amount {
+            color: var(--accent-cyan);
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+
+        .card-benefits {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn-apply {
+            flex: 1;
+            background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-cyan) 100%);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-apply:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 102, 255, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--accent-blue);
+            border: 1px solid var(--accent-blue);
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background: var(--accent-blue);
+            color: white;
+        }
+
+        /* Loading Animation */
+        .loading-screen {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-dark);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .loading-screen.active {
+            display: flex;
+        }
+
+        .loader {
+            width: 60px;
+            height: 60px;
+            border: 4px solid var(--border);
+            border-top: 4px solid var(--accent-blue);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 2rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            color: var(--text-primary);
+            font-size: 1.2rem;
+            text-align: center;
+        }
+
+        .loading-progress {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
         /* Responsive Design */
+        @media (max-width: 1024px) {
+            .hero-title {
+                font-size: 3rem;
+            }
+
+            .form-title {
+                font-size: 2.5rem;
+            }
+        }
+
         @media (max-width: 768px) {
             .hero-title {
                 font-size: 2.5rem;
@@ -360,7 +1033,7 @@
                 font-size: 1.1rem;
             }
 
-            .section-title {
+            .form-title {
                 font-size: 2rem;
             }
 
@@ -389,9 +1062,21 @@
                 padding: 4rem 1rem;
             }
 
-            .start-search-btn {
-                padding: 1.2rem 2rem;
-                font-size: 1.1rem;
+            .category-options {
+                grid-template-columns: 1fr;
+            }
+
+            .card-header {
+                flex-direction: column;
+                align-items: start;
+            }
+
+            .card-fee {
+                text-align: left;
+            }
+
+            .card-actions {
+                flex-direction: column;
             }
         }
 
@@ -411,181 +1096,659 @@
                 justify-content: center;
             }
 
-            .hero {
-                padding-top: 120px;
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .form-title {
+                font-size: 1.8rem;
+            }
+
+            .form-container {
+                padding: 1rem;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Navigation - ADDED HEADER BUTTON -->
+    <!-- Moving Background Effects -->
+    <div class="background-effects">
+        <div class="floating-shape"></div>
+        <div class="floating-shape"></div>
+        <div class="floating-shape"></div>
+        <div class="floating-shape"></div>
+    </div>
+
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loader"></div>
+        <div class="loading-text">Finding Your Perfect Credit Cards...</div>
+        <div class="loading-progress" id="loadingProgress">Analyzing your profile...</div>
+    </div>
+
+    <!-- Navigation -->
     <nav>
-        <div class="nav-container">
+        <div class="nav-container" id="navContainer">
             <div class="nav-left">
-                <div class="logo">CredX</div>
-                <ul class="nav-menu">
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#how-it-works">How It Works</a></li>
-                    <li><a href="#features">Features</a></li>
+                <div class="logo" onclick="showPage('homepage')">CredX</div>
+                <ul class="nav-menu" id="navMenu">
+                    <li><button onclick="scrollToSection('about')">About</button></li>
+                    <li><button onclick="scrollToSection('how-it-works')">How It Works</button></li>
+                    <li><button onclick="scrollToSection('features')">Features</button></li>
                 </ul>
             </div>
 
-            <!-- NEW: Header CTA Button -->
-            <a href="https://ppl-ai-code-interpreter-files.s3.amazonaws.com/web/direct-files/b3f7f88470b606c3bdcf617e9f251a91/94005d5b-9ac4-4718-8e2c-dd4edab0a52a/index.html" 
-               target="_blank" 
-               class="header-cta-btn">
-                 Find Cards
-            </a>
+            <!-- Header CTA Button -->
+            <button class="header-cta-btn" id="headerCTA" onclick="showPage('form')">
+                📝 Find Cards
+            </button>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-bg"></div>
-        <div class="hero-content">
-            <h1 class="hero-title">Find Your Perfect Credit Card</h1>
-            <p class="hero-description">
-                CredX is our most advanced credit card discovery platform. Using AI-powered matching algorithms, we analyze your spending patterns, income profile, and financial goals to recommend the perfect credit cards from leading banks like HDFC, SBI, ICICI, Axis Bank, and more. Find cards that maximize your rewards, minimize fees, and match your lifestyle in seconds.
+    <!-- HOMEPAGE -->
+    <div id="homepage" class="page active">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-bg"></div>
+            <div class="hero-content">
+                <h1 class="hero-title">Find Your Perfect Credit Card</h1>
+                <p class="hero-description">
+                    CredX is our most advanced credit card discovery platform. Using AI-powered matching algorithms, we analyze your spending patterns, income profile, and financial goals to recommend the perfect credit cards from leading banks like HDFC, SBI, ICICI, Axis Bank, and more.
+                </p>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="section">
+            <div class="section-header">
+                <div class="section-number">.01</div>
+                <h2 class="section-title">ABOUT CREDX</h2>
+                <p class="section-description">
+                    CredX revolutionizes credit card discovery in India by leveraging machine learning and big data analytics. Our platform processes thousands of card offers, terms, and benefits to provide personalized recommendations.
+                </p>
+            </div>
+        </section>
+
+        <!-- How It Works Section -->
+        <section id="how-it-works" class="section">
+            <div class="section-header">
+                <div class="section-number">.02</div>
+                <h2 class="section-title">HOW IT WORKS</h2>
+                <p class="section-description">
+                    Our intelligent matching process analyzes your profile to deliver personalized recommendations in three simple steps.
+                </p>
+            </div>
+
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h3 class="step-title">Share Your Profile</h3>
+                    <p class="step-description">
+                        Share your income, spending categories, and preferences. Our secure system analyzes this data to understand your financial profile.
+                    </p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h3 class="step-title">AI-Powered Analysis</h3>
+                    <p class="step-description">
+                        Our advanced algorithm compares your profile against 500+ credit cards, analyzing rewards, fees, eligibility, and benefits.
+                    </p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h3 class="step-title">Get Personalized Matches</h3>
+                    <p class="step-description">
+                        Receive personalized card recommendations ranked by suitability, with detailed comparisons and application links.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section id="features" class="section">
+            <div class="section-header">
+                <div class="section-number">.03</div>
+                <h2 class="section-title">WHY CHOOSE CREDX</h2>
+                <p class="section-description">
+                    Discover the advantages that make CredX the most trusted credit card recommendation platform in India.
+                </p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">🔒</div>
+                    <h3 class="feature-title">100% Secure</h3>
+                    <p class="feature-description">
+                        Your data is encrypted and protected. We never store sensitive information and maintain complete privacy.
+                    </p>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-icon">⚡</div>
+                    <h3 class="feature-title">Instant Results</h3>
+                    <p class="feature-description">
+                        Get personalized recommendations in under 30 seconds. No waiting, no delays - just fast, accurate matches.
+                    </p>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-icon">🧮</div>
+                    <h3 class="feature-title">Reward Calculator</h3>
+                    <p class="feature-description">
+                        Our calculator shows exactly how much you'll earn with each card based on your spending patterns.
+                    </p>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-icon">🆓</div>
+                    <h3 class="feature-title">Completely Free</h3>
+                    <p class="feature-description">
+                        CredX is 100% free for users. No hidden charges, no subscription fees - just honest recommendations.
+                    </p>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-icon">📊</div>
+                    <h3 class="feature-title">Real-time Offers</h3>
+                    <p class="feature-description">
+                        Access to the latest offers, promotional rates, and limited-time bonuses updated in real-time.
+                    </p>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-icon">🎯</div>
+                    <h3 class="feature-title">Personalized Matching</h3>
+                    <p class="feature-description">
+                        Unlike generic comparison sites, we provide truly personalized recommendations based on your profile.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta-section">
+            <h2 class="cta-title">Ready to Find Your Perfect Credit Card?</h2>
+            <p class="cta-description">
+                Join thousands of satisfied users who found their ideal credit cards through CredX. 
+                Start your personalized search now and discover cards that truly match your lifestyle.
             </p>
+
+            <button class="start-search-btn" onclick="showPage('form')">
+                🚀 Start Card Search
+            </button>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <p class="footer-text">
+                    © 2025 CredX. All rights reserved. | Privacy Policy | Terms of Service<br>
+                    CredX is a credit card recommendation platform. We are not a bank or financial institution.
+                </p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- FORM PAGE -->
+    <div id="form" class="page">
+        <div class="form-page">
+            <!-- Simplified Header - No back button -->
+            <nav>
+                <div class="nav-container">
+                    <div class="form-header">
+                        <div class="logo" onclick="showPage('homepage')">CredX</div>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="form-container">
+                <!-- Welcome Section -->
+                <div class="form-welcome">
+                    <div class="form-icon">🎯</div>
+                    <h1 class="form-title">Find Your Perfect Credit Card</h1>
+                    <p class="form-subtitle">
+                        Answer a few quick questions to get personalized credit card recommendations tailored to your lifestyle and financial profile.
+                    </p>
+                </div>
+
+                <!-- Progress Indicator -->
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <div class="progress-text" id="progressText">Step 1 of 3</div>
+                </div>
+
+                <!-- Form Steps -->
+                <div id="step1" class="form-step active">
+                    <div class="step-header">
+                        <h2 class="step-title">Annual Income</h2>
+                        <p class="step-description">Select your yearly income range</p>
+                    </div>
+
+                    <div class="form-options">
+                        <div class="option-card" onclick="selectOption(this, '4-8')">
+                            <h3>₹4,00,000 - ₹8,00,000 LPA</h3>
+                        </div>
+                        <div class="option-card" onclick="selectOption(this, '8-15')">
+                            <h3>₹8,00,000 - ₹15,00,000 LPA</h3>
+                        </div>
+                        <div class="option-card" onclick="selectOption(this, '15-25')">
+                            <h3>₹15,00,000 - ₹25,00,000 LPA</h3>
+                        </div>
+                        <div class="option-card" onclick="selectOption(this, '25-50')">
+                            <h3>₹25,00,000 - ₹50,00,000 LPA</h3>
+                        </div>
+                        <div class="option-card" onclick="selectOption(this, '50-75')">
+                            <h3>₹50,00,000 - ₹75,00,000 LPA</h3>
+                        </div>
+                        <div class="option-card" onclick="selectOption(this, '75-125')">
+                            <h3>₹75,00,000 - ₹1,25,00,000 LPA</h3>
+                        </div>
+                        <div class="option-card" onclick="selectOption(this, '125-200')">
+                            <h3>₹1,25,00,000 - ₹2,00,00,000 LPA</h3>
+                        </div>
+                        <div class="option-card" onclick="selectOption(this, '200+')">
+                            <h3>₹2,00,00,000+ LPA</h3>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button class="btn btn-primary" onclick="nextStep()" id="step1Next" disabled>Next Step</button>
+                    </div>
+                </div>
+
+                <div id="step2" class="form-step">
+                    <div class="step-header">
+                        <h2 class="step-title">Spending Priority</h2>
+                        <p class="step-description">What matters most to you?</p>
+                    </div>
+
+                    <div class="form-options category-options">
+                        <div class="option-card" onclick="selectOption(this, 'CASHBACK')">
+                            <div class="category-card">
+                                <div class="category-icon">💰</div>
+                                <div class="category-content">
+                                    <h3>Cashback</h3>
+                                    <p>Instant rewards on everyday purchases</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="option-card" onclick="selectOption(this, 'TRAVEL')">
+                            <div class="category-card">
+                                <div class="category-icon">✈️</div>
+                                <div class="category-content">
+                                    <h3>Travel Rewards</h3>
+                                    <p>Miles, lounge access, travel benefits</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="option-card" onclick="selectOption(this, 'PREMIUM')">
+                            <div class="category-card">
+                                <div class="category-icon">👑</div>
+                                <div class="category-content">
+                                    <h3>Premium Lifestyle</h3>
+                                    <p>Luxury benefits and concierge services</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="option-card" onclick="selectOption(this, 'BUSINESS')">
+                            <div class="category-card">
+                                <div class="category-icon">💼</div>
+                                <div class="category-content">
+                                    <h3>Business</h3>
+                                    <p>Corporate benefits and expense tools</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="option-card" onclick="selectOption(this, 'FUEL')">
+                            <div class="category-card">
+                                <div class="category-icon">⛽</div>
+                                <div class="category-content">
+                                    <h3>Fuel & Utility</h3>
+                                    <p>High rewards on fuel and bills</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="option-card" onclick="selectOption(this, 'STUDENT')">
+                            <div class="category-card">
+                                <div class="category-icon">🎓</div>
+                                <div class="category-content">
+                                    <h3>Student & Starter</h3>
+                                    <p>Low fees and entry-level benefits</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button class="btn btn-primary" onclick="nextStep()" id="step2Next" disabled>Next Step</button>
+                    </div>
+                </div>
+
+                <div id="step3" class="form-step">
+                    <div class="step-header">
+                        <h2 class="step-title">Age Group</h2>
+                        <p class="step-description">Select your age range</p>
+                    </div>
+
+                    <div class="form-options">
+                        <div class="option-card" onclick="selectOption(this, '18-24')">
+                            <h3>18 - 24 years</h3>
+                        </div>
+                        <div class="option-card" onclick="selectOption(this, '25-30')">
+                            <h3>25 - 30 years</h3>
+                        </div>
+                        <div class="option-card" onclick="selectOption(this, '30-40')">
+                            <h3>30 - 40 years</h3>
+                        </div>
+                        <div class="option-card" onclick="selectOption(this, '40-60')">
+                            <h3>40 - 60 years</h3>
+                        </div>
+                        <div class="option-card" onclick="selectOption(this, '60+')">
+                            <h3>60+ years</h3>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button class="btn btn-primary" onclick="findCards()" id="step3Next" disabled>Find My Perfect Cards</button>
+                    </div>
+                </div>
+            </div>
         </div>
-    </section>
+    </div>
 
-    <!-- About CredX Section -->
-    <section id="about" class="section">
-        <div class="section-header">
-            <div class="section-number">.01</div>
-            <h2 class="section-title">ABOUT CREDX</h2>
-            <p class="section-description">
-                CredX revolutionizes credit card discovery in India by leveraging machine learning and big data analytics. Our platform processes thousands of card offers, terms, and benefits to provide personalized recommendations. Whether you're a first-time applicant or looking to upgrade your wallet, CredX ensures you find cards that truly match your financial needs and spending behavior.
-            </p>
-        </div>
-    </section>
+    <!-- RESULTS PAGE -->
+    <div id="results" class="page">
+        <div class="form-page">
+            <nav>
+                <div class="nav-container">
+                    <div class="form-header">
+                        <div class="logo" onclick="showPage('homepage')">CredX</div>
+                    </div>
+                </div>
+            </nav>
 
-    <!-- How It Works Section -->
-    <section id="how-it-works" class="section">
-        <div class="section-header">
-            <div class="section-number">.02</div>
-            <h2 class="section-title">HOW IT WORKS</h2>
-            <p class="section-description">
-                Our intelligent matching process analyzes your profile to deliver personalized recommendations in three simple steps.
-            </p>
-        </div>
+            <div class="results-section">
+                <div class="results-header">
+                    <h1 class="results-title">🎯 Your Perfect Card Matches</h1>
+                </div>
 
-        <div class="steps-grid">
-            <div class="step-card">
-                <div class="step-number">1</div>
-                <h3 class="step-title">Share Your Profile</h3>
-                <p class="step-description">
-                    Share your income, spending categories, and preferences. Our secure system analyzes this data to understand your financial profile.
-                </p>
-            </div>
+                <div class="user-profile" id="userProfile">
+                    <h3 class="profile-title">Your Profile:</h3>
+                    <div class="profile-details" id="profileDetails">
+                        <!-- Profile details will be populated by JavaScript -->
+                    </div>
+                </div>
 
-            <div class="step-card">
-                <div class="step-number">2</div>
-                <h3 class="step-title">AI-Powered Analysis</h3>
-                <p class="step-description">
-                    Our advanced algorithm compares your profile against 100+ credit cards, analyzing rewards, fees, eligibility, and benefits.
-                </p>
-            </div>
+                <div class="card-recommendations" id="cardRecommendations">
+                    <!-- Card recommendations will be populated by JavaScript -->
+                </div>
 
-            <div class="step-card">
-                <div class="step-number">3</div>
-                <h3 class="step-title">Get Personalized Matches</h3>
-                <p class="step-description">
-                    Receive personalized card recommendations ranked by suitability, with detailed comparisons and application links.
-                </p>
+                <div class="form-actions" style="margin-top: 3rem;">
+                    <button class="btn btn-secondary" onclick="showPage('form')">🔄 Search Again</button>
+                    <button class="btn btn-primary" onclick="showPage('homepage')">🏠 Back to Home</button>
+                </div>
             </div>
         </div>
-    </section>
+    </div>
 
-    <!-- Features Section -->
-    <section id="features" class="section">
-        <div class="section-header">
-            <div class="section-number">.03</div>
-            <h2 class="section-title">WHY CHOOSE CREDX</h2>
-            <p class="section-description">
-                Discover the advantages that make CredX the most trusted credit card recommendation platform in India.
-            </p>
-        </div>
+    <script>
+        // Form state
+        let currentStep = 1;
+        let formData = {
+            income: '',
+            category: '',
+            age: ''
+        };
 
-        <div class="features-grid">
-            <div class="feature-item">
-                <div class="feature-icon">🔒</div>
-                <h3 class="feature-title">100% Secure</h3>
-                <p class="feature-description">
-                    Your data is encrypted and protected. We never store sensitive information and maintain complete privacy throughout the process.
-                </p>
-            </div>
+        // Credit card database
+        const creditCards = [
+            {bank: "ICICI Bank", name: "Amazon Pay Credit Card", category: "CASHBACK", income_brackets: ["4-8", "8-15"], fee: 0, benefits: "5% cashback on Amazon, 2% on bill payments, 1% on others"},
+            {bank: "SBI Card", name: "CASHBACK SBI Card", category: "CASHBACK", income_brackets: ["4-8", "8-15"], fee: 999, benefits: "5% cashback online, 1% offline, fuel surcharge waiver"},
+            {bank: "HDFC Bank", name: "MoneyBack+", category: "CASHBACK", income_brackets: ["4-8", "8-15"], fee: 500, benefits: "Cashback on multiple categories, online spending rewards"},
+            {bank: "Axis Bank", name: "IndianOil Easy", category: "FUEL", income_brackets: ["4-8", "8-15"], fee: 0, benefits: "4% value back on fuel, 1250 EDGE rewards welcome"},
+            {bank: "SBI Card", name: "SimplySAVE", category: "FUEL", income_brackets: ["4-8", "8-15"], fee: 499, benefits: "10 RP per ₹150 dining/grocery, fuel surcharge waiver"},
+            {bank: "HDFC Bank", name: "Swiggy Credit Card", category: "FUEL", income_brackets: ["4-8", "8-15"], fee: 500, benefits: "BOGO BookMyShow, 5X on Swiggy/Zomato, dining rewards"},
+            {bank: "ICICI Bank", name: "MakeMyTrip Platinum", category: "TRAVEL", income_brackets: ["4-8", "8-15"], fee: 500, benefits: "Travel rewards, MakeMyTrip benefits, airport privileges"},
+            {bank: "SBI Card", name: "PRIME", category: "TRAVEL", income_brackets: ["4-8", "8-15", "15-25"], fee: 2999, benefits: "Airport lounge access, dining rewards, travel insurance"},
+            {bank: "HDFC Bank", name: "6E Rewards Indigo", category: "TRAVEL", income_brackets: ["4-8", "8-15"], fee: 500, benefits: "IndiGo vouchers, travel rewards, flight benefits"},
+            {bank: "SBI Card", name: "PULSE", category: "PREMIUM", income_brackets: ["4-8", "8-15"], fee: 1499, benefits: "Smartwatch worth ₹7999, fitness membership, health benefits"},
+            {bank: "SBI Card", name: "Titan Credit Card", category: "PREMIUM", income_brackets: ["4-8", "8-15"], fee: 999, benefits: "Titan vouchers, jewelry benefits, lifestyle rewards"},
+            {bank: "ICICI Bank", name: "Instant Platinum", category: "STUDENT", income_brackets: ["4-8"], fee: 0, benefits: "Against FD, no income proof required, basic rewards"},
+            {bank: "HDFC Bank", name: "Bharat Credit Card", category: "STUDENT", income_brackets: ["4-8"], fee: 500, benefits: "Basic cashback, low fees, entry-level benefits"},
+            {bank: "Axis Bank", name: "Neo Credit Card", category: "STUDENT", income_brackets: ["4-8"], fee: 0, benefits: "Digital-first card, basic rewards, mobile app integration"},
+            {bank: "HDFC Bank", name: "Business Moneyback", category: "BUSINESS", income_brackets: ["4-8", "8-15"], fee: 500, benefits: "Business expense tracking, corporate benefits, cashback"}
+        ];
 
-            <div class="feature-item">
-                <div class="feature-icon">⚡</div>
-                <h3 class="feature-title">Instant Results</h3>
-                <p class="feature-description">
-                    Get personalized recommendations in under 30 seconds. No waiting, no delays - just fast, accurate matches.
-                </p>
-            </div>
+        // Page navigation
+        function showPage(pageId) {
+            // Hide all pages
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => page.classList.remove('active'));
 
-            <div class="feature-item">
-                <div class="feature-icon">🧮</div>
-                <h3 class="feature-title">Reward Calculator</h3>
-                <p class="feature-description">
-                    Our calculator shows exactly how much you'll earn with each card based on your actual spending patterns.
-                </p>
-            </div>
+            // Show target page
+            document.getElementById(pageId).classList.add('active');
 
-            <div class="feature-item">
-                <div class="feature-icon">🆓</div>
-                <h3 class="feature-title">Completely Free</h3>
-                <p class="feature-description">
-                    CredX is 100% free for users. No hidden charges, no subscription fees - just honest, unbiased recommendations.
-                </p>
-            </div>
+            // Update navigation
+            if (pageId === 'homepage') {
+                document.getElementById('navMenu').style.display = 'flex';
+                document.getElementById('headerCTA').style.display = 'flex';
+            } else {
+                document.getElementById('navMenu').style.display = 'none';
+                document.getElementById('headerCTA').style.display = 'none';
+            }
 
-            <div class="feature-item">
-                <div class="feature-icon">📊</div>
-                <h3 class="feature-title">Real-time Offers</h3>
-                <p class="feature-description">
-                    Access to the latest offers, promotional rates, and limited-time bonuses updated in real-time from partner banks.
-                </p>
-            </div>
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
 
-            <div class="feature-item">
-                <div class="feature-icon">🎯</div>
-                <h3 class="feature-title">Personalized Matching</h3>
-                <p class="feature-description">
-                    Unlike generic comparison sites, we provide truly personalized recommendations based on your unique financial profile.
-                </p>
-            </div>
-        </div>
-    </section>
+        // Scroll to section (for homepage navigation)
+        function scrollToSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (section) {
+                section.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
 
-    <!-- CTA Section with UPDATED BUTTON -->
-    <section class="cta-section">
-        <h2 class="cta-title">Ready to Find Your Perfect Credit Card?</h2>
-        <p class="cta-description">
-            Join thousands of satisfied users who found their ideal credit cards through CredX. 
-            Start your personalized search now and discover cards that truly match your lifestyle.
-        </p>
+        // Form functionality
+        function selectOption(element, value) {
+            // Remove selected class from all options in current step
+            const currentStepElement = document.querySelector('.form-step.active');
+            const options = currentStepElement.querySelectorAll('.option-card');
+            options.forEach(option => option.classList.remove('selected'));
 
-        <!-- Main CTA Button -->
-        <a href="https://ppl-ai-code-interpreter-files.s3.amazonaws.com/web/direct-files/b3f7f88470b606c3bdcf617e9f251a91/94005d5b-9ac4-4718-8e2c-dd4edab0a52a/index.html" 
-           target="_blank" 
-           class="start-search-btn">
-             Start Card Search
-        </a>
-    </section>
+            // Add selected class to clicked option
+            element.classList.add('selected');
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-content">
-            <p class="footer-text">
-                © 2025 CredX. All rights reserved. | Privacy Policy | Terms of Service<br>
-                CredX is a credit card recommendation platform. We are not a bank or financial institution.
-            </p>
-        </div>
-    </footer>
+            // Store the value
+            if (currentStep === 1) {
+                formData.income = value;
+                document.getElementById('step1Next').disabled = false;
+            } else if (currentStep === 2) {
+                formData.category = value;
+                document.getElementById('step2Next').disabled = false;
+            } else if (currentStep === 3) {
+                formData.age = value;
+                document.getElementById('step3Next').disabled = false;
+            }
+        }
+
+        function nextStep() {
+            // Hide current step
+            document.getElementById(`step${currentStep}`).classList.remove('active');
+
+            // Move to next step
+            currentStep++;
+            document.getElementById(`step${currentStep}`).classList.add('active');
+
+            // Update progress
+            updateProgress();
+        }
+
+        function updateProgress() {
+            const progress = (currentStep / 3) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+            document.getElementById('progressText').textContent = `Step ${currentStep} of 3`;
+        }
+
+        function findCards() {
+            // Show loading screen
+            showLoading();
+
+            // Simulate processing time
+            setTimeout(() => {
+                // Hide loading screen
+                hideLoading();
+
+                // Generate recommendations
+                generateRecommendations();
+
+                // Show results page
+                showPage('results');
+            }, 3000);
+        }
+
+        function showLoading() {
+            document.getElementById('loadingScreen').classList.add('active');
+
+            // Update loading text progressively
+            const messages = [
+                "Analyzing your profile...",
+                "Comparing 500+ credit cards...",
+                "Finding the best matches...",
+                "Almost ready..."
+            ];
+
+            let messageIndex = 0;
+            const loadingInterval = setInterval(() => {
+                if (messageIndex < messages.length - 1) {
+                    messageIndex++;
+                    document.getElementById('loadingProgress').textContent = messages[messageIndex];
+                } else {
+                    clearInterval(loadingInterval);
+                }
+            }, 750);
+        }
+
+        function hideLoading() {
+            document.getElementById('loadingScreen').classList.remove('active');
+        }
+
+        function generateRecommendations() {
+            // Filter cards based on user selections
+            let matchingCards = creditCards.filter(card => {
+                return card.category === formData.category && 
+                       card.income_brackets.includes(formData.income);
+            });
+
+            // If no exact matches, show best alternatives
+            if (matchingCards.length === 0) {
+                matchingCards = creditCards.filter(card => {
+                    return card.category === formData.category;
+                }).slice(0, 3);
+            }
+
+            // Sort by fee (free cards first) and limit to top 5
+            matchingCards = matchingCards.sort((a, b) => a.fee - b.fee).slice(0, 5);
+
+            // Display user profile
+            displayUserProfile();
+
+            // Display recommendations
+            displayRecommendations(matchingCards);
+        }
+
+        function displayUserProfile() {
+            const incomeLabels = {
+                '4-8': '₹4,00,000 - ₹8,00,000 LPA',
+                '8-15': '₹8,00,000 - ₹15,00,000 LPA',
+                '15-25': '₹15,00,000 - ₹25,00,000 LPA',
+                '25-50': '₹25,00,000 - ₹50,00,000 LPA',
+                '50-75': '₹50,00,000 - ₹75,00,000 LPA',
+                '75-125': '₹75,00,000 - ₹1,25,00,000 LPA',
+                '125-200': '₹1,25,00,000 - ₹2,00,00,000 LPA',
+                '200+': '₹2,00,00,000+ LPA'
+            };
+
+            const categoryLabels = {
+                'CASHBACK': 'Cashback Cards',
+                'TRAVEL': 'Travel Rewards',
+                'PREMIUM': 'Premium Lifestyle',
+                'BUSINESS': 'Business Cards',
+                'FUEL': 'Fuel & Utility',
+                'STUDENT': 'Student & Starter'
+            };
+
+            document.getElementById('profileDetails').innerHTML = `
+                <div class="profile-item">
+                    <strong>Income:</strong> ${incomeLabels[formData.income]}
+                </div>
+                <div class="profile-item">
+                    <strong>Priority:</strong> ${categoryLabels[formData.category]}
+                </div>
+                <div class="profile-item">
+                    <strong>Age:</strong> ${formData.age} years
+                </div>
+            `;
+        }
+
+        function displayRecommendations(cards) {
+            let html = '';
+
+            cards.forEach((card, index) => {
+                const rank = index + 1;
+                const feeText = card.fee === 0 ? 'FREE' : `₹${card.fee.toLocaleString()}`;
+
+                html += `
+                    <div class="card-result">
+                        <div class="card-rank">#${rank} MATCH</div>
+                        <div class="card-header">
+                            <div class="card-info">
+                                <h3>${card.name}</h3>
+                                <div class="card-bank">${card.bank}</div>
+                            </div>
+                            <div class="card-fee">
+                                <div class="fee-label">Annual Fee</div>
+                                <div class="fee-amount">${feeText}</div>
+                            </div>
+                        </div>
+                        <div class="card-benefits">${card.benefits}</div>
+                        <div class="card-actions">
+                            <button class="btn-apply" onclick="applyForCard('${card.bank}', '${card.name}')">
+                                Apply for ${card.name}
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            document.getElementById('cardRecommendations').innerHTML = html;
+        }
+
+        function applyForCard(bank, cardName) {
+            alert(`🎉 Great choice!\n\nYou're about to apply for ${cardName} from ${bank}.\n\nIn a real application, this would redirect you to the bank's application page.\n\nFor now, this is a demo of the CredX platform!`);
+        }
+
+        // Initialize the app
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🚀 CredX Platform Loaded Successfully!');
+            console.log('💳 Ready to help users find their perfect credit cards');
+
+            // Show homepage by default
+            showPage('homepage');
+        });
+
+        // Enhanced animations and effects
+        window.addEventListener('scroll', function() {
+            const scrolled = window.pageYOffset;
+            const heroBackground = document.querySelector('.hero-bg');
+            if (heroBackground) {
+                heroBackground.style.transform = `translateY(${scrolled * 0.5}px)`;
+            }
+        });
+    </script>
 </body>
 </html>
-
-
-

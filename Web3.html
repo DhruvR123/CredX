@@ -1090,7 +1090,110 @@
         }
 
         
-        /* Supported Cards Page Styles */
+        /* Supported Cards Overview Section */
+        .supported-cards-preview {
+            text-align: center;
+        }
+
+        .banks-showcase {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .bank-preview {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem 1rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .bank-preview:hover {
+            transform: translateY(-8px);
+            border-color: var(--accent-blue);
+            box-shadow: 0 15px 30px rgba(0, 102, 255, 0.15);
+            background: rgba(0, 102, 255, 0.03);
+        }
+
+        .bank-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .bank-preview:hover .bank-icon {
+            transform: scale(1.1);
+        }
+
+        .bank-preview h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .bank-preview p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .cards-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin: 3rem 0;
+            flex-wrap: wrap;
+        }
+
+        .stat-highlight {
+            text-align: center;
+        }
+
+        .stat-highlight .stat-number {
+            display: block;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent-blue);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-highlight .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .section-cta {
+            margin-top: 3rem;
+        }
+
+        .explore-cards-btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-cyan) 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 102, 255, 0.3);
+        }
+
+        .explore-cards-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 102, 255, 0.4);
+        }
+
+        /* Supported Cards Full Page Styles */
         .supported-cards-container {
             margin: 2rem 0;
         }
@@ -1232,6 +1335,19 @@
         }
 
         @media (max-width: 768px) {
+            .banks-showcase {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+
+            .cards-stats {
+                gap: 2rem;
+            }
+
+            .stat-highlight .stat-number {
+                font-size: 2rem;
+            }
+
             .cards-grid {
                 grid-template-columns: 1fr;
                 padding: 1rem;
@@ -1246,6 +1362,17 @@
 
             .stats-grid {
                 grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .banks-showcase {
+                grid-template-columns: 1fr;
+            }
+
+            .cards-stats {
+                flex-direction: column;
                 gap: 1rem;
             }
         }
@@ -1441,9 +1568,9 @@
                 <div class="logo" onclick="showPage('homepage')">CredX</div>
                 <ul class="nav-menu" id="navMenu">
                     <li><button onclick="scrollToSection('features')">Features</button></li>
+                    <li><button onclick="scrollToSection('supported-cards')">Supported Cards</button></li>
                     <li><button onclick="scrollToSection('how-it-works')">How It Works</button></li>
                     <li><button onclick="scrollToSection('about')">About</button></li>
-                    <li><button onclick="showPage('supported-cards')">Supported Cards</button></li>
                 </ul>
             </div>
 
@@ -1527,10 +1654,72 @@
             </div>
         </section>
 
+        <!-- Supported Cards Section -->
+        <section id="supported-cards" class="section">
+            <div class="section-header">
+                <div class="section-number">.02</div>
+                <h2 class="section-title">SUPPORTED CARDS</h2>
+                <p class="section-description">
+                    Browse our comprehensive database of 29+ credit cards from leading banks including HDFC, SBI, ICICI, Axis Bank, and American Express. Each card is carefully analyzed for rewards, benefits, and eligibility criteria.
+                </p>
+            </div>
+            
+            <div class="supported-cards-preview">
+                <div class="banks-showcase">
+                    <div class="bank-preview">
+                        <div class="bank-icon">🏦</div>
+                        <h3>HDFC Bank</h3>
+                        <p>7 cards available</p>
+                    </div>
+                    <div class="bank-preview">
+                        <div class="bank-icon">🏛️</div>
+                        <h3>SBI Card</h3>
+                        <p>6 cards available</p>
+                    </div>
+                    <div class="bank-preview">
+                        <div class="bank-icon">🏢</div>
+                        <h3>ICICI Bank</h3>
+                        <p>5 cards available</p>
+                    </div>
+                    <div class="bank-preview">
+                        <div class="bank-icon">🏪</div>
+                        <h3>Axis Bank</h3>
+                        <p>4 cards available</p>
+                    </div>
+                    <div class="bank-preview">
+                        <div class="bank-icon">💳</div>
+                        <h3>American Express</h3>
+                        <p>7 cards available</p>
+                    </div>
+                </div>
+                
+                <div class="cards-stats">
+                    <div class="stat-highlight">
+                        <span class="stat-number">29+</span>
+                        <span class="stat-label">Credit Cards</span>
+                    </div>
+                    <div class="stat-highlight">
+                        <span class="stat-number">5</span>
+                        <span class="stat-label">Major Banks</span>
+                    </div>
+                    <div class="stat-highlight">
+                        <span class="stat-number">6</span>
+                        <span class="stat-label">Free Cards</span>
+                    </div>
+                </div>
+                
+                <div class="section-cta">
+                    <button class="explore-cards-btn" onclick="showPage('supported-cards-full')">
+                        Explore All Cards
+                    </button>
+                </div>
+            </div>
+        </section>
+
         <!-- How It Works Section -->
         <section id="how-it-works" class="section">
             <div class="section-header">
-                <div class="section-number">.02</div>
+                <div class="section-number">.03</div>
                 <h2 class="section-title">HOW IT WORKS</h2>
                 <p class="section-description">
                     Our intelligent matching process analyzes your profile to deliver personalized recommendations in three simple steps.
@@ -1550,7 +1739,7 @@
                     <div class="step-number">2</div>
                     <h3 class="step-title">AI-Powered Analysis</h3>
                     <p class="step-description">
-                        Our advanced algorithm compares your profile against 50+ credit cards, analyzing rewards, fees, eligibility, and benefits.
+                        Our advanced algorithm compares your profile against 500+ credit cards, analyzing rewards, fees, eligibility, and benefits.
                     </p>
                 </div>
 
@@ -1567,7 +1756,7 @@
         <!-- About Section -->
         <section id="about" class="section">
             <div class="section-header">
-                <div class="section-number">.03</div>
+                <div class="section-number">.04</div>
                 <h2 class="section-title">ABOUT CREDX</h2>
                 <p class="section-description">
                     CredX revolutionizes credit card discovery in India by leveraging machine learning and big data analytics. Our platform processes thousands of card offers, terms, and benefits to provide personalized recommendations.
@@ -1804,10 +1993,9 @@
     </div>
 
 
-    <!-- SUPPORTED CARDS PAGE -->
-    <div id="supported-cards" class="page">
+    <!-- SUPPORTED CARDS FULL PAGE -->
+    <div id="supported-cards-full" class="page">
         <div class="form-page">
-            <!-- Header -->
             <nav>
                 <div class="nav-container">
                     <div class="form-header">
@@ -1817,16 +2005,14 @@
             </nav>
 
             <div class="form-container" style="max-width: 1200px;">
-                <!-- Page Header -->
                 <div class="form-welcome">
                     <div class="form-icon">🏦</div>
                     <h1 class="form-title">All Supported Credit Cards</h1>
                     <p class="form-subtitle">
-                        CredX supports 500+ credit cards from leading banks and financial institutions. Here are all the cards currently in our recommendation database, organized by bank.
+                        CredX supports 29+ credit cards from leading banks and financial institutions. Here are all the cards currently in our recommendation database, organized by bank.
                     </p>
                 </div>
 
-                <!-- Bank-wise Card Listing -->
                 <div id="supportedCardsList" class="supported-cards-container">
                     <!-- Will be populated by JavaScript -->
                 </div>
@@ -1843,7 +2029,6 @@
 
         // Generate supported cards page
         function generateSupportedCardsPage() {
-            // Group cards by bank
             const cardsByBank = {};
             creditCards.forEach(card => {
                 if (!cardsByBank[card.bank]) {
@@ -1852,7 +2037,6 @@
                 cardsByBank[card.bank].push(card);
             });
 
-            // Bank logos mapping
             const bankLogos = {
                 'HDFC Bank': '🏦',
                 'SBI Card': '🏛️',
@@ -1861,7 +2045,6 @@
                 'American Express': '💳'
             };
 
-            // Bank descriptions
             const bankDescriptions = {
                 'HDFC Bank': `${cardsByBank['HDFC Bank']?.length || 0} cards available`,
                 'SBI Card': `${cardsByBank['SBI Card']?.length || 0} cards available`,
@@ -1870,35 +2053,21 @@
                 'American Express': `${cardsByBank['American Express']?.length || 0} cards available`
             };
 
-            // Income bracket labels
             const incomeLabels = {
-                '4-8': '₹4-8L',
-                '8-15': '₹8-15L',
-                '15-25': '₹15-25L',
-                '25-50': '₹25-50L',
-                '50-75': '₹50-75L',
-                '75-125': '₹75-125L',
-                '125-200': '₹125-200L',
-                '200+': '₹200L+'
+                '4-8': '₹4-8L', '8-15': '₹8-15L', '15-25': '₹15-25L', '25-50': '₹25-50L',
+                '50-75': '₹50-75L', '75-125': '₹75-125L', '125-200': '₹125-200L', '200+': '₹200L+'
             };
 
-            // Category colors
             const categoryColors = {
-                'CASHBACK': '#28a745',
-                'TRAVEL': '#007bff',
-                'PREMIUM': '#6f42c1',
-                'BUSINESS': '#fd7e14',
-                'FUEL': '#dc3545',
-                'STUDENT': '#17a2b8'
+                'CASHBACK': '#28a745', 'TRAVEL': '#007bff', 'PREMIUM': '#6f42c1',
+                'BUSINESS': '#fd7e14', 'FUEL': '#dc3545', 'STUDENT': '#17a2b8'
             };
 
-            // Calculate statistics
             const totalCards = creditCards.length;
             const totalBanks = Object.keys(cardsByBank).length;
             const freeCards = creditCards.filter(card => card.fee === 0).length;
             const premiumCards = creditCards.filter(card => card.category === 'PREMIUM').length;
 
-            // Generate HTML
             let html = `
                 <div class="stats-summary">
                     <h3 style="color: var(--text-primary); margin-bottom: 1rem;">Database Statistics</h3>
@@ -1923,7 +2092,6 @@
                 </div>
             `;
 
-            // Sort banks alphabetically
             const sortedBanks = Object.keys(cardsByBank).sort();
 
             sortedBanks.forEach(bank => {
@@ -1943,7 +2111,6 @@
                         <div class="cards-grid">
                 `;
 
-                // Sort cards by name within each bank
                 cards.sort((a, b) => a.name.localeCompare(b.name)).forEach(card => {
                     const feeText = card.fee === 0 ? 'FREE' : `₹${card.fee.toLocaleString()}`;
                     const categoryColor = categoryColors[card.category] || '#6c757d';
@@ -1965,10 +2132,7 @@
                     `;
                 });
 
-                html += `
-                        </div>
-                    </div>
-                `;
+                html += `</div></div>`;
             });
 
             document.getElementById('supportedCardsList').innerHTML = html;
@@ -2069,8 +2233,7 @@
                 document.getElementById('headerCTA').style.display = 'none';
             }
 
-            // Generate supported cards page content when accessed
-            if (pageId === 'supported-cards') {
+            if (pageId === 'supported-cards-full') {
                 generateSupportedCardsPage();
             }
 
@@ -2249,4 +2412,3 @@
     </script>
 </body>
 </html>
-

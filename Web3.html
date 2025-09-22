@@ -32,43 +32,6 @@
             font-family: var(--sans);
             overflow-x: hidden;
             line-height: 1.6;
-            cursor: none; /* Hide default cursor */
-        }
-
-        /* Optimized Glass Cursor */
-        .glass-cursor {
-            position: fixed;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: rgba(0, 102, 255, 0.1);
-            border: 1px solid rgba(0, 102, 255, 0.3);
-            backdrop-filter: blur(4px);
-            pointer-events: none;
-            z-index: 9999;
-            transition: all 0.1s ease;
-            transform: translate(-50%, -50%);
-        }
-
-        /* Glass effect for interactive elements */
-        button:hover, 
-        .option-card:hover, 
-        .start-search-btn:hover, 
-        .header-cta-btn:hover, 
-        .step-card:hover,
-        .feature-item:hover {
-            backdrop-filter: blur(10px);
-            background: rgba(0, 102, 255, 0.1) !important;
-            border-color: rgba(0, 102, 255, 0.3);
-        }
-
-        /* Enhanced glass cursor on hover */
-        body.cursor-hover .glass-cursor {
-            width: 40px;
-            height: 40px;
-            background: rgba(0, 102, 255, 0.15);
-            border: 2px solid rgba(0, 191, 255, 0.4);
-            backdrop-filter: blur(8px);
         }
 
         /* Page Container */
@@ -82,6 +45,96 @@
         .page.active {
             display: block;
         }
+
+        /* Matrix/Glitch Background Effects for Homepage Only */
+        .matrix-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0;
+            transition: opacity 2s ease-in-out;
+        }
+
+        .homepage.active .matrix-background {
+            opacity: 1;
+        }
+
+        /* Matrix Rain Effect */
+        .matrix-rain {
+            position: absolute;
+            top: -100%;
+            color: rgba(0, 102, 255, 0.1);
+            font-family: var(--mono);
+            font-size: 14px;
+            line-height: 14px;
+            animation: matrixFall 15s linear infinite;
+            white-space: nowrap;
+        }
+
+        @keyframes matrixFall {
+            0% { top: -100%; opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { top: 100%; opacity: 0; }
+        }
+
+        .matrix-rain:nth-child(1) { left: 5%; animation-delay: 0s; }
+        .matrix-rain:nth-child(2) { left: 15%; animation-delay: 2s; }
+        .matrix-rain:nth-child(3) { left: 25%; animation-delay: 4s; }
+        .matrix-rain:nth-child(4) { left: 35%; animation-delay: 6s; }
+        .matrix-rain:nth-child(5) { left: 45%; animation-delay: 8s; }
+        .matrix-rain:nth-child(6) { left: 55%; animation-delay: 10s; }
+        .matrix-rain:nth-child(7) { left: 65%; animation-delay: 12s; }
+        .matrix-rain:nth-child(8) { left: 75%; animation-delay: 1s; }
+        .matrix-rain:nth-child(9) { left: 85%; animation-delay: 3s; }
+        .matrix-rain:nth-child(10) { left: 95%; animation-delay: 5s; }
+
+        /* Glitch Elements */
+        .glitch-line {
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(0, 102, 255, 0.3), transparent);
+            animation: glitchMove 8s ease-in-out infinite;
+        }
+
+        @keyframes glitchMove {
+            0%, 100% { top: 20%; opacity: 0; }
+            25% { opacity: 1; }
+            50% { top: 60%; opacity: 1; }
+            75% { opacity: 1; }
+        }
+
+        .glitch-line:nth-child(12) { animation-delay: 0s; }
+        .glitch-line:nth-child(13) { animation-delay: 2s; top: 40%; }
+        .glitch-line:nth-child(14) { animation-delay: 4s; top: 70%; }
+
+        /* Floating Code Snippets */
+        .code-float {
+            position: absolute;
+            color: rgba(0, 191, 255, 0.08);
+            font-family: var(--mono);
+            font-size: 10px;
+            animation: codeFloat 20s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes codeFloat {
+            0% { transform: translateY(100vh) translateX(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100px) translateX(50px) rotate(10deg); opacity: 0; }
+        }
+
+        .code-float:nth-child(15) { left: 10%; animation-delay: 0s; }
+        .code-float:nth-child(16) { left: 30%; animation-delay: 5s; }
+        .code-float:nth-child(17) { left: 50%; animation-delay: 10s; }
+        .code-float:nth-child(18) { left: 70%; animation-delay: 15s; }
+        .code-float:nth-child(19) { left: 90%; animation-delay: 7s; }
 
         /* Simple Static Background Pattern */
         .static-background {
@@ -148,7 +201,7 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            cursor: none;
+            cursor: pointer;
             transition: transform 0.3s ease;
         }
 
@@ -173,7 +226,7 @@
             border: none;
             font-weight: 500;
             font-size: 1rem;
-            cursor: none;
+            cursor: pointer;
             transition: all 0.3s ease;
             position: relative;
             padding: 0.5rem 0;
@@ -208,7 +261,7 @@
             border-radius: 8px;
             font-weight: 600;
             font-size: 0.9rem;
-            cursor: none;
+            cursor: pointer;
             transition: all 0.3s ease;
             box-shadow: 0 4px 15px rgba(0, 102, 255, 0.3);
             display: flex;
@@ -231,7 +284,7 @@
             margin: 0 auto;
         }
 
-        /* Hero Section - Simplified */
+        /* Hero Section - Enhanced with Matrix Effects */
         .hero {
             min-height: 100vh;
             display: flex;
@@ -249,6 +302,7 @@
             text-align: center;
             animation: heroFadeIn 1.5s ease-out;
             z-index: 2;
+            position: relative;
         }
 
         @keyframes heroFadeIn {
@@ -271,6 +325,23 @@
             background-clip: text;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            position: relative;
+        }
+
+        /* Subtle glitch effect on title */
+        .hero-title::before {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            color: rgba(0, 102, 255, 0.1);
+            animation: glitchTitle 10s infinite;
+            z-index: -1;
+        }
+
+        @keyframes glitchTitle {
+            0%, 90%, 100% { transform: translate(0); opacity: 0; }
+            95% { transform: translate(2px, 0); opacity: 1; }
         }
 
         .hero-description {
@@ -346,13 +417,14 @@
             text-align: center;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
-            cursor: none;
+            cursor: pointer;
         }
 
         .step-card:hover {
             transform: translateY(-8px);
             box-shadow: 0 20px 40px rgba(0, 102, 255, 0.1);
             border-color: var(--accent-blue);
+            background: rgba(0, 102, 255, 0.05);
         }
 
         .step-number {
@@ -401,11 +473,12 @@
             border-radius: 12px;
             transition: all 0.3s ease;
             position: relative;
-            cursor: none;
+            cursor: pointer;
         }
 
         .feature-item:hover {
             transform: translateY(-5px);
+            background: rgba(0, 102, 255, 0.05);
         }
 
         .feature-icon {
@@ -477,7 +550,7 @@
             border-radius: 12px;
             font-weight: 600;
             font-size: 1.2rem;
-            cursor: none;
+            cursor: pointer;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             box-shadow: 0 8px 30px rgba(0, 102, 255, 0.3);
             gap: 0.75rem;
@@ -509,7 +582,7 @@
             line-height: 1.6;
         }
 
-        /* FORM PAGE STYLES */
+        /* FORM PAGE STYLES - COMPACT OPTIMIZED */
         .form-page {
             min-height: 100vh;
             padding-top: 80px;
@@ -518,20 +591,20 @@
         }
 
         .form-container {
-            max-width: 900px;
+            max-width: 1000px;
             margin: 0 auto;
-            padding: 2rem;
+            padding: 1rem;
         }
 
         .form-welcome {
             text-align: center;
-            margin-bottom: 3rem;
+            margin-bottom: 2rem;
             animation: fadeInUp 1s ease-out;
         }
 
         .form-icon {
-            font-size: 4rem;
-            margin-bottom: 1rem;
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
             animation: bounceIn 1s ease-out;
         }
 
@@ -542,10 +615,10 @@
         }
 
         .form-title {
-            font-size: 3rem;
+            font-size: 2.2rem;
             font-weight: 700;
             color: var(--text-primary);
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
             background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-cyan) 100%);
             background-clip: text;
             -webkit-background-clip: text;
@@ -554,21 +627,21 @@
 
         .form-subtitle {
             color: var(--text-secondary);
-            font-size: 1.2rem;
+            font-size: 1rem;
             max-width: 600px;
             margin: 0 auto;
             line-height: 1.6;
         }
 
         .progress-container {
-            margin: 3rem 0;
+            margin: 2rem 0;
             text-align: center;
         }
 
         .progress-bar {
             width: 100%;
             max-width: 400px;
-            height: 8px;
+            height: 6px;
             background: var(--border);
             border-radius: 4px;
             margin: 1rem auto;
@@ -611,11 +684,11 @@
 
         .step-header {
             text-align: center;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
         }
 
         .step-title {
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             font-weight: 600;
             color: var(--text-primary);
             margin-bottom: 0.5rem;
@@ -623,29 +696,55 @@
 
         .step-description {
             color: var(--text-secondary);
-            font-size: 1rem;
+            font-size: 0.95rem;
         }
 
+        /* COMPACT FORM OPTIONS - MAIN IMPROVEMENT */
         .form-options {
             display: grid;
-            gap: 1rem;
-            margin: 2rem 0;
+            gap: 0.75rem;
+            margin: 1.5rem 0;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
+        /* Income options - 2 columns on desktop, 1 on mobile */
+        .income-options {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        /* Category options - 2 columns on desktop */
+        .category-options {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        /* Age options - 3 columns to fit all on one screen */
+        .age-options {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        /* COMPACT OPTION CARDS */
         .option-card {
             background: var(--bg-card);
             border: 2px solid var(--border);
-            border-radius: 12px;
-            padding: 1.5rem;
-            cursor: none;
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            cursor: pointer;
             transition: all 0.3s ease;
             position: relative;
+            text-align: center;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .option-card:hover {
             border-color: var(--accent-blue);
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0, 102, 255, 0.15);
+            box-shadow: 0 4px 15px rgba(0, 102, 255, 0.15);
+            background: rgba(0, 102, 255, 0.05);
         }
 
         .option-card.selected {
@@ -653,21 +752,27 @@
             background: rgba(0, 102, 255, 0.1);
         }
 
-        .category-options {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1rem;
+        .option-card h3 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: 0;
+            line-height: 1.3;
         }
 
+        /* COMPACT CATEGORY CARDS */
         .category-card {
             display: flex;
             align-items: center;
-            gap: 1rem;
+            gap: 0.75rem;
+            text-align: left;
+            width: 100%;
         }
 
         .category-icon {
-            font-size: 2rem;
+            font-size: 1.5rem;
             transition: transform 0.3s ease;
+            flex-shrink: 0;
         }
 
         .option-card:hover .category-icon {
@@ -676,32 +781,35 @@
 
         .category-content h3 {
             color: var(--text-primary);
-            font-size: 1.2rem;
+            font-size: 1rem;
             font-weight: 600;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.25rem;
+            line-height: 1.2;
         }
 
         .category-content p {
             color: var(--text-secondary);
-            font-size: 0.9rem;
-            line-height: 1.4;
+            font-size: 0.8rem;
+            line-height: 1.3;
+            margin: 0;
         }
 
         .form-actions {
             display: flex;
             justify-content: center;
             gap: 1rem;
-            margin-top: 3rem;
+            margin-top: 2rem;
         }
 
         .btn {
-            padding: 1rem 2rem;
+            padding: 0.9rem 2rem;
             border: none;
             border-radius: 8px;
             font-weight: 600;
-            cursor: none;
+            cursor: pointer;
             transition: all 0.3s ease;
             font-family: var(--sans);
+            font-size: 1rem;
         }
 
         .btn-primary {
@@ -856,7 +964,7 @@
             border: none;
             border-radius: 8px;
             font-weight: 600;
-            cursor: none;
+            cursor: pointer;
             transition: all 0.3s ease;
         }
 
@@ -872,7 +980,7 @@
             padding: 0.75rem 1.5rem;
             border-radius: 8px;
             font-weight: 600;
-            cursor: none;
+            cursor: pointer;
             transition: all 0.3s ease;
         }
 
@@ -934,7 +1042,19 @@
             }
 
             .form-title {
-                font-size: 2.5rem;
+                font-size: 2rem;
+            }
+
+            .income-options {
+                grid-template-columns: 1fr;
+            }
+
+            .category-options {
+                grid-template-columns: 1fr;
+            }
+
+            .age-options {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
 
@@ -948,7 +1068,7 @@
             }
 
             .form-title {
-                font-size: 2rem;
+                font-size: 1.8rem;
             }
 
             .nav-container {
@@ -976,7 +1096,12 @@
                 padding: 4rem 1rem;
             }
 
+            .income-options,
             .category-options {
+                grid-template-columns: 1fr;
+            }
+
+            .age-options {
                 grid-template-columns: 1fr;
             }
 
@@ -991,6 +1116,11 @@
 
             .card-actions {
                 flex-direction: column;
+            }
+
+            /* Hide matrix effects on mobile for performance */
+            .matrix-background {
+                display: none;
             }
         }
 
@@ -1015,21 +1145,54 @@
             }
 
             .form-title {
-                font-size: 1.8rem;
+                font-size: 1.6rem;
             }
 
             .form-container {
-                padding: 1rem;
+                padding: 0.5rem;
+            }
+
+            .option-card {
+                padding: 0.5rem;
+                min-height: 50px;
+            }
+
+            .option-card h3 {
+                font-size: 0.85rem;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Glass Cursor -->
-    <div class="glass-cursor" id="glassCursor"></div>
-
     <!-- Simple Static Background -->
     <div class="static-background"></div>
+
+    <!-- Matrix/Glitch Background (Homepage Only) -->
+    <div class="matrix-background">
+        <!-- Matrix Rain -->
+        <div class="matrix-rain">01001100 01101111 01110110 01100101</div>
+        <div class="matrix-rain">01000011 01110010 01100101 01100100</div>
+        <div class="matrix-rain">01011000 11000000 10101010 01010101</div>
+        <div class="matrix-rain">01000001 01001001 00100000 01000011</div>
+        <div class="matrix-rain">01000010 01101100 01110101 01100101</div>
+        <div class="matrix-rain">01010000 01101100 01100001 01110100</div>
+        <div class="matrix-rain">01000110 01101001 01101110 01100001</div>
+        <div class="matrix-rain">01000011 01100001 01110010 01100100</div>
+        <div class="matrix-rain">01000100 01100001 01110100 01100001</div>
+        <div class="matrix-rain">01000010 01100001 01101110 01101011</div>
+
+        <!-- Glitch Lines -->
+        <div class="glitch-line"></div>
+        <div class="glitch-line"></div>
+        <div class="glitch-line"></div>
+
+        <!-- Floating Code -->
+        <div class="code-float">function findCard() {</div>
+        <div class="code-float">if (user.income > 500000) {</div>
+        <div class="code-float">return bestMatch;</div>
+        <div class="code-float">} else { continue; }</div>
+        <div class="code-float">const creditScore = 750;</div>
+    </div>
 
     <!-- Loading Screen -->
     <div class="loading-screen" id="loadingScreen">
@@ -1058,11 +1221,11 @@
     </nav>
 
     <!-- HOMEPAGE -->
-    <div id="homepage" class="page active">
+    <div id="homepage" class="page active homepage">
         <!-- Hero Section -->
         <section class="hero" id="heroSection">
             <div class="hero-content">
-                <h1 class="hero-title">Find Your Perfect Credit Card</h1>
+                <h1 class="hero-title" data-text="Find Your Perfect Credit Card">Find Your Perfect Credit Card</h1>
                 <p class="hero-description">
                     CredX is our most advanced credit card discovery platform. Using AI-powered matching algorithms, we analyze your spending patterns, income profile, and financial goals to recommend the perfect credit cards from leading banks like HDFC, SBI, ICICI, Axis Bank, and more.
                 </p>
@@ -1239,7 +1402,7 @@
                         <p class="step-description">Select your yearly income range</p>
                     </div>
 
-                    <div class="form-options">
+                    <div class="form-options income-options">
                         <div class="option-card" onclick="selectOption(this, '4-8')">
                             <h3>₹4,00,000 - ₹8,00,000 LPA</h3>
                         </div>
@@ -1345,7 +1508,7 @@
                         <p class="step-description">Select your age range</p>
                     </div>
 
-                    <div class="form-options">
+                    <div class="form-options age-options">
                         <div class="option-card" onclick="selectOption(this, '18-24')">
                             <h3>18 - 24 years</h3>
                         </div>
@@ -1433,38 +1596,6 @@
             {bank: "Axis Bank", name: "Neo Credit Card", category: "STUDENT", income_brackets: ["4-8"], fee: 0, benefits: "Digital-first card, basic rewards, mobile app integration"},
             {bank: "HDFC Bank", name: "Business Moneyback", category: "BUSINESS", income_brackets: ["4-8", "8-15"], fee: 500, benefits: "Business expense tracking, corporate benefits, cashback"}
         ];
-
-        // Optimized Glass Cursor System
-        const glassCursor = document.getElementById('glassCursor');
-        let mouseX = 0;
-        let mouseY = 0;
-
-        // Efficient cursor movement with requestAnimationFrame
-        function updateCursor() {
-            glassCursor.style.left = mouseX + 'px';
-            glassCursor.style.top = mouseY + 'px';
-        }
-
-        document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-            requestAnimationFrame(updateCursor);
-        });
-
-        // Glass effect hover state
-        const interactiveElements = 'button, .option-card, .start-search-btn, .header-cta-btn, .step-card, .feature-item, .logo, .btn';
-
-        document.addEventListener('mouseover', (e) => {
-            if (e.target.matches(interactiveElements) || e.target.closest(interactiveElements)) {
-                document.body.classList.add('cursor-hover');
-            }
-        });
-
-        document.addEventListener('mouseout', (e) => {
-            if (e.target.matches(interactiveElements) || e.target.closest(interactiveElements)) {
-                document.body.classList.remove('cursor-hover');
-            }
-        });
 
         // Form reset function
         function resetForm() {
@@ -1679,7 +1810,7 @@
 
         // Initialize the app
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('🚀 CredX Platform Loaded - Optimized Version!');
+            console.log('🚀 CredX Platform Loaded - Compact Form Version!');
             showPage('homepage');
             updateProgress();
         });

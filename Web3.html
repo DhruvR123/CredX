@@ -33,7 +33,7 @@
             overflow-x: hidden;
         }
 
-        /* Navigation - REMOVED "Card Types" from header */
+        /* Navigation - ADDED HEADER BUTTON */
         nav {
             position: fixed;
             top: 0;
@@ -51,6 +51,12 @@
             padding: 1rem 2rem;
             max-width: 1200px;
             margin: 0 auto;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
         }
 
         .logo {
@@ -83,6 +89,34 @@
 
         .nav-menu a:hover {
             color: var(--accent-blue);
+        }
+
+        /* Header Button - NEW */
+        .header-cta-btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.75rem 1.5rem;
+            background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-cyan) 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(0, 102, 255, 0.3);
+            gap: 0.5rem;
+            border: none;
+            cursor: pointer;
+            font-family: var(--sans);
+        }
+
+        .header-cta-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(0, 102, 255, 0.4);
+        }
+
+        .header-cta-btn:active {
+            transform: translateY(0);
         }
 
         /* Hero Section */
@@ -269,7 +303,7 @@
             margin-right: auto;
         }
 
-        /* Updated Start Card Search Button */
+        /* Main CTA Button */
         .start-search-btn {
             display: inline-flex;
             align-items: center;
@@ -334,12 +368,21 @@
                 padding: 1rem;
             }
 
+            .nav-left {
+                gap: 1rem;
+            }
+
             .logo {
                 font-size: 1.5rem;
             }
 
             .nav-menu {
                 display: none;
+            }
+
+            .header-cta-btn {
+                padding: 0.6rem 1rem;
+                font-size: 0.8rem;
             }
 
             .section {
@@ -351,18 +394,48 @@
                 font-size: 1.1rem;
             }
         }
+
+        @media (max-width: 480px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 0.75rem 1rem;
+            }
+
+            .nav-left {
+                justify-content: center;
+            }
+
+            .header-cta-btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .hero {
+                padding-top: 120px;
+            }
+        }
     </style>
 </head>
 <body>
-    <!-- Navigation - REMOVED "Card Types" from menu -->
+    <!-- Navigation - ADDED HEADER BUTTON -->
     <nav>
         <div class="nav-container">
-            <div class="logo">CredX</div>
-            <ul class="nav-menu">
-                <li><a href="#about">About</a></li>
-                <li><a href="#how-it-works">How It Works</a></li>
-                <li><a href="#features">Features</a></li>
-            </ul>
+            <div class="nav-left">
+                <div class="logo">CredX</div>
+                <ul class="nav-menu">
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#how-it-works">How It Works</a></li>
+                    <li><a href="#features">Features</a></li>
+                </ul>
+            </div>
+
+            <!-- NEW: Header CTA Button -->
+            <a href="https://ppl-ai-code-interpreter-files.s3.amazonaws.com/web/direct-files/b3f7f88470b606c3bdcf617e9f251a91/94005d5b-9ac4-4718-8e2c-dd4edab0a52a/index.html" 
+               target="_blank" 
+               class="header-cta-btn">
+                📝 Find Cards
+            </a>
         </div>
     </nav>
 
@@ -424,9 +497,6 @@
             </div>
         </div>
     </section>
-
-    <!-- REMOVED: Card Categories Section with 6 category buttons -->
-    <!-- This entire section has been removed as requested -->
 
     <!-- Features Section -->
     <section id="features" class="section">
@@ -497,7 +567,7 @@
             Start your personalized search now and discover cards that truly match your lifestyle.
         </p>
 
-        <!-- UPDATED START CARD SEARCH BUTTON - This replaces line 1082 -->
+        <!-- Main CTA Button -->
         <a href="https://ppl-ai-code-interpreter-files.s3.amazonaws.com/web/direct-files/b3f7f88470b606c3bdcf617e9f251a91/94005d5b-9ac4-4718-8e2c-dd4edab0a52a/index.html" 
            target="_blank" 
            class="start-search-btn">

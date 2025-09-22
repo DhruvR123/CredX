@@ -32,20 +32,59 @@
             font-family: var(--sans);
             overflow-x: hidden;
             line-height: 1.6;
+            cursor: none; /* Hide default cursor */
+        }
+
+        /* Optimized Glass Cursor */
+        .glass-cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: rgba(0, 102, 255, 0.1);
+            border: 1px solid rgba(0, 102, 255, 0.3);
+            backdrop-filter: blur(4px);
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.1s ease;
+            transform: translate(-50%, -50%);
+        }
+
+        /* Glass effect for interactive elements */
+        button:hover, 
+        .option-card:hover, 
+        .start-search-btn:hover, 
+        .header-cta-btn:hover, 
+        .step-card:hover,
+        .feature-item:hover {
+            backdrop-filter: blur(10px);
+            background: rgba(0, 102, 255, 0.1) !important;
+            border-color: rgba(0, 102, 255, 0.3);
+        }
+
+        /* Enhanced glass cursor on hover */
+        body.cursor-hover .glass-cursor {
+            width: 40px;
+            height: 40px;
+            background: rgba(0, 102, 255, 0.15);
+            border: 2px solid rgba(0, 191, 255, 0.4);
+            backdrop-filter: blur(8px);
         }
 
         /* Page Container */
         .page {
             display: none;
             min-height: 100vh;
+            position: relative;
+            z-index: 1;
         }
 
         .page.active {
             display: block;
         }
 
-        /* Moving Background Effects */
-        .background-effects {
+        /* Simple Static Background Pattern */
+        .static-background {
             position: fixed;
             top: 0;
             left: 0;
@@ -53,53 +92,25 @@
             height: 100%;
             pointer-events: none;
             z-index: 0;
-            overflow: hidden;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(0, 102, 255, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(0, 191, 255, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 40% 60%, rgba(0, 102, 255, 0.02) 0%, transparent 50%);
         }
 
-        .floating-shape {
+        /* Subtle grid pattern */
+        .static-background::before {
+            content: '';
             position: absolute;
-            background: rgba(0, 102, 255, 0.03);
-            border-radius: 50%;
-            animation: float 20s linear infinite;
-        }
-
-        .floating-shape:nth-child(1) {
-            width: 100px;
-            height: 100px;
-            top: 20%;
-            left: -10%;
-            animation-delay: 0s;
-        }
-
-        .floating-shape:nth-child(2) {
-            width: 150px;
-            height: 150px;
-            top: 60%;
-            left: -15%;
-            animation-delay: -5s;
-        }
-
-        .floating-shape:nth-child(3) {
-            width: 80px;
-            height: 80px;
-            top: 40%;
-            left: -8%;
-            animation-delay: -10s;
-        }
-
-        .floating-shape:nth-child(4) {
-            width: 120px;
-            height: 120px;
-            top: 80%;
-            left: -12%;
-            animation-delay: -15s;
-        }
-
-        @keyframes float {
-            0% { transform: translateX(-100px) translateY(0px) rotate(0deg); opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { transform: translateX(calc(100vw + 100px)) translateY(-100px) rotate(360deg); opacity: 0; }
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 102, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 102, 255, 0.02) 1px, transparent 1px);
+            background-size: 50px 50px;
+            opacity: 0.5;
         }
 
         /* Navigation */
@@ -137,7 +148,7 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            cursor: pointer;
+            cursor: none;
             transition: transform 0.3s ease;
         }
 
@@ -162,7 +173,7 @@
             border: none;
             font-weight: 500;
             font-size: 1rem;
-            cursor: pointer;
+            cursor: none;
             transition: all 0.3s ease;
             position: relative;
             padding: 0.5rem 0;
@@ -197,7 +208,7 @@
             border-radius: 8px;
             font-weight: 600;
             font-size: 0.9rem;
-            cursor: pointer;
+            cursor: none;
             transition: all 0.3s ease;
             box-shadow: 0 4px 15px rgba(0, 102, 255, 0.3);
             display: flex;
@@ -210,7 +221,7 @@
             box-shadow: 0 8px 25px rgba(0, 102, 255, 0.4);
         }
 
-        /* Form Header - Simplified (no back button) */
+        /* Form Header - Simplified */
         .form-header {
             display: flex;
             justify-content: center;
@@ -220,7 +231,7 @@
             margin: 0 auto;
         }
 
-        /* Hero Section */
+        /* Hero Section - Simplified */
         .hero {
             min-height: 100vh;
             display: flex;
@@ -229,34 +240,6 @@
             overflow: hidden;
             padding-top: 100px;
             z-index: 1;
-        }
-
-        .hero-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(circle at 20% 50%, rgba(0, 102, 255, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(0, 191, 255, 0.1) 0%, transparent 50%);
-            z-index: -1;
-        }
-
-        .hero-bg::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, transparent 0%, rgba(0, 102, 255, 0.05) 50%, transparent 100%);
-            animation: gradientShift 8s ease-in-out infinite;
-        }
-
-        @keyframes gradientShift {
-            0%, 100% { transform: rotate(0deg) scale(1); }
-            50% { transform: rotate(2deg) scale(1.02); }
         }
 
         .hero-content {
@@ -288,12 +271,6 @@
             background-clip: text;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            animation: titleGlow 3s ease-in-out infinite;
-        }
-
-        @keyframes titleGlow {
-            0%, 100% { filter: brightness(1); }
-            50% { filter: brightness(1.1); }
         }
 
         .hero-description {
@@ -369,28 +346,13 @@
             text-align: center;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
-            overflow: hidden;
-        }
-
-        .step-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(0, 102, 255, 0.1), transparent);
-            transition: left 0.5s ease;
+            cursor: none;
         }
 
         .step-card:hover {
             transform: translateY(-8px);
             box-shadow: 0 20px 40px rgba(0, 102, 255, 0.1);
             border-color: var(--accent-blue);
-        }
-
-        .step-card:hover::before {
-            left: 100%;
         }
 
         .step-number {
@@ -439,10 +401,10 @@
             border-radius: 12px;
             transition: all 0.3s ease;
             position: relative;
+            cursor: none;
         }
 
         .feature-item:hover {
-            background: rgba(0, 102, 255, 0.05);
             transform: translateY(-5px);
         }
 
@@ -515,33 +477,17 @@
             border-radius: 12px;
             font-weight: 600;
             font-size: 1.2rem;
-            cursor: pointer;
+            cursor: none;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             box-shadow: 0 8px 30px rgba(0, 102, 255, 0.3);
             gap: 0.75rem;
             font-family: var(--sans);
             position: relative;
-            overflow: hidden;
-        }
-
-        .start-search-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.5s ease;
         }
 
         .start-search-btn:hover {
             transform: translateY(-3px);
             box-shadow: 0 15px 40px rgba(0, 102, 255, 0.4);
-        }
-
-        .start-search-btn:hover::before {
-            left: 100%;
         }
 
         /* Footer */
@@ -691,31 +637,15 @@
             border: 2px solid var(--border);
             border-radius: 12px;
             padding: 1.5rem;
-            cursor: pointer;
+            cursor: none;
             transition: all 0.3s ease;
             position: relative;
-            overflow: hidden;
-        }
-
-        .option-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(0, 102, 255, 0.1), transparent);
-            transition: left 0.5s ease;
         }
 
         .option-card:hover {
             border-color: var(--accent-blue);
             transform: translateY(-2px);
             box-shadow: 0 8px 25px rgba(0, 102, 255, 0.15);
-        }
-
-        .option-card:hover::before {
-            left: 100%;
         }
 
         .option-card.selected {
@@ -769,7 +699,7 @@
             border: none;
             border-radius: 8px;
             font-weight: 600;
-            cursor: pointer;
+            cursor: none;
             transition: all 0.3s ease;
             font-family: var(--sans);
         }
@@ -851,28 +781,12 @@
             padding: 2rem;
             transition: all 0.3s ease;
             position: relative;
-            overflow: hidden;
-        }
-
-        .card-result::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(0, 102, 255, 0.1), transparent);
-            transition: left 0.5s ease;
         }
 
         .card-result:hover {
             border-color: var(--accent-blue);
             transform: translateY(-5px);
             box-shadow: 0 15px 30px rgba(0, 102, 255, 0.1);
-        }
-
-        .card-result:hover::before {
-            left: 100%;
         }
 
         .card-rank {
@@ -888,7 +802,7 @@
 
         .card-header {
             display: flex;
-            justify-content: between;
+            justify-content: space-between;
             align-items: start;
             margin-bottom: 1rem;
             flex-wrap: wrap;
@@ -942,7 +856,7 @@
             border: none;
             border-radius: 8px;
             font-weight: 600;
-            cursor: pointer;
+            cursor: none;
             transition: all 0.3s ease;
         }
 
@@ -958,7 +872,7 @@
             padding: 0.75rem 1.5rem;
             border-radius: 8px;
             font-weight: 600;
-            cursor: pointer;
+            cursor: none;
             transition: all 0.3s ease;
         }
 
@@ -1111,13 +1025,11 @@
     </style>
 </head>
 <body>
-    <!-- Moving Background Effects -->
-    <div class="background-effects">
-        <div class="floating-shape"></div>
-        <div class="floating-shape"></div>
-        <div class="floating-shape"></div>
-        <div class="floating-shape"></div>
-    </div>
+    <!-- Glass Cursor -->
+    <div class="glass-cursor" id="glassCursor"></div>
+
+    <!-- Simple Static Background -->
+    <div class="static-background"></div>
 
     <!-- Loading Screen -->
     <div class="loading-screen" id="loadingScreen">
@@ -1139,7 +1051,7 @@
             </div>
 
             <!-- Header CTA Button -->
-            <button class="header-cta-btn" id="headerCTA" onclick="showPage('form')">
+            <button class="header-cta-btn" id="headerCTA" onclick="startFormProcess()">
                 📝 Find Cards
             </button>
         </div>
@@ -1148,8 +1060,7 @@
     <!-- HOMEPAGE -->
     <div id="homepage" class="page active">
         <!-- Hero Section -->
-        <section class="hero">
-            <div class="hero-bg"></div>
+        <section class="hero" id="heroSection">
             <div class="hero-content">
                 <h1 class="hero-title">Find Your Perfect Credit Card</h1>
                 <p class="hero-description">
@@ -1275,7 +1186,7 @@
                 Start your personalized search now and discover cards that truly match your lifestyle.
             </p>
 
-            <button class="start-search-btn" onclick="showPage('form')">
+            <button class="start-search-btn" onclick="startFormProcess()">
                 🚀 Start Card Search
             </button>
         </section>
@@ -1488,7 +1399,7 @@
                 </div>
 
                 <div class="form-actions" style="margin-top: 3rem;">
-                    <button class="btn btn-secondary" onclick="showPage('form')">🔄 Search Again</button>
+                    <button class="btn btn-secondary" onclick="startFormProcess()">🔄 Search Again</button>
                     <button class="btn btn-primary" onclick="showPage('homepage')">🏠 Back to Home</button>
                 </div>
             </div>
@@ -1523,16 +1434,75 @@
             {bank: "HDFC Bank", name: "Business Moneyback", category: "BUSINESS", income_brackets: ["4-8", "8-15"], fee: 500, benefits: "Business expense tracking, corporate benefits, cashback"}
         ];
 
-        // Page navigation
+        // Optimized Glass Cursor System
+        const glassCursor = document.getElementById('glassCursor');
+        let mouseX = 0;
+        let mouseY = 0;
+
+        // Efficient cursor movement with requestAnimationFrame
+        function updateCursor() {
+            glassCursor.style.left = mouseX + 'px';
+            glassCursor.style.top = mouseY + 'px';
+        }
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            requestAnimationFrame(updateCursor);
+        });
+
+        // Glass effect hover state
+        const interactiveElements = 'button, .option-card, .start-search-btn, .header-cta-btn, .step-card, .feature-item, .logo, .btn';
+
+        document.addEventListener('mouseover', (e) => {
+            if (e.target.matches(interactiveElements) || e.target.closest(interactiveElements)) {
+                document.body.classList.add('cursor-hover');
+            }
+        });
+
+        document.addEventListener('mouseout', (e) => {
+            if (e.target.matches(interactiveElements) || e.target.closest(interactiveElements)) {
+                document.body.classList.remove('cursor-hover');
+            }
+        });
+
+        // Form reset function
+        function resetForm() {
+            currentStep = 1;
+            formData = {
+                income: '',
+                category: '',
+                age: ''
+            };
+
+            document.querySelectorAll('.form-step').forEach(step => {
+                step.classList.remove('active');
+            });
+            document.getElementById('step1').classList.add('active');
+
+            document.getElementById('progressFill').style.width = '33.33%';
+            document.getElementById('progressText').textContent = 'Step 1 of 3';
+
+            document.querySelectorAll('.option-card').forEach(option => {
+                option.classList.remove('selected');
+            });
+
+            document.getElementById('step1Next').disabled = true;
+            document.getElementById('step2Next').disabled = true;
+            document.getElementById('step3Next').disabled = true;
+        }
+
+        function startFormProcess() {
+            resetForm();
+            showPage('form');
+        }
+
         function showPage(pageId) {
-            // Hide all pages
             const pages = document.querySelectorAll('.page');
             pages.forEach(page => page.classList.remove('active'));
 
-            // Show target page
             document.getElementById(pageId).classList.add('active');
 
-            // Update navigation
             if (pageId === 'homepage') {
                 document.getElementById('navMenu').style.display = 'flex';
                 document.getElementById('headerCTA').style.display = 'flex';
@@ -1541,11 +1511,9 @@
                 document.getElementById('headerCTA').style.display = 'none';
             }
 
-            // Scroll to top
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Scroll to section (for homepage navigation)
         function scrollToSection(sectionId) {
             const section = document.getElementById(sectionId);
             if (section) {
@@ -1553,17 +1521,13 @@
             }
         }
 
-        // Form functionality
         function selectOption(element, value) {
-            // Remove selected class from all options in current step
             const currentStepElement = document.querySelector('.form-step.active');
             const options = currentStepElement.querySelectorAll('.option-card');
             options.forEach(option => option.classList.remove('selected'));
 
-            // Add selected class to clicked option
             element.classList.add('selected');
 
-            // Store the value
             if (currentStep === 1) {
                 formData.income = value;
                 document.getElementById('step1Next').disabled = false;
@@ -1577,14 +1541,9 @@
         }
 
         function nextStep() {
-            // Hide current step
             document.getElementById(`step${currentStep}`).classList.remove('active');
-
-            // Move to next step
             currentStep++;
             document.getElementById(`step${currentStep}`).classList.add('active');
-
-            // Update progress
             updateProgress();
         }
 
@@ -1595,18 +1554,11 @@
         }
 
         function findCards() {
-            // Show loading screen
             showLoading();
 
-            // Simulate processing time
             setTimeout(() => {
-                // Hide loading screen
                 hideLoading();
-
-                // Generate recommendations
                 generateRecommendations();
-
-                // Show results page
                 showPage('results');
             }, 3000);
         }
@@ -1614,7 +1566,6 @@
         function showLoading() {
             document.getElementById('loadingScreen').classList.add('active');
 
-            // Update loading text progressively
             const messages = [
                 "Analyzing your profile...",
                 "Comparing 500+ credit cards...",
@@ -1638,26 +1589,20 @@
         }
 
         function generateRecommendations() {
-            // Filter cards based on user selections
             let matchingCards = creditCards.filter(card => {
                 return card.category === formData.category && 
                        card.income_brackets.includes(formData.income);
             });
 
-            // If no exact matches, show best alternatives
             if (matchingCards.length === 0) {
                 matchingCards = creditCards.filter(card => {
                     return card.category === formData.category;
                 }).slice(0, 3);
             }
 
-            // Sort by fee (free cards first) and limit to top 5
             matchingCards = matchingCards.sort((a, b) => a.fee - b.fee).slice(0, 5);
 
-            // Display user profile
             displayUserProfile();
-
-            // Display recommendations
             displayRecommendations(matchingCards);
         }
 
@@ -1734,20 +1679,9 @@
 
         // Initialize the app
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('🚀 CredX Platform Loaded Successfully!');
-            console.log('💳 Ready to help users find their perfect credit cards');
-
-            // Show homepage by default
+            console.log('🚀 CredX Platform Loaded - Optimized Version!');
             showPage('homepage');
-        });
-
-        // Enhanced animations and effects
-        window.addEventListener('scroll', function() {
-            const scrolled = window.pageYOffset;
-            const heroBackground = document.querySelector('.hero-bg');
-            if (heroBackground) {
-                heroBackground.style.transform = `translateY(${scrolled * 0.5}px)`;
-            }
+            updateProgress();
         });
     </script>
 </body>

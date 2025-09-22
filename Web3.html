@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -452,7 +453,165 @@
             50% { transform: translateY(-10px) rotate(180deg); }
             75% { transform: translateY(-30px) rotate(270deg); }
         }
-    </style>
+    
+
+        /* Enhanced Navigation - Same Window */
+        .nav-menu a {
+            transition: all 0.3s ease !important;
+            position: relative !important;
+        }
+
+        /* Find Cards Special Highlighting - Same Window */
+        .find-card-highlight {
+            background: linear-gradient(135deg, #0066ff, #00bfff) !important;
+            color: #000000 !important;
+            padding: 0.7rem 1.2rem !important;
+            border-radius: 20px !important;
+            font-weight: 700 !important;
+            font-size: 0.9rem !important;
+            text-transform: uppercase !important;
+            letter-spacing: 0.5px !important;
+            position: relative !important;
+            transition: all 0.3s ease !important;
+            box-shadow: 0 3px 10px rgba(0, 102, 255, 0.3) !important;
+        }
+
+        .find-card-highlight::after {
+            content: ' 🔍' !important;
+            font-size: 0.8em !important;
+        }
+
+        .find-card-highlight:hover {
+            transform: scale(1.05) translateY(-1px) !important;
+            box-shadow: 
+                0 5px 20px rgba(0, 102, 255, 0.5),
+                0 0 15px rgba(0, 191, 255, 0.4) !important;
+            background: linear-gradient(135deg, #00bfff, #0066ff) !important;
+        }
+
+        /* Page Links Styling */
+        .page-link {
+            font-weight: 500 !important;
+            transition: all 0.3s ease !important;
+        }
+
+        .page-link:hover {
+            color: #00bfff !important;
+            text-shadow: 0 0 8px rgba(0, 191, 255, 0.6) !important;
+            transform: translateX(3px) !important;
+        }
+
+        /* Regular Navigation Hover Effects */
+        .nav-menu a:not(.find-card-highlight) {
+            transition: all 0.3s ease !important;
+            position: relative !important;
+        }
+
+        .nav-menu a:not(.find-card-highlight):hover {
+            color: #00bfff !important;
+            text-shadow: 0 0 8px rgba(0, 191, 255, 0.6) !important;
+        }
+
+        .nav-menu a:not(.find-card-highlight)::before {
+            content: '' !important;
+            position: absolute !important;
+            bottom: -3px !important;
+            left: 0 !important;
+            width: 0 !important;
+            height: 2px !important;
+            background: linear-gradient(90deg, #0066ff, #00bfff) !important;
+            transition: width 0.3s ease !important;
+        }
+
+        .nav-menu a:not(.find-card-highlight):hover::before {
+            width: 100% !important;
+        }
+
+        /* Enhanced Button Effects - Same Window */
+        .search-cta {
+            transition: all 0.3s ease !important;
+            position: relative !important;
+            z-index: 1 !important;
+        }
+
+        .search-cta:hover {
+            transform: translateY(-2px) scale(1.03) !important;
+            box-shadow: 
+                0 5px 15px rgba(0, 102, 255, 0.4),
+                0 0 20px rgba(0, 191, 255, 0.3) !important;
+            filter: brightness(1.1) !important;
+        }
+
+        /* Smooth Section Transitions */
+        section {
+            scroll-behavior: smooth !important;
+        }
+
+        /* Clean Text Animations */
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInLeft {
+            0% {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Apply animations */
+        .hero h1 {
+            animation: fadeInUp 0.8s ease-out !important;
+        }
+
+        .hero .tagline {
+            animation: slideInLeft 1s ease-out 0.2s both !important;
+        }
+
+        .hero .description {
+            animation: fadeInUp 1.2s ease-out 0.4s both !important;
+        }
+
+        /* Card hover effects */
+        .card {
+            transition: all 0.3s ease !important;
+        }
+
+        .card:hover {
+            transform: translateY(-5px) !important;
+            box-shadow: 0 8px 25px rgba(0, 102, 255, 0.2) !important;
+        }
+
+        /* Section title effects */
+        .section-title:hover {
+            transform: scale(1.02) !important;
+            color: #00bfff !important;
+            transition: all 0.3s ease !important;
+        }
+
+        /* Prevent glitches */
+        * {
+            backface-visibility: hidden !important;
+            -webkit-backface-visibility: hidden !important;
+        }
+
+        /* Smooth scrolling for entire page */
+        html {
+            scroll-behavior: smooth !important;
+        }
+
+</style>
 </head>
 <body>
     <!-- Navigation -->
@@ -460,13 +619,13 @@
         <div class="nav-container">
             <div class="logo">CredX</div>
             <ul class="nav-menu">
-                <li><a href="#home">01. Home</a></li>
-                <li><a href="#about">02. About CredX</a></li>
-                <li><a href="#how">03. How It Works</a></li>
-                <li><a href="#cards">04. Card Types</a></li>
-                <li><a href="#benefits">05. Benefits</a></li>
-                <li><a href="#faq">06. FAQ</a></li>
-                <li><a href="#find">07. Find Cards</a></li>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About CredX</a></li>
+                <li><a href="#how" class="page-link">How It Works</a></li>
+                <li><a href="#cards" class="page-link">Card Types</a></li>
+                <li><a href="#benefits" class="page-link">Benefits</a></li>
+                <li><a href="#faq">FAQ</a></li>
+                <li><a href="#find" class="find-card-highlight">Find Cards</a></li>
             </ul>
         </div>
     </nav>
@@ -861,8 +1020,134 @@
             document.body.insertAdjacentHTML('beforeend', searchInterface);
         });
     </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('CredX Same-Window Navigation Loaded');
+
+            // Enhanced smooth scrolling for all navigation links
+            const allNavLinks = document.querySelectorAll('.nav-menu a, .search-cta');
+
+            allNavLinks.forEach(function(link) {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+
+                    let targetId;
+
+                    // Handle search button click
+                    if (this.classList.contains('search-cta')) {
+                        targetId = 'find';
+                    } else {
+                        targetId = this.getAttribute('href').substring(1);
+                    }
+
+                    const targetSection = document.getElementById(targetId);
+
+                    if (targetSection) {
+                        // Add fade effect to current view
+                        document.body.style.transition = 'opacity 0.3s ease';
+                        document.body.style.opacity = '0.7';
+
+                        // Smooth scroll to target section
+                        setTimeout(function() {
+                            targetSection.scrollIntoView({
+                                behavior: 'smooth',
+                                block: 'start',
+                                inline: 'nearest'
+                            });
+
+                            // Fade back in
+                            setTimeout(function() {
+                                document.body.style.opacity = '1';
+
+                                // Highlight the target section briefly
+                                targetSection.style.transition = 'all 0.5s ease';
+                                targetSection.style.transform = 'scale(1.01)';
+                                targetSection.style.boxShadow = '0 0 30px rgba(0, 102, 255, 0.2)';
+
+                                // Remove highlight after animation
+                                setTimeout(function() {
+                                    targetSection.style.transform = 'scale(1)';
+                                    targetSection.style.boxShadow = 'none';
+                                }, 1000);
+
+                            }, 100);
+                        }, 150);
+
+                        // Update active navigation state
+                        updateActiveNav(targetId);
+                    }
+                });
+            });
+
+            // Function to update active navigation item
+            function updateActiveNav(activeId) {
+                // Remove active class from all nav items
+                document.querySelectorAll('.nav-menu a').forEach(function(navItem) {
+                    navItem.classList.remove('active');
+                });
+
+                // Add active class to current nav item
+                const activeNav = document.querySelector(`a[href="#${activeId}"]`);
+                if (activeNav) {
+                    activeNav.classList.add('active');
+                }
+            }
+
+            // Add active state styling dynamically
+            const activeStyle = document.createElement('style');
+            activeStyle.textContent = `
+                .nav-menu a.active {
+                    color: #00bfff !important;
+                    text-shadow: 0 0 10px rgba(0, 191, 255, 0.8) !important;
+                }
+
+                .nav-menu a.active::before {
+                    width: 100% !important;
+                }
+
+                .find-card-highlight.active {
+                    box-shadow: 0 5px 20px rgba(0, 102, 255, 0.6) !important;
+                    transform: scale(1.02) !important;
+                }
+            `;
+            document.head.appendChild(activeStyle);
+
+            // Set initial active state (home)
+            updateActiveNav('home');
+
+            // Add scroll spy functionality
+            window.addEventListener('scroll', function() {
+                const sections = document.querySelectorAll('section[id]');
+                let currentSection = '';
+
+                sections.forEach(function(section) {
+                    const sectionTop = section.getBoundingClientRect().top;
+                    if (sectionTop <= 100 && sectionTop >= -section.offsetHeight + 100) {
+                        currentSection = section.getAttribute('id');
+                    }
+                });
+
+                if (currentSection) {
+                    updateActiveNav(currentSection);
+                }
+            });
+
+            // Add special Find Cards pulsing effect
+            const findCardLink = document.querySelector('.find-card-highlight');
+            if (findCardLink) {
+                setInterval(function() {
+                    findCardLink.style.boxShadow = '0 5px 25px rgba(0, 102, 255, 0.6), 0 0 20px rgba(0, 191, 255, 0.4)';
+                    setTimeout(function() {
+                        if (!findCardLink.matches(':hover')) {
+                            findCardLink.style.boxShadow = '0 3px 10px rgba(0, 102, 255, 0.3)';
+                        }
+                    }, 1000);
+                }, 3000);
+            }
+        });
+    </script>
 </body>
 </html>
-
 
 

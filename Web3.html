@@ -455,13 +455,7 @@
         }
     
 
-        /* Enhanced Navigation - Same Window */
-        .nav-menu a {
-            transition: all 0.3s ease !important;
-            position: relative !important;
-        }
-
-        /* Find Cards Special Highlighting - Same Window */
+        /* Enhanced Find Cards Button */
         .find-card-highlight {
             background: linear-gradient(135deg, #0066ff, #00bfff) !important;
             color: #000000 !important;
@@ -471,7 +465,6 @@
             font-size: 0.9rem !important;
             text-transform: uppercase !important;
             letter-spacing: 0.5px !important;
-            position: relative !important;
             transition: all 0.3s ease !important;
             box-shadow: 0 3px 10px rgba(0, 102, 255, 0.3) !important;
         }
@@ -483,132 +476,305 @@
 
         .find-card-highlight:hover {
             transform: scale(1.05) translateY(-1px) !important;
-            box-shadow: 
-                0 5px 20px rgba(0, 102, 255, 0.5),
-                0 0 15px rgba(0, 191, 255, 0.4) !important;
-            background: linear-gradient(135deg, #00bfff, #0066ff) !important;
+            box-shadow: 0 5px 20px rgba(0, 102, 255, 0.5) !important;
         }
 
-        /* Page Links Styling */
-        .page-link {
-            font-weight: 500 !important;
-            transition: all 0.3s ease !important;
-        }
-
-        .page-link:hover {
-            color: #00bfff !important;
-            text-shadow: 0 0 8px rgba(0, 191, 255, 0.6) !important;
-            transform: translateX(3px) !important;
-        }
-
-        /* Regular Navigation Hover Effects */
-        .nav-menu a:not(.find-card-highlight) {
+        /* Clickable Card Categories */
+        .clickable-card {
+            cursor: pointer !important;
             transition: all 0.3s ease !important;
             position: relative !important;
+            overflow: hidden !important;
         }
 
-        .nav-menu a:not(.find-card-highlight):hover {
-            color: #00bfff !important;
-            text-shadow: 0 0 8px rgba(0, 191, 255, 0.6) !important;
-        }
-
-        .nav-menu a:not(.find-card-highlight)::before {
+        .clickable-card::before {
             content: '' !important;
             position: absolute !important;
-            bottom: -3px !important;
+            top: 0 !important;
             left: 0 !important;
-            width: 0 !important;
-            height: 2px !important;
-            background: linear-gradient(90deg, #0066ff, #00bfff) !important;
-            transition: width 0.3s ease !important;
-        }
-
-        .nav-menu a:not(.find-card-highlight):hover::before {
             width: 100% !important;
-        }
-
-        /* Enhanced Button Effects - Same Window */
-        .search-cta {
-            transition: all 0.3s ease !important;
-            position: relative !important;
+            height: 100% !important;
+            background: linear-gradient(135deg, rgba(0, 102, 255, 0.1), rgba(0, 191, 255, 0.1)) !important;
+            opacity: 0 !important;
+            transition: opacity 0.3s ease !important;
             z-index: 1 !important;
         }
 
-        .search-cta:hover {
-            transform: translateY(-2px) scale(1.03) !important;
+        .clickable-card:hover::before {
+            opacity: 1 !important;
+        }
+
+        .clickable-card:hover {
+            transform: translateY(-8px) scale(1.02) !important;
             box-shadow: 
-                0 5px 15px rgba(0, 102, 255, 0.4),
-                0 0 20px rgba(0, 191, 255, 0.3) !important;
-            filter: brightness(1.1) !important;
+                0 10px 30px rgba(0, 102, 255, 0.3),
+                0 0 20px rgba(0, 191, 255, 0.2) !important;
+            border: 2px solid rgba(0, 191, 255, 0.3) !important;
         }
 
-        /* Smooth Section Transitions */
-        section {
-            scroll-behavior: smooth !important;
+        .clickable-card::after {
+            content: 'Click to view cards →' !important;
+            position: absolute !important;
+            bottom: 1rem !important;
+            right: 1rem !important;
+            background: linear-gradient(135deg, #0066ff, #00bfff) !important;
+            color: #000000 !important;
+            padding: 0.5rem 1rem !important;
+            border-radius: 15px !important;
+            font-size: 0.8rem !important;
+            font-weight: 600 !important;
+            opacity: 0 !important;
+            transform: translateY(10px) !important;
+            transition: all 0.3s ease !important;
+            z-index: 2 !important;
         }
 
-        /* Clean Text Animations */
+        .clickable-card:hover::after {
+            opacity: 1 !important;
+            transform: translateY(0) !important;
+        }
+
+        .clickable-card > * {
+            position: relative !important;
+            z-index: 2 !important;
+        }
+
+        /* Sub-page Container Styles */
+        .subpage-container {
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100vw !important;
+            height: 100vh !important;
+            background: var(--bg-dark) !important;
+            z-index: 10000 !important;
+            overflow-y: auto !important;
+            display: none !important;
+            opacity: 0;
+            transition: opacity 0.4s ease-in-out !important;
+        }
+
+        .subpage-container.show {
+            display: block !important;
+            opacity: 1 !important;
+        }
+
+        .subpage-header {
+            padding: 2rem;
+            text-align: center;
+            background: var(--bg-card) !important;
+            border-bottom: 2px solid var(--accent-blue);
+            position: relative !important;
+            margin-bottom: 2rem;
+        }
+
+        .back-btn {
+            background: linear-gradient(135deg, #0066ff, #00bfff);
+            color: #000000;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            margin-bottom: 2rem;
+            font-family: var(--mono);
+            text-transform: uppercase;
+            box-shadow: 0 4px 15px rgba(0, 102, 255, 0.3);
+        }
+
+        .back-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(0, 102, 255, 0.5);
+        }
+
+        .subpage-title-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .subpage-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .subpage-title {
+            font-size: 3rem;
+            color: var(--accent-cyan);
+            margin-bottom: 1rem;
+            font-family: var(--mono);
+            font-weight: 700;
+        }
+
+        .subpage-description {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .subpage-content {
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Card Grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .detailed-card {
+            background: linear-gradient(135deg, var(--bg-card), #1a1a1a);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.6s ease-out both;
+        }
+
+        .detailed-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 102, 255, 0.3);
+            border-color: var(--accent-cyan);
+        }
+
+        .card-image-container {
+            position: relative;
+            height: 200px;
+            overflow: hidden;
+            background: linear-gradient(135deg, #333, #555);
+        }
+
+        .card-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .detailed-card:hover .card-image {
+            transform: scale(1.05);
+        }
+
+        .card-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .detailed-card:hover .card-overlay {
+            opacity: 1;
+        }
+
+        .apply-btn {
+            background: linear-gradient(135deg, #0066ff, #00bfff);
+            color: #000000;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-family: var(--mono);
+        }
+
+        .apply-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(0, 191, 255, 0.5);
+        }
+
+        .card-details {
+            padding: 2rem;
+        }
+
+        .card-name {
+            font-size: 1.5rem;
+            color: var(--accent-cyan);
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .card-highlight {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: rgba(0, 102, 255, 0.1);
+            border-radius: 8px;
+            border-left: 4px solid var(--accent-blue);
+        }
+
+        .cashback-rate {
+            font-weight: 700;
+            color: #00ff88;
+            font-size: 1.1rem;
+        }
+
+        .annual-fee {
+            color: #ff9900;
+            font-weight: 600;
+        }
+
+        .card-features h4 {
+            color: var(--accent-cyan);
+            margin-bottom: 0.5rem;
+        }
+
+        .card-features ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .card-features li {
+            padding: 0.3rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            color: var(--text-primary);
+        }
+
+        .card-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #00ff88;
+            font-weight: bold;
+        }
+
+        .best-for {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: rgba(0, 191, 255, 0.1);
+            border-radius: 8px;
+            border-left: 4px solid var(--accent-cyan);
+        }
+
         @keyframes fadeInUp {
-            0% {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        @keyframes slideInLeft {
-            0% {
-                opacity: 0;
-                transform: translateX(-30px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        /* Apply animations */
-        .hero h1 {
-            animation: fadeInUp 0.8s ease-out !important;
-        }
-
-        .hero .tagline {
-            animation: slideInLeft 1s ease-out 0.2s both !important;
-        }
-
-        .hero .description {
-            animation: fadeInUp 1.2s ease-out 0.4s both !important;
-        }
-
-        /* Card hover effects */
-        .card {
-            transition: all 0.3s ease !important;
-        }
-
-        .card:hover {
-            transform: translateY(-5px) !important;
-            box-shadow: 0 8px 25px rgba(0, 102, 255, 0.2) !important;
-        }
-
-        /* Section title effects */
-        .section-title:hover {
-            transform: scale(1.02) !important;
-            color: #00bfff !important;
-            transition: all 0.3s ease !important;
-        }
-
-        /* Prevent glitches */
-        * {
-            backface-visibility: hidden !important;
-            -webkit-backface-visibility: hidden !important;
-        }
-
-        /* Smooth scrolling for entire page */
-        html {
-            scroll-behavior: smooth !important;
+        /* Responsive */
+        @media (max-width: 768px) {
+            .cards-grid { grid-template-columns: 1fr; }
+            .subpage-content { padding: 1rem; }
+            .subpage-title { font-size: 2rem; }
         }
 
 </style>
@@ -621,9 +787,9 @@
             <ul class="nav-menu">
                 <li><a href="#home">Home</a></li>
                 <li><a href="#about">About CredX</a></li>
-                <li><a href="#how" class="page-link">How It Works</a></li>
-                <li><a href="#cards" class="page-link">Card Types</a></li>
-                <li><a href="#benefits" class="page-link">Benefits</a></li>
+                <li><a href="#how">How It Works</a></li>
+                <li><a href="#cards">Card Types</a></li>
+                <li><a href="#benefits">Benefits</a></li>
                 <li><a href="#faq">FAQ</a></li>
                 <li><a href="#find" class="find-card-highlight">Find Cards</a></li>
             </ul>
@@ -723,7 +889,7 @@
         </div>
         
         <div class="card-types-grid">
-            <div class="card-type">
+            <div class="card-type clickable-card" data-category="cashback">
                 <div class="card-type-number">.01</div>
                 <div class="card-type-icon">💰</div>
                 <h3 class="card-type-title">Cashback Cards</h3>
@@ -736,7 +902,7 @@
                 </div>
             </div>
             
-            <div class="card-type">
+            <div class="card-type clickable-card" data-category="travel">
                 <div class="card-type-number">.02</div>
                 <div class="card-type-icon">✈️</div>
                 <h3 class="card-type-title">Travel Rewards</h3>
@@ -749,7 +915,7 @@
                 </div>
             </div>
             
-            <div class="card-type">
+            <div class="card-type clickable-card" data-category="premium">
                 <div class="card-type-number">.03</div>
                 <div class="card-type-icon">$</div>
                 <h3 class="card-type-title">Premium Lifestyle</h3>
@@ -762,7 +928,7 @@
                 </div>
             </div>
             
-            <div class="card-type">
+            <div class="card-type clickable-card" data-category="business">
                 <div class="card-type-number">.04</div>
                 <div class="card-type-icon">🏢</div>
                 <h3 class="card-type-title">Business Cards</h3>
@@ -775,7 +941,7 @@
                 </div>
             </div>
             
-            <div class="card-type">
+            <div class="card-type clickable-card" data-category="fuel">
                 <div class="card-type-number">.05</div>
                 <div class="card-type-icon">⛽</div>
                 <h3 class="card-type-title">Fuel & Utility</h3>
@@ -788,7 +954,7 @@
                 </div>
             </div>
             
-            <div class="card-type">
+            <div class="card-type clickable-card" data-category="student">
                 <div class="card-type-number">.06</div>
                 <div class="card-type-icon">🎓</div>
                 <h3 class="card-type-title">Student & Starter</h3>
@@ -1021,130 +1187,264 @@
         });
     </script>
 
+
+    <!-- Sub-page Container for Card Categories -->
+    <div id="subpage-container" class="subpage-container" style="display: none;">
+        <div class="subpage-header">
+            <button id="back-to-main" class="back-btn">
+                ← Back to CredX
+            </button>
+            <div class="subpage-title-container">
+                <div class="subpage-icon"></div>
+                <h1 class="subpage-title"></h1>
+                <p class="subpage-description"></p>
+            </div>
+        </div>
+        <div id="subpage-content" class="subpage-content">
+            <!-- Card details will be inserted here -->
+        </div>
+    </div>
+
+
     <script>
+        const cardData = {
+  "cashback": {
+    "title": "Cashback Credit Cards",
+    "icon": "\ud83d\udcb0",
+    "description": "Earn instant cashback on everyday purchases with these top-rated cards.",
+    "cards": [
+      {
+        "name": "HDFC MoneyBack+ Credit Card",
+        "image_placeholder": "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=400&h=250&fit=crop&crop=center",
+        "cashback": "Up to 5% cashback",
+        "annual_fee": "\u20b9500 (waived on \u20b915,000 spend)",
+        "key_features": [
+          "5% cashback on online shopping",
+          "2% on dining & entertainment",
+          "1% on all other spends"
+        ],
+        "best_for": "Online shopping enthusiasts"
+      },
+      {
+        "name": "SBI CashBack Credit Card",
+        "image_placeholder": "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=400&h=250&fit=crop&crop=center",
+        "cashback": "Up to 5% cashback",
+        "annual_fee": "\u20b9999 (waived on \u20b92L spend)",
+        "key_features": [
+          "5% on online spends",
+          "1% on other categories",
+          "No capping on cashback"
+        ],
+        "best_for": "Heavy online spenders"
+      }
+    ]
+  },
+  "travel": {
+    "title": "Travel Rewards Credit Cards",
+    "icon": "\u2708\ufe0f",
+    "description": "Maximize your travel benefits with airline miles, lounge access, and travel insurance.",
+    "cards": [
+      {
+        "name": "HDFC Regalia Credit Card",
+        "image_placeholder": "https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=400&h=250&fit=crop&crop=center",
+        "cashback": "4 reward points per \u20b9150",
+        "annual_fee": "\u20b92,500",
+        "key_features": [
+          "Airport lounge access",
+          "Travel insurance",
+          "4X rewards on dining & travel"
+        ],
+        "best_for": "Frequent domestic travelers"
+      }
+    ]
+  },
+  "premium": {
+    "title": "Premium Lifestyle Credit Cards",
+    "icon": "\ud83d\udc8e",
+    "description": "Luxury cards offering concierge services, golf privileges, and exclusive benefits.",
+    "cards": [
+      {
+        "name": "HDFC Infinia Credit Card",
+        "image_placeholder": "https://images.unsplash.com/photo-1621981386829-9b458a2cddde?w=400&h=250&fit=crop&crop=center",
+        "cashback": "5 reward points per \u20b9150",
+        "annual_fee": "\u20b912,500",
+        "key_features": [
+          "Unlimited airport lounge access",
+          "Golf privileges",
+          "Concierge services"
+        ],
+        "best_for": "Ultra-high net worth individuals"
+      }
+    ]
+  },
+  "business": {
+    "title": "Business Credit Cards",
+    "icon": "\ud83c\udfe2",
+    "description": "Designed for entrepreneurs with expense management and corporate benefits.",
+    "cards": [
+      {
+        "name": "HDFC Business MoneyBack",
+        "image_placeholder": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=250&fit=crop&crop=center",
+        "cashback": "Up to 5% cashback",
+        "annual_fee": "\u20b91,000",
+        "key_features": [
+          "Expense management tools",
+          "Higher credit limits",
+          "Business rewards"
+        ],
+        "best_for": "Small business owners"
+      }
+    ]
+  },
+  "fuel": {
+    "title": "Fuel & Utility Credit Cards",
+    "icon": "\u26fd",
+    "description": "Specialized rewards for fuel purchases and utility bill payments.",
+    "cards": [
+      {
+        "name": "HDFC Freedom Credit Card",
+        "image_placeholder": "https://images.unsplash.com/photo-1556742111-a301076d9d18?w=400&h=250&fit=crop&crop=center",
+        "cashback": "5X rewards on fuel",
+        "annual_fee": "\u20b9500",
+        "key_features": [
+          "Fuel surcharge waiver",
+          "5X rewards on utilities",
+          "No joining fee"
+        ],
+        "best_for": "Daily commuters"
+      }
+    ]
+  },
+  "student": {
+    "title": "Student & Starter Credit Cards",
+    "icon": "\ud83c\udf93",
+    "description": "Entry-level cards perfect for students and young professionals.",
+    "cards": [
+      {
+        "name": "HDFC Student ForexPlus",
+        "image_placeholder": "https://images.unsplash.com/photo-1556740738-b6a63e27c4df?w=400&h=250&fit=crop&crop=center",
+        "cashback": "1% cashback",
+        "annual_fee": "Nil",
+        "key_features": [
+          "No annual fee",
+          "Student benefits",
+          "International usage"
+        ],
+        "best_for": "College students"
+      }
+    ]
+  }
+};
+
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('CredX Same-Window Navigation Loaded');
+            console.log('CredX Card Categories Navigation Loaded');
 
-            // Enhanced smooth scrolling for all navigation links
-            const allNavLinks = document.querySelectorAll('.nav-menu a, .search-cta');
+            const subpageContainer = document.getElementById('subpage-container');
+            const backBtn = document.getElementById('back-to-main');
+            const subpageIcon = document.querySelector('.subpage-icon');
+            const subpageTitle = document.querySelector('.subpage-title');
+            const subpageDescription = document.querySelector('.subpage-description');
+            const subpageContent = document.getElementById('subpage-content');
 
-            allNavLinks.forEach(function(link) {
-                link.addEventListener('click', function(e) {
+            const cardCategories = document.querySelectorAll('.clickable-card');
+            console.log('Found clickable cards:', cardCategories.length);
+
+            cardCategories.forEach(function(card) {
+                card.addEventListener('click', function(e) {
                     e.preventDefault();
 
-                    let targetId;
+                    const category = this.getAttribute('data-category');
+                    console.log('Card clicked:', category);
 
-                    // Handle search button click
-                    if (this.classList.contains('search-cta')) {
-                        targetId = 'find';
+                    const categoryData = cardData[category];
+
+                    if (categoryData) {
+                        showSubPage(categoryData, category);
                     } else {
-                        targetId = this.getAttribute('href').substring(1);
-                    }
-
-                    const targetSection = document.getElementById(targetId);
-
-                    if (targetSection) {
-                        // Add fade effect to current view
-                        document.body.style.transition = 'opacity 0.3s ease';
-                        document.body.style.opacity = '0.7';
-
-                        // Smooth scroll to target section
-                        setTimeout(function() {
-                            targetSection.scrollIntoView({
-                                behavior: 'smooth',
-                                block: 'start',
-                                inline: 'nearest'
-                            });
-
-                            // Fade back in
-                            setTimeout(function() {
-                                document.body.style.opacity = '1';
-
-                                // Highlight the target section briefly
-                                targetSection.style.transition = 'all 0.5s ease';
-                                targetSection.style.transform = 'scale(1.01)';
-                                targetSection.style.boxShadow = '0 0 30px rgba(0, 102, 255, 0.2)';
-
-                                // Remove highlight after animation
-                                setTimeout(function() {
-                                    targetSection.style.transform = 'scale(1)';
-                                    targetSection.style.boxShadow = 'none';
-                                }, 1000);
-
-                            }, 100);
-                        }, 150);
-
-                        // Update active navigation state
-                        updateActiveNav(targetId);
+                        console.error('No data found for category:', category);
                     }
                 });
             });
 
-            // Function to update active navigation item
-            function updateActiveNav(activeId) {
-                // Remove active class from all nav items
-                document.querySelectorAll('.nav-menu a').forEach(function(navItem) {
-                    navItem.classList.remove('active');
+            if (backBtn) {
+                backBtn.addEventListener('click', function() {
+                    hideSubPage();
                 });
-
-                // Add active class to current nav item
-                const activeNav = document.querySelector(`a[href="#${activeId}"]`);
-                if (activeNav) {
-                    activeNav.classList.add('active');
-                }
             }
 
-            // Add active state styling dynamically
-            const activeStyle = document.createElement('style');
-            activeStyle.textContent = `
-                .nav-menu a.active {
-                    color: #00bfff !important;
-                    text-shadow: 0 0 10px rgba(0, 191, 255, 0.8) !important;
-                }
+            function showSubPage(categoryData, category) {
+                console.log('Showing subpage for:', category);
 
-                .nav-menu a.active::before {
-                    width: 100% !important;
-                }
+                const sections = document.querySelectorAll('section, nav');
+                sections.forEach(section => section.style.display = 'none');
 
-                .find-card-highlight.active {
-                    box-shadow: 0 5px 20px rgba(0, 102, 255, 0.6) !important;
-                    transform: scale(1.02) !important;
-                }
-            `;
-            document.head.appendChild(activeStyle);
+                if (subpageIcon) subpageIcon.textContent = categoryData.icon;
+                if (subpageTitle) subpageTitle.textContent = categoryData.title;
+                if (subpageDescription) subpageDescription.textContent = categoryData.description;
 
-            // Set initial active state (home)
-            updateActiveNav('home');
-
-            // Add scroll spy functionality
-            window.addEventListener('scroll', function() {
-                const sections = document.querySelectorAll('section[id]');
-                let currentSection = '';
-
-                sections.forEach(function(section) {
-                    const sectionTop = section.getBoundingClientRect().top;
-                    if (sectionTop <= 100 && sectionTop >= -section.offsetHeight + 100) {
-                        currentSection = section.getAttribute('id');
-                    }
+                let cardsHTML = '<div class="cards-grid">';
+                categoryData.cards.forEach(function(card, index) {
+                    cardsHTML += `
+                        <div class="detailed-card" style="animation-delay: ${index * 0.1}s;">
+                            <div class="card-image-container">
+                                <img src="${card.image_placeholder}" alt="${card.name}" class="card-image" 
+                                     onerror="this.src='https://via.placeholder.com/400x250/0066ff/ffffff?text=Credit+Card';" />
+                                <div class="card-overlay">
+                                    <button class="apply-btn">Apply Now →</button>
+                                </div>
+                            </div>
+                            <div class="card-details">
+                                <h3 class="card-name">${card.name}</h3>
+                                <div class="card-highlight">
+                                    <span class="cashback-rate">${card.cashback}</span>
+                                    <span class="annual-fee">Annual Fee: ${card.annual_fee}</span>
+                                </div>
+                                <div class="card-features">
+                                    <h4>Key Features:</h4>
+                                    <ul>
+                                        ${card.key_features.map(feature => `<li>${feature}</li>`).join('')}
+                                    </ul>
+                                </div>
+                                <div class="best-for">
+                                    <strong>Best For:</strong> ${card.best_for}
+                                </div>
+                            </div>
+                        </div>
+                    `;
                 });
+                cardsHTML += '</div>';
 
-                if (currentSection) {
-                    updateActiveNav(currentSection);
+                if (subpageContent) {
+                    subpageContent.innerHTML = cardsHTML;
+                }
+
+                subpageContainer.style.display = 'block';
+                subpageContainer.classList.add('show');
+                subpageContainer.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            function hideSubPage() {
+                console.log('Hiding subpage');
+
+                subpageContainer.style.display = 'none';
+                subpageContainer.classList.remove('show');
+
+                const sections = document.querySelectorAll('section, nav');
+                sections.forEach(section => section.style.display = '');
+
+                setTimeout(function() {
+                    const cardsSection = document.getElementById('cards');
+                    if (cardsSection) {
+                        cardsSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                }, 100);
+            }
+
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && subpageContainer && subpageContainer.style.display === 'block') {
+                    hideSubPage();
                 }
             });
-
-            // Add special Find Cards pulsing effect
-            const findCardLink = document.querySelector('.find-card-highlight');
-            if (findCardLink) {
-                setInterval(function() {
-                    findCardLink.style.boxShadow = '0 5px 25px rgba(0, 102, 255, 0.6), 0 0 20px rgba(0, 191, 255, 0.4)';
-                    setTimeout(function() {
-                        if (!findCardLink.matches(':hover')) {
-                            findCardLink.style.boxShadow = '0 3px 10px rgba(0, 102, 255, 0.3)';
-                        }
-                    }, 1000);
-                }, 3000);
-            }
         });
     </script>
 </body>

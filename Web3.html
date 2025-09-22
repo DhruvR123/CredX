@@ -46,6 +46,60 @@
             display: block;
         }
 
+        /* Credit Card Transition Hints */
+        .card-hints {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0;
+            transition: opacity 3s ease-in-out;
+        }
+
+        .homepage.active .card-hints {
+            opacity: 1;
+        }
+
+        /* Floating Credit Card Shapes */
+        .card-float {
+            position: absolute;
+            width: 80px;
+            height: 50px;
+            background: linear-gradient(135deg, 
+                rgba(0, 102, 255, 0.04) 0%, 
+                rgba(0, 191, 255, 0.06) 100%);
+            border-radius: 8px;
+            border: 1px solid rgba(0, 102, 255, 0.08);
+            animation: cardFloat 25s linear infinite;
+            opacity: 0.5;
+        }
+
+        @keyframes cardFloat {
+            0% { 
+                transform: translateY(100vh) translateX(0) rotate(0deg); 
+                opacity: 0; 
+            }
+            10% { opacity: 0.5; }
+            50% { opacity: 0.7; }
+            90% { opacity: 0.5; }
+            100% { 
+                transform: translateY(-100px) translateX(30px) rotate(15deg); 
+                opacity: 0; 
+            }
+        }
+
+        .card-float:nth-child(1) { left: 5%; animation-delay: 0s; width: 70px; height: 44px; }
+        .card-float:nth-child(2) { left: 15%; animation-delay: 8s; width: 85px; height: 54px; }
+        .card-float:nth-child(3) { left: 25%; animation-delay: 16s; width: 75px; height: 47px; }
+        .card-float:nth-child(4) { left: 35%; animation-delay: 4s; width: 80px; height: 50px; }
+        .card-float:nth-child(5) { left: 50%; animation-delay: 12s; width: 78px; height: 49px; }
+        .card-float:nth-child(6) { left: 65%; animation-delay: 20s; width: 82px; height: 52px; }
+        .card-float:nth-child(7) { left: 80%; animation-delay: 2s; width: 76px; height: 48px; }
+        .card-float:nth-child(8) { left: 90%; animation-delay: 10s; width: 84px; height: 53px; }
+
         /* Matrix/Glitch Background Effects for Homepage Only */
         .matrix-background {
             position: fixed;
@@ -1035,6 +1089,167 @@
             margin-top: 0.5rem;
         }
 
+        
+        /* Supported Cards Page Styles */
+        .supported-cards-container {
+            margin: 2rem 0;
+        }
+
+        .bank-section {
+            background: var(--bg-card);
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+
+        .bank-header {
+            background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-cyan) 100%);
+            color: white;
+            padding: 1.5rem 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .bank-logo {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .bank-info h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .bank-info p {
+            opacity: 0.9;
+            font-size: 0.9rem;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+            padding: 2rem;
+        }
+
+        .supported-card-item {
+            background: rgba(0, 102, 255, 0.02);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .supported-card-item:hover {
+            border-color: var(--accent-blue);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 102, 255, 0.1);
+        }
+
+        .card-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+        }
+
+        .card-category {
+            display: inline-block;
+            background: var(--accent-blue);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .card-fee {
+            color: var(--accent-cyan);
+            font-weight: 600;
+            font-size: 1rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .card-benefits {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+
+        .card-income-brackets {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .income-bracket {
+            background: rgba(0, 102, 255, 0.1);
+            color: var(--accent-blue);
+            padding: 0.25rem 0.5rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .stats-summary {
+            background: var(--bg-card);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent-blue);
+            display: block;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .cards-grid {
+                grid-template-columns: 1fr;
+                padding: 1rem;
+            }
+
+            .bank-header {
+                padding: 1rem;
+                flex-direction: column;
+                text-align: center;
+                gap: 0.5rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+        }
+
         /* Responsive Design */
         @media (max-width: 1024px) {
             .hero-title {
@@ -1122,6 +1337,11 @@
             .matrix-background {
                 display: none;
             }
+
+            /* Hide card hints on mobile for performance */
+            .card-hints {
+                display: none;
+            }
         }
 
         @media (max-width: 480px) {
@@ -1194,6 +1414,19 @@
         <div class="code-float">const creditScore = 750;</div>
     </div>
 
+    <!-- Credit Card Hints (Homepage Only) -->
+    <div class="card-hints">
+        <!-- Floating Credit Cards -->
+        <div class="card-float"></div>
+        <div class="card-float"></div>
+        <div class="card-float"></div>
+        <div class="card-float"></div>
+        <div class="card-float"></div>
+        <div class="card-float"></div>
+        <div class="card-float"></div>
+        <div class="card-float"></div>
+    </div>
+
     <!-- Loading Screen -->
     <div class="loading-screen" id="loadingScreen">
         <div class="loader"></div>
@@ -1210,6 +1443,7 @@
                     <li><button onclick="scrollToSection('features')">Features</button></li>
                     <li><button onclick="scrollToSection('how-it-works')">How It Works</button></li>
                     <li><button onclick="scrollToSection('about')">About</button></li>
+                    <li><button onclick="showPage('supported-cards')">Supported Cards</button></li>
                 </ul>
             </div>
 
@@ -1569,7 +1803,177 @@
         </div>
     </div>
 
+
+    <!-- SUPPORTED CARDS PAGE -->
+    <div id="supported-cards" class="page">
+        <div class="form-page">
+            <!-- Header -->
+            <nav>
+                <div class="nav-container">
+                    <div class="form-header">
+                        <div class="logo" onclick="showPage('homepage')">CredX</div>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="form-container" style="max-width: 1200px;">
+                <!-- Page Header -->
+                <div class="form-welcome">
+                    <div class="form-icon">🏦</div>
+                    <h1 class="form-title">All Supported Credit Cards</h1>
+                    <p class="form-subtitle">
+                        CredX supports 500+ credit cards from leading banks and financial institutions. Here are all the cards currently in our recommendation database, organized by bank.
+                    </p>
+                </div>
+
+                <!-- Bank-wise Card Listing -->
+                <div id="supportedCardsList" class="supported-cards-container">
+                    <!-- Will be populated by JavaScript -->
+                </div>
+
+                <div class="form-actions" style="margin-top: 3rem;">
+                    <button class="btn btn-primary" onclick="showPage('homepage')">Back to Home</button>
+                    <button class="btn btn-secondary" onclick="startFormProcess()">Find My Cards</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
+
+        // Generate supported cards page
+        function generateSupportedCardsPage() {
+            // Group cards by bank
+            const cardsByBank = {};
+            creditCards.forEach(card => {
+                if (!cardsByBank[card.bank]) {
+                    cardsByBank[card.bank] = [];
+                }
+                cardsByBank[card.bank].push(card);
+            });
+
+            // Bank logos mapping
+            const bankLogos = {
+                'HDFC Bank': '🏦',
+                'SBI Card': '🏛️',
+                'ICICI Bank': '🏢',
+                'Axis Bank': '🏪',
+                'American Express': '💳'
+            };
+
+            // Bank descriptions
+            const bankDescriptions = {
+                'HDFC Bank': `${cardsByBank['HDFC Bank']?.length || 0} cards available`,
+                'SBI Card': `${cardsByBank['SBI Card']?.length || 0} cards available`,
+                'ICICI Bank': `${cardsByBank['ICICI Bank']?.length || 0} cards available`,
+                'Axis Bank': `${cardsByBank['Axis Bank']?.length || 0} cards available`,
+                'American Express': `${cardsByBank['American Express']?.length || 0} cards available`
+            };
+
+            // Income bracket labels
+            const incomeLabels = {
+                '4-8': '₹4-8L',
+                '8-15': '₹8-15L',
+                '15-25': '₹15-25L',
+                '25-50': '₹25-50L',
+                '50-75': '₹50-75L',
+                '75-125': '₹75-125L',
+                '125-200': '₹125-200L',
+                '200+': '₹200L+'
+            };
+
+            // Category colors
+            const categoryColors = {
+                'CASHBACK': '#28a745',
+                'TRAVEL': '#007bff',
+                'PREMIUM': '#6f42c1',
+                'BUSINESS': '#fd7e14',
+                'FUEL': '#dc3545',
+                'STUDENT': '#17a2b8'
+            };
+
+            // Calculate statistics
+            const totalCards = creditCards.length;
+            const totalBanks = Object.keys(cardsByBank).length;
+            const freeCards = creditCards.filter(card => card.fee === 0).length;
+            const premiumCards = creditCards.filter(card => card.category === 'PREMIUM').length;
+
+            // Generate HTML
+            let html = `
+                <div class="stats-summary">
+                    <h3 style="color: var(--text-primary); margin-bottom: 1rem;">Database Statistics</h3>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <span class="stat-number">${totalCards}</span>
+                            <div class="stat-label">Total Cards</div>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">${totalBanks}</span>
+                            <div class="stat-label">Banks</div>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">${freeCards}</span>
+                            <div class="stat-label">Free Cards</div>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">${premiumCards}</span>
+                            <div class="stat-label">Premium Cards</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // Sort banks alphabetically
+            const sortedBanks = Object.keys(cardsByBank).sort();
+
+            sortedBanks.forEach(bank => {
+                const cards = cardsByBank[bank];
+                const logo = bankLogos[bank] || '🏦';
+                const description = bankDescriptions[bank] || `${cards.length} cards available`;
+
+                html += `
+                    <div class="bank-section">
+                        <div class="bank-header">
+                            <div class="bank-logo">${logo}</div>
+                            <div class="bank-info">
+                                <h2>${bank}</h2>
+                                <p>${description}</p>
+                            </div>
+                        </div>
+                        <div class="cards-grid">
+                `;
+
+                // Sort cards by name within each bank
+                cards.sort((a, b) => a.name.localeCompare(b.name)).forEach(card => {
+                    const feeText = card.fee === 0 ? 'FREE' : `₹${card.fee.toLocaleString()}`;
+                    const categoryColor = categoryColors[card.category] || '#6c757d';
+
+                    html += `
+                        <div class="supported-card-item">
+                            <div class="card-title">
+                                <span>${card.name}</span>
+                                <span class="card-category" style="background: ${categoryColor}">${card.category}</span>
+                            </div>
+                            <div class="card-fee">Annual Fee: ${feeText}</div>
+                            <div class="card-benefits">${card.benefits}</div>
+                            <div class="card-income-brackets">
+                                ${card.income_brackets.map(bracket => 
+                                    `<span class="income-bracket">${incomeLabels[bracket]}</span>`
+                                ).join('')}
+                            </div>
+                        </div>
+                    `;
+                });
+
+                html += `
+                        </div>
+                    </div>
+                `;
+            });
+
+            document.getElementById('supportedCardsList').innerHTML = html;
+        }
+
         // Form state
         let currentStep = 1;
         let formData = {
@@ -1578,23 +1982,46 @@
             age: ''
         };
 
-        // Credit card database
+        // Enhanced Credit card database with AmEx
         const creditCards = [
-            {bank: "ICICI Bank", name: "Amazon Pay Credit Card", category: "CASHBACK", income_brackets: ["4-8", "8-15"], fee: 0, benefits: "5% cashback on Amazon, 2% on bill payments, 1% on others"},
-            {bank: "SBI Card", name: "CASHBACK SBI Card", category: "CASHBACK", income_brackets: ["4-8", "8-15"], fee: 999, benefits: "5% cashback online, 1% offline, fuel surcharge waiver"},
-            {bank: "HDFC Bank", name: "MoneyBack+", category: "CASHBACK", income_brackets: ["4-8", "8-15"], fee: 500, benefits: "Cashback on multiple categories, online spending rewards"},
+            // American Express
+            {bank: "American Express", name: "AmEx Membership Rewards Credit Card", category: "CASHBACK", income_brackets: ["8-15", "15-25"], fee: 1000, benefits: "1.5 MR points per ₹50, flexible redemption, no preset limit"},
+            {bank: "American Express", name: "AmEx SmartEarn Credit Card", category: "CASHBACK", income_brackets: ["4-8", "8-15"], fee: 495, benefits: "2.5% cashback on online, 0.5% on offline, welcome bonus"},
+            {bank: "American Express", name: "AmEx Gold Credit Card", category: "TRAVEL", income_brackets: ["15-25", "25-50"], fee: 4500, benefits: "4X points dining/international, airport lounge, travel insurance"},
+            {bank: "American Express", name: "AmEx Platinum Travel Credit Card", category: "TRAVEL", income_brackets: ["25-50", "50-75"], fee: 3500, benefits: "5X points travel, 2X dining, lounge access, hotel benefits"},
+            {bank: "American Express", name: "AmEx Platinum Card", category: "PREMIUM", income_brackets: ["50-75", "75-125", "125-200", "200+"], fee: 60000, benefits: "Unlimited airport lounge, hotel elite status, concierge, insurance"},
+            {bank: "American Express", name: "AmEx Centurion Card", category: "PREMIUM", income_brackets: ["200+"], fee: 300000, benefits: "Invite-only, unlimited benefits, personal concierge, exclusive events"},
+            {bank: "American Express", name: "AmEx Business Gold Card", category: "BUSINESS", income_brackets: ["15-25", "25-50", "50-75"], fee: 4000, benefits: "Business rewards, expense management, travel benefits, insurance"},
+
+            // Axis Bank
             {bank: "Axis Bank", name: "IndianOil Easy", category: "FUEL", income_brackets: ["4-8", "8-15"], fee: 0, benefits: "4% value back on fuel, 1250 EDGE rewards welcome"},
-            {bank: "SBI Card", name: "SimplySAVE", category: "FUEL", income_brackets: ["4-8", "8-15"], fee: 499, benefits: "10 RP per ₹150 dining/grocery, fuel surcharge waiver"},
+            {bank: "Axis Bank", name: "Neo Credit Card", category: "STUDENT", income_brackets: ["4-8"], fee: 0, benefits: "Digital-first card, basic rewards, mobile app integration"},
+            {bank: "Axis Bank", name: "Flipkart Credit Card", category: "CASHBACK", income_brackets: ["4-8", "8-15"], fee: 500, benefits: "5% unlimited cashback on Flipkart, 4% on Myntra/Jabong"},
+            {bank: "Axis Bank", name: "Magnus Credit Card", category: "PREMIUM", income_brackets: ["15-25", "25-50", "50-75"], fee: 12500, benefits: "24 RP per ₹200, airport lounge access, golf privileges"},
+
+            // HDFC Bank
+            {bank: "HDFC Bank", name: "MoneyBack+", category: "CASHBACK", income_brackets: ["4-8", "8-15"], fee: 500, benefits: "Cashback on multiple categories, online spending rewards"},
             {bank: "HDFC Bank", name: "Swiggy Credit Card", category: "FUEL", income_brackets: ["4-8", "8-15"], fee: 500, benefits: "BOGO BookMyShow, 5X on Swiggy/Zomato, dining rewards"},
-            {bank: "ICICI Bank", name: "MakeMyTrip Platinum", category: "TRAVEL", income_brackets: ["4-8", "8-15"], fee: 500, benefits: "Travel rewards, MakeMyTrip benefits, airport privileges"},
-            {bank: "SBI Card", name: "PRIME", category: "TRAVEL", income_brackets: ["4-8", "8-15", "15-25"], fee: 2999, benefits: "Airport lounge access, dining rewards, travel insurance"},
             {bank: "HDFC Bank", name: "6E Rewards Indigo", category: "TRAVEL", income_brackets: ["4-8", "8-15"], fee: 500, benefits: "IndiGo vouchers, travel rewards, flight benefits"},
+            {bank: "HDFC Bank", name: "Bharat Credit Card", category: "STUDENT", income_brackets: ["4-8"], fee: 500, benefits: "Basic cashback, low fees, entry-level benefits"},
+            {bank: "HDFC Bank", name: "Business Moneyback", category: "BUSINESS", income_brackets: ["4-8", "8-15"], fee: 500, benefits: "Business expense tracking, corporate benefits, cashback"},
+            {bank: "HDFC Bank", name: "Regalia Gold", category: "PREMIUM", income_brackets: ["8-15", "15-25"], fee: 2500, benefits: "4 RP per ₹150, airport lounge, premium dining"},
+            {bank: "HDFC Bank", name: "Diners Club Black", category: "PREMIUM", income_brackets: ["25-50", "50-75", "75-125"], fee: 10000, benefits: "10 RP per ₹150, unlimited lounge access, golf"},
+
+            // ICICI Bank
+            {bank: "ICICI Bank", name: "Amazon Pay Credit Card", category: "CASHBACK", income_brackets: ["4-8", "8-15"], fee: 0, benefits: "5% cashback on Amazon, 2% on bill payments, 1% on others"},
+            {bank: "ICICI Bank", name: "MakeMyTrip Platinum", category: "TRAVEL", income_brackets: ["4-8", "8-15"], fee: 500, benefits: "Travel rewards, MakeMyTrip benefits, airport privileges"},
+            {bank: "ICICI Bank", name: "Instant Platinum", category: "STUDENT", income_brackets: ["4-8"], fee: 0, benefits: "Against FD, no income proof required, basic rewards"},
+            {bank: "ICICI Bank", name: "Sapphiro Credit Card", category: "PREMIUM", income_brackets: ["15-25", "25-50"], fee: 3500, benefits: "2 RP per ₹100, international lounge, insurance"},
+            {bank: "ICICI Bank", name: "Emeralde Credit Card", category: "PREMIUM", income_brackets: ["50-75", "75-125", "125-200"], fee: 12000, benefits: "4 RP per ₹100, unlimited lounge, concierge"},
+
+            // SBI Card
+            {bank: "SBI Card", name: "CASHBACK SBI Card", category: "CASHBACK", income_brackets: ["4-8", "8-15"], fee: 999, benefits: "5% cashback online, 1% offline, fuel surcharge waiver"},
+            {bank: "SBI Card", name: "SimplySAVE", category: "FUEL", income_brackets: ["4-8", "8-15"], fee: 499, benefits: "10 RP per ₹150 dining/grocery, fuel surcharge waiver"},
+            {bank: "SBI Card", name: "PRIME", category: "TRAVEL", income_brackets: ["4-8", "8-15", "15-25"], fee: 2999, benefits: "Airport lounge access, dining rewards, travel insurance"},
             {bank: "SBI Card", name: "PULSE", category: "PREMIUM", income_brackets: ["4-8", "8-15"], fee: 1499, benefits: "Smartwatch worth ₹7999, fitness membership, health benefits"},
             {bank: "SBI Card", name: "Titan Credit Card", category: "PREMIUM", income_brackets: ["4-8", "8-15"], fee: 999, benefits: "Titan vouchers, jewelry benefits, lifestyle rewards"},
-            {bank: "ICICI Bank", name: "Instant Platinum", category: "STUDENT", income_brackets: ["4-8"], fee: 0, benefits: "Against FD, no income proof required, basic rewards"},
-            {bank: "HDFC Bank", name: "Bharat Credit Card", category: "STUDENT", income_brackets: ["4-8"], fee: 500, benefits: "Basic cashback, low fees, entry-level benefits"},
-            {bank: "Axis Bank", name: "Neo Credit Card", category: "STUDENT", income_brackets: ["4-8"], fee: 0, benefits: "Digital-first card, basic rewards, mobile app integration"},
-            {bank: "HDFC Bank", name: "Business Moneyback", category: "BUSINESS", income_brackets: ["4-8", "8-15"], fee: 500, benefits: "Business expense tracking, corporate benefits, cashback"}
+            {bank: "SBI Card", name: "Elite Credit Card", category: "PREMIUM", income_brackets: ["25-50", "50-75"], fee: 4999, benefits: "5 RP per ₹100, priority customer service, insurance"}
         ];
 
         // Form reset function
@@ -1640,6 +2067,11 @@
             } else {
                 document.getElementById('navMenu').style.display = 'none';
                 document.getElementById('headerCTA').style.display = 'none';
+            }
+
+            // Generate supported cards page content when accessed
+            if (pageId === 'supported-cards') {
+                generateSupportedCardsPage();
             }
 
             window.scrollTo({ top: 0, behavior: 'smooth' });

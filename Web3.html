@@ -1,10 +1,11 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CredX - Smart Credit Card Discovery Platform</title>
-    <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CredX- Smart Credit Card Discovery Platform</title>
+<style>
         @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap');
 
         * {
@@ -264,7 +265,7 @@
         }
 
         .logo::before {
-            content: "💳";
+            content: "";
             font-size: 1.5rem;
         }
 
@@ -1511,521 +1512,471 @@
     </style>
 </head>
 <body>
-    <!-- Simple Static Background -->
-    <div class="static-background"></div>
-
-    <!-- Matrix/Glitch Background (Homepage Only) -->
-    <div class="matrix-background">
-        <!-- Matrix Rain -->
-        <div class="matrix-rain">01001100 01101111 01110110 01100101</div>
-        <div class="matrix-rain">01000011 01110010 01100101 01100100</div>
-        <div class="matrix-rain">01011000 11000000 10101010 01010101</div>
-        <div class="matrix-rain">01000001 01001001 00100000 01000011</div>
-        <div class="matrix-rain">01000010 01101100 01110101 01100101</div>
-        <div class="matrix-rain">01010000 01101100 01100001 01110100</div>
-        <div class="matrix-rain">01000110 01101001 01101110 01100001</div>
-        <div class="matrix-rain">01000011 01100001 01110010 01100100</div>
-        <div class="matrix-rain">01000100 01100001 01110100 01100001</div>
-        <div class="matrix-rain">01000010 01100001 01101110 01101011</div>
-
-        <!-- Glitch Lines -->
-        <div class="glitch-line"></div>
-        <div class="glitch-line"></div>
-        <div class="glitch-line"></div>
-
-        <!-- Floating Code -->
-        <div class="code-float">function findCard() {</div>
-        <div class="code-float">if (user.income > 500000) {</div>
-        <div class="code-float">return bestMatch;</div>
-        <div class="code-float">} else { continue; }</div>
-        <div class="code-float">const creditScore = 750;</div>
-    </div>
-
-    <!-- Credit Card Hints (Homepage Only) -->
-    <div class="card-hints">
-        <!-- Floating Credit Cards -->
-        <div class="card-float"></div>
-        <div class="card-float"></div>
-        <div class="card-float"></div>
-        <div class="card-float"></div>
-        <div class="card-float"></div>
-        <div class="card-float"></div>
-        <div class="card-float"></div>
-        <div class="card-float"></div>
-    </div>
-
-    <!-- Loading Screen -->
-    <div class="loading-screen" id="loadingScreen">
-        <div class="loader"></div>
-        <div class="loading-text">Finding Your Perfect Credit Cards...</div>
-        <div class="loading-progress" id="loadingProgress">Analyzing your profile...</div>
-    </div>
-
-    <!-- Navigation -->
-    <nav>
-        <div class="nav-container" id="navContainer">
-            <div class="nav-left">
-                <div class="logo" onclick="showPage('homepage')">CredX</div>
-                <ul class="nav-menu" id="navMenu">
-                    <li><button onclick="scrollToSection('features')">Features</button></li>
-                    <li><button onclick="scrollToSection('supported-cards')">Supported Cards</button></li>
-                    <li><button onclick="scrollToSection('how-it-works')">How It Works</button></li>
-                    <li><button onclick="scrollToSection('about')">About</button></li>
-                </ul>
-            </div>
-
-            <!-- Header CTA Button -->
-            <button class="header-cta-btn" id="headerCTA" onclick="startFormProcess()">
+<!-- Simple Static Background -->
+<div class="static-background"></div>
+<!-- Matrix/Glitch Background (Homepage Only) -->
+<div class="matrix-background">
+<!-- Matrix Rain -->
+<div class="matrix-rain">01001100 01101111 01110110 01100101</div>
+<div class="matrix-rain">01000011 01110010 01100101 01100100</div>
+<div class="matrix-rain">01011000 11000000 10101010 01010101</div>
+<div class="matrix-rain">01000001 01001001 00100000 01000011</div>
+<div class="matrix-rain">01000010 01101100 01110101 01100101</div>
+<div class="matrix-rain">01010000 01101100 01100001 01110100</div>
+<div class="matrix-rain">01000110 01101001 01101110 01100001</div>
+<div class="matrix-rain">01000011 01100001 01110010 01100100</div>
+<div class="matrix-rain">01000100 01100001 01110100 01100001</div>
+<div class="matrix-rain">01000010 01100001 01101110 01101011</div>
+<!-- Glitch Lines -->
+<div class="glitch-line"></div>
+<div class="glitch-line"></div>
+<div class="glitch-line"></div>
+<!-- Floating Code -->
+<div class="code-float">function findCard() {</div>
+<div class="code-float">if (user.income &gt; 500000) {</div>
+<div class="code-float">return bestMatch;</div>
+<div class="code-float">} else { continue; }</div>
+<div class="code-float">const creditScore = 750;</div>
+</div>
+<!-- Credit Card Hints (Homepage Only) -->
+<div class="card-hints">
+<!-- Floating Credit Cards -->
+<div class="card-float"></div>
+<div class="card-float"></div>
+<div class="card-float"></div>
+<div class="card-float"></div>
+<div class="card-float"></div>
+<div class="card-float"></div>
+<div class="card-float"></div>
+<div class="card-float"></div>
+</div>
+<!-- Loading Screen -->
+<div class="loading-screen" id="loadingScreen">
+<div class="loader"></div>
+<div class="loading-text">Finding Your Perfect Credit Cards...</div>
+<div class="loading-progress" id="loadingProgress">Analyzing your profile...</div>
+</div>
+<!-- Navigation -->
+<nav>
+<div class="nav-container" id="navContainer">
+<div class="nav-left">
+<div class="logo" onclick="showPage('homepage')"><img alt="CredX logo" class="credx-logo" src="c:\Users\dhruv\Pictures\Screenshots\Screenshot 2025-09-23 093013.png" style="width:84px; height:84px; object-fit:contain; margin-right:8px;"/></div>
+<ul class="nav-menu" id="navMenu">
+<li><button onclick="scrollToSection('features')">Features</button></li>
+<li><button onclick="scrollToSection('supported-cards')">Supported Cards</button></li>
+<li><button onclick="scrollToSection('how-it-works')">How It Works</button></li>
+<li><button onclick="scrollToSection('about')">About</button></li>
+</ul>
+</div>
+<!-- Header CTA Button -->
+<button class="header-cta-btn" id="headerCTA" onclick="startFormProcess()">
                 Find Cards
             </button>
-        </div>
-    </nav>
-
-    <!-- HOMEPAGE -->
-    <div id="homepage" class="page active homepage">
-        <!-- Hero Section -->
-        <section class="hero" id="heroSection">
-            <div class="hero-content">
-                <h1 class="hero-title" data-text="Find Your Perfect Credit Card">Find Your Perfect Credit Card</h1>
-                <p class="hero-description">
+</div>
+</nav>
+<!-- HOMEPAGE -->
+<div class="page active homepage" id="homepage">
+<!-- Hero Section -->
+<section class="hero" id="heroSection">
+<div class="hero-content">
+<h1 class="hero-title" data-text="Find Your Perfect Credit Card">Find Your Perfect Credit Card</h1>
+<p class="hero-description">
                     CredX is our most advanced credit card discovery platform. Using AI-powered matching algorithms, we analyze your spending patterns, income profile, and financial goals to recommend the perfect credit cards from leading banks like HDFC, SBI, ICICI, Axis Bank, and more.
                 </p>
-            </div>
-        </section>
-
-        <!-- Features Section -->
-        <section id="features" class="section">
-            <div class="section-header">
-                <div class="section-number">.01</div>
-                <h2 class="section-title">WHY CHOOSE CREDX</h2>
-                <p class="section-description">
+</div>
+</section>
+<!-- Features Section -->
+<section class="section" id="features">
+<div class="section-header">
+<div class="section-number">.01</div>
+<h2 class="section-title">WHY CHOOSE CREDX</h2>
+<p class="section-description">
                     Discover the advantages that make CredX the most trusted credit card recommendation platform in India.
                 </p>
-            </div>
-
-            <div class="features-grid">
-                <div class="feature-item">
-                    <div class="feature-icon">🔒</div>
-                    <h3 class="feature-title">100% Secure</h3>
-                    <p class="feature-description">
+</div>
+<div class="features-grid">
+<div class="feature-item">
+<div class="feature-icon">🔒</div>
+<h3 class="feature-title">100% Secure</h3>
+<p class="feature-description">
                         Your data is encrypted and protected. We never store sensitive information and maintain complete privacy.
                     </p>
-                </div>
-
-                <div class="feature-item">
-                    <div class="feature-icon">⚡</div>
-                    <h3 class="feature-title">Instant Results</h3>
-                    <p class="feature-description">
+</div>
+<div class="feature-item">
+<div class="feature-icon">⚡</div>
+<h3 class="feature-title">Instant Results</h3>
+<p class="feature-description">
                         Get personalized recommendations in under 30 seconds. No waiting, no delays - just fast, accurate matches.
                     </p>
-                </div>
-
-                <div class="feature-item">
-                    <div class="feature-icon">🏦</div>
-                    <h3 class="feature-title">Support for Major Banks </h3>
-                    <p class="feature-description">
+</div>
+<div class="feature-item">
+<div class="feature-icon">🏦</div>
+<h3 class="feature-title">Support for Major Banks </h3>
+<p class="feature-description">
                         We support and collect data from leading banks like SBI, HDFC, AXIS BANK, American Express and more!
                     </p>
-                </div>
-
-                <div class="feature-item">
-                    <div class="feature-icon">🆓</div>
-                    <h3 class="feature-title">Completely Free</h3>
-                    <p class="feature-description">
+</div>
+<div class="feature-item">
+<div class="feature-icon">🆓</div>
+<h3 class="feature-title">Completely Free</h3>
+<p class="feature-description">
                         CredX is 100% free for users. No hidden charges, no subscription fees - just honest recommendations.
                     </p>
-                </div>
-
-                <div class="feature-item">
-                    <div class="feature-icon">📊</div>
-                    <h3 class="feature-title">Real-time Offers</h3>
-                    <p class="feature-description">
+</div>
+<div class="feature-item">
+<div class="feature-icon">📊</div>
+<h3 class="feature-title">Real-time Offers</h3>
+<p class="feature-description">
                         Access to the latest offers, promotional rates, and limited-time bonuses updated in real-time.
                     </p>
-                </div>
-
-                <div class="feature-item">
-                    <div class="feature-icon">🎯</div>
-                    <h3 class="feature-title">Personalized Matching</h3>
-                    <p class="feature-description">
+</div>
+<div class="feature-item">
+<div class="feature-icon">🎯</div>
+<h3 class="feature-title">Personalized Matching</h3>
+<p class="feature-description">
                         Unlike generic comparison sites, we provide truly personalized recommendations based on your profile.
                     </p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Supported Cards Section -->
-        <section id="supported-cards" class="section">
-            <div class="section-header">
-                <div class="section-number">.02</div>
-                <h2 class="section-title">SUPPORTED CARDS</h2>
-                <p class="section-description">
+</div>
+</div>
+</section>
+<!-- Supported Cards Section -->
+<section class="section" id="supported-cards">
+<div class="section-header">
+<div class="section-number">.02</div>
+<h2 class="section-title">SUPPORTED CARDS</h2>
+<p class="section-description">
                     Browse our comprehensive database of 29+ credit cards from leading banks including HDFC, SBI, ICICI, Axis Bank, and American Express. Each card is carefully analyzed for rewards, benefits, and eligibility criteria.
                 </p>
-            </div>
-            
-            <div class="supported-cards-preview">
-                <div class="banks-showcase">
-                    <div class="bank-preview">
-                        <div class="bank-icon">🏦</div>
-                        <h3>HDFC Bank</h3>
-                        <p>7 cards available</p>
-                    </div>
-                    <div class="bank-preview">
-                        <div class="bank-icon">🏛️</div>
-                        <h3>SBI Card</h3>
-                        <p>6 cards available</p>
-                    </div>
-                    <div class="bank-preview">
-                        <div class="bank-icon">🏢</div>
-                        <h3>ICICI Bank</h3>
-                        <p>5 cards available</p>
-                    </div>
-                    <div class="bank-preview">
-                        <div class="bank-icon">🏪</div>
-                        <h3>Axis Bank</h3>
-                        <p>4 cards available</p>
-                    </div>
-                    <div class="bank-preview">
-                        <div class="bank-icon">💳</div>
-                        <h3>American Express</h3>
-                        <p>7 cards available</p>
-                    </div>
-                </div>
-                
-                <div class="cards-stats">
-                    <div class="stat-highlight">
-                        <span class="stat-number">29+</span>
-                        <span class="stat-label">Credit Cards</span>
-                    </div>
-                    <div class="stat-highlight">
-                        <span class="stat-number">5</span>
-                        <span class="stat-label">Major Banks</span>
-                    </div>
-                    <div class="stat-highlight">
-                        <span class="stat-number">6</span>
-                        <span class="stat-label">Free Cards</span>
-                    </div>
-                </div>
-                
-                <div class="section-cta">
-                    <button class="explore-cards-btn" onclick="showPage('supported-cards-full')">
+</div>
+<div class="supported-cards-preview">
+<div class="banks-showcase">
+<div class="bank-preview">
+<div class="bank-icon">🏦</div>
+<h3>HDFC Bank</h3>
+<p>7 cards available</p>
+</div>
+<div class="bank-preview">
+<div class="bank-icon">🏛️</div>
+<h3>SBI Card</h3>
+<p>6 cards available</p>
+</div>
+<div class="bank-preview">
+<div class="bank-icon">🏢</div>
+<h3>ICICI Bank</h3>
+<p>5 cards available</p>
+</div>
+<div class="bank-preview">
+<div class="bank-icon">🏪</div>
+<h3>Axis Bank</h3>
+<p>4 cards available</p>
+</div>
+<div class="bank-preview">
+<div class="bank-icon">💳</div>
+<h3>American Express</h3>
+<p>7 cards available</p>
+</div>
+</div>
+<div class="cards-stats">
+<div class="stat-highlight">
+<span class="stat-number">29+</span>
+<span class="stat-label">Credit Cards</span>
+</div>
+<div class="stat-highlight">
+<span class="stat-number">5</span>
+<span class="stat-label">Major Banks</span>
+</div>
+<div class="stat-highlight">
+<span class="stat-number">6</span>
+<span class="stat-label">Free Cards</span>
+</div>
+</div>
+<div class="section-cta">
+<button class="explore-cards-btn" onclick="showPage('supported-cards-full')">
                         Explore All Cards
                     </button>
-                </div>
-            </div>
-        </section>
-
-        <!-- How It Works Section -->
-        <section id="how-it-works" class="section">
-            <div class="section-header">
-                <div class="section-number">.03</div>
-                <h2 class="section-title">HOW IT WORKS</h2>
-                <p class="section-description">
+</div>
+</div>
+</section>
+<!-- How It Works Section -->
+<section class="section" id="how-it-works">
+<div class="section-header">
+<div class="section-number">.03</div>
+<h2 class="section-title">HOW IT WORKS</h2>
+<p class="section-description">
                     Our intelligent matching process analyzes your profile to deliver personalized recommendations in three simple steps.
                 </p>
-            </div>
-
-            <div class="steps-grid">
-                <div class="step-card">
-                    <div class="step-number">1</div>
-                    <h3 class="step-title">Share Your Profile</h3>
-                    <p class="step-description">
+</div>
+<div class="steps-grid">
+<div class="step-card">
+<div class="step-number">1</div>
+<h3 class="step-title">Share Your Profile</h3>
+<p class="step-description">
                         Share your income, spending categories, and preferences. Our secure system analyzes this data to understand your financial profile.
                     </p>
-                </div>
-
-                <div class="step-card">
-                    <div class="step-number">2</div>
-                    <h3 class="step-title">AI-Powered Analysis</h3>
-                    <p class="step-description">
+</div>
+<div class="step-card">
+<div class="step-number">2</div>
+<h3 class="step-title">AI-Powered Analysis</h3>
+<p class="step-description">
                         Our advanced algorithm compares your profile against 500+ credit cards, analyzing rewards, fees, eligibility, and benefits.
                     </p>
-                </div>
-
-                <div class="step-card">
-                    <div class="step-number">3</div>
-                    <h3 class="step-title">Get Personalized Matches</h3>
-                    <p class="step-description">
+</div>
+<div class="step-card">
+<div class="step-number">3</div>
+<h3 class="step-title">Get Personalized Matches</h3>
+<p class="step-description">
                         Receive personalized card recommendations ranked by suitability, with detailed comparisons and application links.
                     </p>
-                </div>
-            </div>
-        </section>
-
-        <!-- About Section -->
-        <section id="about" class="section">
-            <div class="section-header">
-                <div class="section-number">.04</div>
-                <h2 class="section-title">ABOUT CREDX</h2>
-                <p class="section-description">
+</div>
+</div>
+</section>
+<!-- About Section -->
+<section class="section" id="about">
+<div class="section-header">
+<div class="section-number">.04</div>
+<h2 class="section-title">ABOUT CREDX</h2>
+<p class="section-description">
                     CredX revolutionizes credit card discovery in India by leveraging machine learning and big data analytics. Our platform processes thousands of card offers, terms, and benefits to provide personalized recommendations.
                 </p>
-            </div>
-        </section>
-
-        <!-- CTA Section -->
-        <section class="cta-section">
-            <h2 class="cta-title">Ready to Find Your Perfect Credit Card?</h2>
-            <p class="cta-description">
+</div>
+</section>
+<!-- CTA Section -->
+<section class="cta-section">
+<h2 class="cta-title">Ready to Find Your Perfect Credit Card?</h2>
+<p class="cta-description">
                 Join thousands of satisfied users who found their ideal credit cards through CredX. 
                 Start your personalized search now and discover cards that truly match your lifestyle.
             </p>
-
-            <button class="start-search-btn" onclick="startFormProcess()">
+<button class="start-search-btn" onclick="startFormProcess()">
                 Start Card Search
             </button>
-        </section>
-
-        <!-- Footer -->
-        <footer class="footer">
-            <div class="footer-content">
-                <p class="footer-text">
-                    © 2025 CredX. All rights reserved. | Privacy Policy | Terms of Service<br>
+</section>
+<!-- Footer -->
+<footer class="footer">
+<div class="footer-content">
+<p class="footer-text">
+                    © 2025 CredX. All rights reserved. | Privacy Policy | Terms of Service<br/>
                     CredX is a credit card recommendation platform. We are not a bank or financial institution.
                 </p>
-            </div>
-        </footer>
-    </div>
-
-    <!-- FORM PAGE -->
-    <div id="form" class="page">
-        <div class="form-page">
-            <!-- Simplified Header - No back button -->
-            <nav>
-                <div class="nav-container">
-                    <div class="form-header">
-                        <div class="logo" onclick="showPage('homepage')">CredX</div>
-                    </div>
-                </div>
-            </nav>
-
-            <div class="form-container">
-                <!-- Welcome Section -->
-                <div class="form-welcome">
-                    <div class="form-icon">🎯</div>
-                    <h1 class="form-title">Find Your Perfect Credit Card</h1>
-                    <p class="form-subtitle">
+</div>
+</footer>
+</div>
+<!-- FORM PAGE -->
+<div class="page" id="form">
+<div class="form-page">
+<!-- Simplified Header - No back button -->
+<nav>
+<div class="nav-container">
+<div class="form-header">
+<div class="logo" onclick="showPage('homepage')">CredX</div>
+</div>
+</div>
+</nav>
+<div class="form-container">
+<!-- Welcome Section -->
+<div class="form-welcome">
+<div class="form-icon">🎯</div>
+<h1 class="form-title">Find Your Perfect Credit Card</h1>
+<p class="form-subtitle">
                         Answer a few quick questions to get personalized credit card recommendations tailored to your lifestyle and financial profile.
                     </p>
-                </div>
-
-                <!-- Progress Indicator -->
-                <div class="progress-container">
-                    <div class="progress-bar">
-                        <div class="progress-fill" id="progressFill"></div>
-                    </div>
-                    <div class="progress-text" id="progressText">Step 1 of 3</div>
-                </div>
-
-                <!-- Form Steps -->
-                <div id="step1" class="form-step active">
-                    <div class="step-header">
-                        <h2 class="step-title">Annual Income</h2>
-                        <p class="step-description">Select your yearly income range</p>
-                    </div>
-
-                    <div class="form-options income-options">
-                        <div class="option-card" onclick="selectOption(this, '4-8')">
-                            <h3>₹4,00,000 - ₹8,00,000 LPA</h3>
-                        </div>
-                        <div class="option-card" onclick="selectOption(this, '8-15')">
-                            <h3>₹8,00,000 - ₹15,00,000 LPA</h3>
-                        </div>
-                        <div class="option-card" onclick="selectOption(this, '15-25')">
-                            <h3>₹15,00,000 - ₹25,00,000 LPA</h3>
-                        </div>
-                        <div class="option-card" onclick="selectOption(this, '25-50')">
-                            <h3>₹25,00,000 - ₹50,00,000 LPA</h3>
-                        </div>
-                        <div class="option-card" onclick="selectOption(this, '50-75')">
-                            <h3>₹50,00,000 - ₹75,00,000 LPA</h3>
-                        </div>
-                        <div class="option-card" onclick="selectOption(this, '75-125')">
-                            <h3>₹75,00,000 - ₹1,25,00,000 LPA</h3>
-                        </div>
-                        <div class="option-card" onclick="selectOption(this, '125-200')">
-                            <h3>₹1,25,00,000 - ₹2,00,00,000 LPA</h3>
-                        </div>
-                        <div class="option-card" onclick="selectOption(this, '200+')">
-                            <h3>₹2,00,00,000+ LPA</h3>
-                        </div>
-                    </div>
-
-                    <div class="form-actions">
-                        <button class="btn btn-primary" onclick="nextStep()" id="step1Next" disabled>Next Step</button>
-                    </div>
-                </div>
-
-                <div id="step2" class="form-step">
-                    <div class="step-header">
-                        <h2 class="step-title">Spending Priority</h2>
-                        <p class="step-description">What matters most to you?</p>
-                    </div>
-
-                    <div class="form-options category-options">
-                        <div class="option-card" onclick="selectOption(this, 'CASHBACK')">
-                            <div class="category-card">
-                                <div class="category-icon">💰</div>
-                                <div class="category-content">
-                                    <h3>Cashback</h3>
-                                    <p>Instant rewards on everyday purchases</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="option-card" onclick="selectOption(this, 'TRAVEL')">
-                            <div class="category-card">
-                                <div class="category-icon">✈️</div>
-                                <div class="category-content">
-                                    <h3>Travel Rewards</h3>
-                                    <p>Miles, lounge access, travel benefits</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="option-card" onclick="selectOption(this, 'PREMIUM')">
-                            <div class="category-card">
-                                <div class="category-icon">👑</div>
-                                <div class="category-content">
-                                    <h3>Premium Lifestyle</h3>
-                                    <p>Luxury benefits and concierge services</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="option-card" onclick="selectOption(this, 'BUSINESS')">
-                            <div class="category-card">
-                                <div class="category-icon">💼</div>
-                                <div class="category-content">
-                                    <h3>Business</h3>
-                                    <p>Corporate benefits and expense tools</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="option-card" onclick="selectOption(this, 'FUEL')">
-                            <div class="category-card">
-                                <div class="category-icon">⛽</div>
-                                <div class="category-content">
-                                    <h3>Fuel & Utility</h3>
-                                    <p>High rewards on fuel and bills</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="option-card" onclick="selectOption(this, 'STUDENT')">
-                            <div class="category-card">
-                                <div class="category-icon">🎓</div>
-                                <div class="category-content">
-                                    <h3>Student & Starter</h3>
-                                    <p>Low fees and entry-level benefits</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-actions">
-                        <button class="btn btn-primary" onclick="nextStep()" id="step2Next" disabled>Next Step</button>
-                    </div>
-                </div>
-
-                <div id="step3" class="form-step">
-                    <div class="step-header">
-                        <h2 class="step-title">Age Group</h2>
-                        <p class="step-description">Select your age range</p>
-                    </div>
-
-                    <div class="form-options age-options">
-                        <div class="option-card" onclick="selectOption(this, '18-24')">
-                            <h3>18 - 24 years</h3>
-                        </div>
-                        <div class="option-card" onclick="selectOption(this, '25-30')">
-                            <h3>25 - 30 years</h3>
-                        </div>
-                        <div class="option-card" onclick="selectOption(this, '30-40')">
-                            <h3>30 - 40 years</h3>
-                        </div>
-                        <div class="option-card" onclick="selectOption(this, '40-60')">
-                            <h3>40 - 60 years</h3>
-                        </div>
-                        <div class="option-card" onclick="selectOption(this, '60+')">
-                            <h3>60+ years</h3>
-                        </div>
-                    </div>
-
-                    <div class="form-actions">
-                        <button class="btn btn-primary" onclick="findCards()" id="step3Next" disabled>Find My Perfect Cards</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- RESULTS PAGE -->
-    <div id="results" class="page">
-        <div class="form-page">
-            <nav>
-                <div class="nav-container">
-                    <div class="form-header">
-                        <div class="logo" onclick="showPage('homepage')">CredX</div>
-                    </div>
-                </div>
-            </nav>
-
-            <div class="results-section">
-                <div class="results-header">
-                    <h1 class="results-title">🎯 Your Perfect Card Matches</h1>
-                </div>
-
-                <div class="user-profile" id="userProfile">
-                    <h3 class="profile-title">Your Profile:</h3>
-                    <div class="profile-details" id="profileDetails">
-                        <!-- Profile details will be populated by JavaScript -->
-                    </div>
-                </div>
-
-                <div class="card-recommendations" id="cardRecommendations">
-                    <!-- Card recommendations will be populated by JavaScript -->
-                </div>
-
-                <div class="form-actions" style="margin-top: 3rem;">
-                    <button class="btn btn-secondary" onclick="startFormProcess()">Search Again</button>
-                    <button class="btn btn-primary" onclick="showPage('homepage')">Back to Home</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <!-- SUPPORTED CARDS FULL PAGE -->
-    <div id="supported-cards-full" class="page">
-        <div class="form-page">
-            <nav>
-                <div class="nav-container">
-                    <div class="form-header">
-                        <div class="logo" onclick="showPage('homepage')">CredX</div>
-                    </div>
-                </div>
-            </nav>
-
-            <div class="form-container" style="max-width: 1200px;">
-                <div class="form-welcome">
-                    <div class="form-icon">🏦</div>
-                    <h1 class="form-title">All Supported Credit Cards</h1>
-                    <p class="form-subtitle">
+</div>
+<!-- Progress Indicator -->
+<div class="progress-container">
+<div class="progress-bar">
+<div class="progress-fill" id="progressFill"></div>
+</div>
+<div class="progress-text" id="progressText">Step 1 of 3</div>
+</div>
+<!-- Form Steps -->
+<div class="form-step active" id="step1">
+<div class="step-header">
+<h2 class="step-title">Annual Income</h2>
+<p class="step-description">Select your yearly income range</p>
+</div>
+<div class="form-options income-options">
+<div class="option-card" onclick="selectOption(this, '4-8')">
+<h3>₹4,00,000 - ₹8,00,000 LPA</h3>
+</div>
+<div class="option-card" onclick="selectOption(this, '8-15')">
+<h3>₹8,00,000 - ₹15,00,000 LPA</h3>
+</div>
+<div class="option-card" onclick="selectOption(this, '15-25')">
+<h3>₹15,00,000 - ₹25,00,000 LPA</h3>
+</div>
+<div class="option-card" onclick="selectOption(this, '25-50')">
+<h3>₹25,00,000 - ₹50,00,000 LPA</h3>
+</div>
+<div class="option-card" onclick="selectOption(this, '50-75')">
+<h3>₹50,00,000 - ₹75,00,000 LPA</h3>
+</div>
+<div class="option-card" onclick="selectOption(this, '75-125')">
+<h3>₹75,00,000 - ₹1,25,00,000 LPA</h3>
+</div>
+<div class="option-card" onclick="selectOption(this, '125-200')">
+<h3>₹1,25,00,000 - ₹2,00,00,000 LPA</h3>
+</div>
+<div class="option-card" onclick="selectOption(this, '200+')">
+<h3>₹2,00,00,000+ LPA</h3>
+</div>
+</div>
+<div class="form-actions">
+<button class="btn btn-primary" disabled="" id="step1Next" onclick="nextStep()">Next Step</button>
+</div>
+</div>
+<div class="form-step" id="step2">
+<div class="step-header">
+<h2 class="step-title">Spending Priority</h2>
+<p class="step-description">What matters most to you?</p>
+</div>
+<div class="form-options category-options">
+<div class="option-card" onclick="selectOption(this, 'CASHBACK')">
+<div class="category-card">
+<div class="category-icon">💰</div>
+<div class="category-content">
+<h3>Cashback</h3>
+<p>Instant rewards on everyday purchases</p>
+</div>
+</div>
+</div>
+<div class="option-card" onclick="selectOption(this, 'TRAVEL')">
+<div class="category-card">
+<div class="category-icon">✈️</div>
+<div class="category-content">
+<h3>Travel Rewards</h3>
+<p>Miles, lounge access, travel benefits</p>
+</div>
+</div>
+</div>
+<div class="option-card" onclick="selectOption(this, 'PREMIUM')">
+<div class="category-card">
+<div class="category-icon">👑</div>
+<div class="category-content">
+<h3>Premium Lifestyle</h3>
+<p>Luxury benefits and concierge services</p>
+</div>
+</div>
+</div>
+<div class="option-card" onclick="selectOption(this, 'BUSINESS')">
+<div class="category-card">
+<div class="category-icon">💼</div>
+<div class="category-content">
+<h3>Business</h3>
+<p>Corporate benefits and expense tools</p>
+</div>
+</div>
+</div>
+<div class="option-card" onclick="selectOption(this, 'FUEL')">
+<div class="category-card">
+<div class="category-icon">⛽</div>
+<div class="category-content">
+<h3>Fuel &amp; Utility</h3>
+<p>High rewards on fuel and bills</p>
+</div>
+</div>
+</div>
+<div class="option-card" onclick="selectOption(this, 'STUDENT')">
+<div class="category-card">
+<div class="category-icon">🎓</div>
+<div class="category-content">
+<h3>Student &amp; Starter</h3>
+<p>Low fees and entry-level benefits</p>
+</div>
+</div>
+</div>
+</div>
+<div class="form-actions">
+<button class="btn btn-primary" disabled="" id="step2Next" onclick="nextStep()">Next Step</button>
+</div>
+</div>
+<div class="form-step" id="step3">
+<div class="step-header">
+<h2 class="step-title">Age Group</h2>
+<p class="step-description">Select your age range</p>
+</div>
+<div class="form-options age-options">
+<div class="option-card" onclick="selectOption(this, '18-24')">
+<h3>18 - 24 years</h3>
+</div>
+<div class="option-card" onclick="selectOption(this, '25-30')">
+<h3>25 - 30 years</h3>
+</div>
+<div class="option-card" onclick="selectOption(this, '30-40')">
+<h3>30 - 40 years</h3>
+</div>
+<div class="option-card" onclick="selectOption(this, '40-60')">
+<h3>40 - 60 years</h3>
+</div>
+<div class="option-card" onclick="selectOption(this, '60+')">
+<h3>60+ years</h3>
+</div>
+</div>
+<div class="form-actions">
+<button class="btn btn-primary" disabled="" id="step3Next" onclick="findCards()">Find My Perfect Cards</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- RESULTS PAGE -->
+<div class="page" id="results">
+<div class="form-page">
+<nav>
+<div class="nav-container">
+<div class="form-header">
+<div class="logo" onclick="showPage('homepage')">CredX</div>
+</div>
+</div>
+</nav>
+<div class="results-section">
+<div class="results-header">
+<h1 class="results-title">🎯 Your Perfect Card Matches</h1>
+</div>
+<div class="user-profile" id="userProfile">
+<h3 class="profile-title">Your Profile:</h3>
+<div class="profile-details" id="profileDetails">
+<!-- Profile details will be populated by JavaScript -->
+</div>
+</div>
+<div class="card-recommendations" id="cardRecommendations">
+<!-- Card recommendations will be populated by JavaScript -->
+</div>
+<div class="form-actions" style="margin-top: 3rem;">
+<button class="btn btn-secondary" onclick="startFormProcess()">Search Again</button>
+<button class="btn btn-primary" onclick="showPage('homepage')">Back to Home</button>
+</div>
+</div>
+</div>
+</div>
+<!-- SUPPORTED CARDS FULL PAGE -->
+<div class="page" id="supported-cards-full">
+<div class="form-page">
+<nav>
+<div class="nav-container">
+<div class="form-header">
+<div class="logo" onclick="showPage('homepage')">CredX</div>
+</div>
+</div>
+</nav>
+<div class="form-container" style="max-width: 1200px;">
+<div class="form-welcome">
+<div class="form-icon">🏦</div>
+<h1 class="form-title">All Supported Credit Cards</h1>
+<p class="form-subtitle">
                         CredX supports 29+ credit cards from leading banks and financial institutions. Here are all the cards currently in our recommendation database, organized by bank.
                     </p>
-                </div>
-
-                <div id="supportedCardsList" class="supported-cards-container">
-                    <!-- Will be populated by JavaScript -->
-                </div>
-
-                <div class="form-actions" style="margin-top: 3rem;">
-                    <button class="btn btn-primary" onclick="showPage('homepage')">Back to Home</button>
-                    <button class="btn btn-secondary" onclick="startFormProcess()">Find My Cards</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script>
+</div>
+<div class="supported-cards-container" id="supportedCardsList">
+<!-- Will be populated by JavaScript -->
+</div>
+<div class="form-actions" style="margin-top: 3rem;">
+<button class="btn btn-primary" onclick="showPage('homepage')">Back to Home</button>
+<button class="btn btn-secondary" onclick="startFormProcess()">Find My Cards</button>
+</div>
+</div>
+</div>
+</div>
+<script>
 
         // Generate supported cards page
         function generateSupportedCardsPage() {

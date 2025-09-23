@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>CredX- Smart Credit Card Discovery Platform</title>
-<style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CredX - Smart Credit Card Discovery Platform</title>
+    <style>
         @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap');
 
         * {
@@ -15,210 +14,98 @@
         }
 
         :root {
-            --bg-dark: #000000;
-            --bg-card: #0a0a0a;
+            --bg-dark: #000814;
+            --bg-card: #001d3d;
+            --bg-accent: #003566;
             --text-primary: #ffffff;
             --text-secondary: #a0a0a0;
-            --accent-blue: #0066ff;
-            --accent-cyan: #00bfff;
-            --accent-dark-blue: #003d99;
-            --border: #1a1a1a;
+            --accent-blue: #0077b6;
+            --accent-cyan: #00b4d8;
+            --accent-light-blue: #48cae4;
+            --accent-dark-blue: #023e8a;
+            --border: #001d3d;
+            --border-blue: #0077b6;
             --mono: 'JetBrains Mono', monospace;
             --sans: 'Inter', sans-serif;
         }
 
         body {
-            background: var(--bg-dark);
+            background: linear-gradient(135deg, var(--bg-dark) 0%, #000a1a 50%, var(--bg-dark) 100%);
             color: var(--text-primary);
             font-family: var(--sans);
             overflow-x: hidden;
             line-height: 1.6;
-        }
-
-        /* Page Container */
-        .page {
-            display: none;
             min-height: 100vh;
-            position: relative;
-            z-index: 1;
         }
 
-        .page.active {
-            display: block;
-        }
-
-        /* Credit Card Transition Hints */
-        .card-hints {
+        /* Animated Background */
+        .bg-animation {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            pointer-events: none;
-            z-index: 0;
-            opacity: 0;
-            transition: opacity 3s ease-in-out;
+            z-index: -2;
+            overflow: hidden;
         }
 
-        .homepage.active .card-hints {
-            opacity: 1;
-        }
-
-        /* Floating Credit Card Shapes */
-        .card-float {
+        .floating-shapes {
             position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .shape {
+            position: absolute;
+            background: linear-gradient(45deg, var(--accent-blue), var(--accent-cyan));
+            border-radius: 50%;
+            opacity: 0.03;
+            animation: float 25s infinite linear;
+        }
+
+        .shape:nth-child(1) {
+            width: 100px;
+            height: 100px;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .shape:nth-child(2) {
+            width: 150px;
+            height: 150px;
+            left: 30%;
+            animation-delay: -8s;
+        }
+
+        .shape:nth-child(3) {
             width: 80px;
-            height: 50px;
-            background: linear-gradient(135deg, 
-                rgba(0, 102, 255, 0.04) 0%, 
-                rgba(0, 191, 255, 0.06) 100%);
-            border-radius: 8px;
-            border: 1px solid rgba(0, 102, 255, 0.08);
-            animation: cardFloat 25s linear infinite;
-            opacity: 0.5;
+            height: 80px;
+            left: 60%;
+            animation-delay: -16s;
         }
 
-        @keyframes cardFloat {
-            0% { 
-                transform: translateY(100vh) translateX(0) rotate(0deg); 
-                opacity: 0; 
+        .shape:nth-child(4) {
+            width: 120px;
+            height: 120px;
+            left: 80%;
+            animation-delay: -24s;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
             }
-            10% { opacity: 0.5; }
-            50% { opacity: 0.7; }
-            90% { opacity: 0.5; }
-            100% { 
-                transform: translateY(-100px) translateX(30px) rotate(15deg); 
-                opacity: 0; 
+            10% {
+                opacity: 0.05;
             }
-        }
-
-        .card-float:nth-child(1) { left: 5%; animation-delay: 0s; width: 70px; height: 44px; }
-        .card-float:nth-child(2) { left: 15%; animation-delay: 8s; width: 85px; height: 54px; }
-        .card-float:nth-child(3) { left: 25%; animation-delay: 16s; width: 75px; height: 47px; }
-        .card-float:nth-child(4) { left: 35%; animation-delay: 4s; width: 80px; height: 50px; }
-        .card-float:nth-child(5) { left: 50%; animation-delay: 12s; width: 78px; height: 49px; }
-        .card-float:nth-child(6) { left: 65%; animation-delay: 20s; width: 82px; height: 52px; }
-        .card-float:nth-child(7) { left: 80%; animation-delay: 2s; width: 76px; height: 48px; }
-        .card-float:nth-child(8) { left: 90%; animation-delay: 10s; width: 84px; height: 53px; }
-
-        /* Matrix/Glitch Background Effects for Homepage Only */
-        .matrix-background {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
-            opacity: 0;
-            transition: opacity 2s ease-in-out;
-        }
-
-        .homepage.active .matrix-background {
-            opacity: 1;
-        }
-
-        /* Matrix Rain Effect */
-        .matrix-rain {
-            position: absolute;
-            top: -100%;
-            color: rgba(0, 102, 255, 0.1);
-            font-family: var(--mono);
-            font-size: 14px;
-            line-height: 14px;
-            animation: matrixFall 15s linear infinite;
-            white-space: nowrap;
-        }
-
-        @keyframes matrixFall {
-            0% { top: -100%; opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { top: 100%; opacity: 0; }
-        }
-
-        .matrix-rain:nth-child(1) { left: 5%; animation-delay: 0s; }
-        .matrix-rain:nth-child(2) { left: 15%; animation-delay: 2s; }
-        .matrix-rain:nth-child(3) { left: 25%; animation-delay: 4s; }
-        .matrix-rain:nth-child(4) { left: 35%; animation-delay: 6s; }
-        .matrix-rain:nth-child(5) { left: 45%; animation-delay: 8s; }
-        .matrix-rain:nth-child(6) { left: 55%; animation-delay: 10s; }
-        .matrix-rain:nth-child(7) { left: 65%; animation-delay: 12s; }
-        .matrix-rain:nth-child(8) { left: 75%; animation-delay: 1s; }
-        .matrix-rain:nth-child(9) { left: 85%; animation-delay: 3s; }
-        .matrix-rain:nth-child(10) { left: 95%; animation-delay: 5s; }
-
-        /* Glitch Elements */
-        .glitch-line {
-            position: absolute;
-            width: 100%;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, rgba(0, 102, 255, 0.3), transparent);
-            animation: glitchMove 8s ease-in-out infinite;
-        }
-
-        @keyframes glitchMove {
-            0%, 100% { top: 20%; opacity: 0; }
-            25% { opacity: 1; }
-            50% { top: 60%; opacity: 1; }
-            75% { opacity: 1; }
-        }
-
-        .glitch-line:nth-child(12) { animation-delay: 0s; }
-        .glitch-line:nth-child(13) { animation-delay: 2s; top: 40%; }
-        .glitch-line:nth-child(14) { animation-delay: 4s; top: 70%; }
-
-        /* Floating Code Snippets */
-        .code-float {
-            position: absolute;
-            color: rgba(0, 191, 255, 0.08);
-            font-family: var(--mono);
-            font-size: 10px;
-            animation: codeFloat 20s linear infinite;
-            pointer-events: none;
-        }
-
-        @keyframes codeFloat {
-            0% { transform: translateY(100vh) translateX(0) rotate(0deg); opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { transform: translateY(-100px) translateX(50px) rotate(10deg); opacity: 0; }
-        }
-
-        .code-float:nth-child(15) { left: 10%; animation-delay: 0s; }
-        .code-float:nth-child(16) { left: 30%; animation-delay: 5s; }
-        .code-float:nth-child(17) { left: 50%; animation-delay: 10s; }
-        .code-float:nth-child(18) { left: 70%; animation-delay: 15s; }
-        .code-float:nth-child(19) { left: 90%; animation-delay: 7s; }
-
-        /* Simple Static Background Pattern */
-        .static-background {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
-            background: 
-                radial-gradient(circle at 20% 20%, rgba(0, 102, 255, 0.03) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(0, 191, 255, 0.03) 0%, transparent 50%),
-                radial-gradient(circle at 40% 60%, rgba(0, 102, 255, 0.02) 0%, transparent 50%);
-        }
-
-        /* Subtle grid pattern */
-        .static-background::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                linear-gradient(rgba(0, 102, 255, 0.02) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 102, 255, 0.02) 1px, transparent 1px);
-            background-size: 50px 50px;
-            opacity: 0.5;
+            90% {
+                opacity: 0.05;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
         }
 
         /* Navigation */
@@ -226,192 +113,177 @@
             position: fixed;
             top: 0;
             width: 100%;
-            background: rgba(0, 0, 0, 0.95);
+            background: rgba(0, 8, 20, 0.95);
             backdrop-filter: blur(20px);
             z-index: 1000;
+            padding: 15px 0;
             border-bottom: 1px solid var(--border);
             transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            padding: 10px 0;
+            border-bottom-color: var(--accent-blue);
+            box-shadow: 0 5px 20px rgba(0, 119, 182, 0.1);
         }
 
         .nav-container {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1rem 2rem;
             max-width: 1200px;
             margin: 0 auto;
-        }
-
-        .nav-left {
-            display: flex;
-            align-items: center;
-            gap: 2rem;
+            padding: 0 20px;
         }
 
         .logo {
-            font-family: var(--mono);
-            font-weight: 700;
-            font-size: 1.8rem;
-            color: var(--accent-blue);
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            font-family: var(--mono);
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--accent-cyan);
             cursor: pointer;
-            transition: transform 0.3s ease;
+            transition: all 0.3s ease;
         }
 
         .logo:hover {
             transform: scale(1.05);
+            text-shadow: 0 0 20px var(--accent-cyan);
         }
 
-        .logo::before {
-            content: "";
-            font-size: 1.5rem;
+        .logo-text {
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
-        .nav-menu {
+        .nav-links {
             display: flex;
-            gap: 2rem;
             list-style: none;
+            gap: 30px;
         }
 
-        .nav-menu button {
+        .nav-links a {
             color: var(--text-secondary);
-            background: none;
-            border: none;
-            font-weight: 500;
-            font-size: 1rem;
-            cursor: pointer;
+            text-decoration: none;
             transition: all 0.3s ease;
+            cursor: pointer;
             position: relative;
-            padding: 0.5rem 0;
+            padding: 8px 0;
         }
 
-        .nav-menu button:hover {
-            color: var(--accent-blue);
-            transform: translateY(-2px);
-        }
-
-        .nav-menu button::after {
+        .nav-links a::after {
             content: '';
             position: absolute;
             bottom: 0;
             left: 0;
             width: 0;
             height: 2px;
-            background: var(--accent-blue);
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-blue));
             transition: width 0.3s ease;
         }
 
-        .nav-menu button:hover::after {
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
             width: 100%;
         }
 
-        /* Header CTA Button */
-        .header-cta-btn {
-            padding: 0.75rem 1.5rem;
-            background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-cyan) 100%);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0, 102, 255, 0.3);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--accent-cyan);
+            text-shadow: 0 0 10px var(--accent-cyan);
         }
 
-        .header-cta-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0, 102, 255, 0.4);
-        }
-
-        /* Form Header - Simplified */
-        .form-header {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 1rem 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        /* Hero Section - Enhanced with Matrix Effects */
+        /* Hero Section */
         .hero {
             min-height: 100vh;
             display: flex;
             align-items: center;
             position: relative;
-            overflow: hidden;
-            padding-top: 100px;
-            z-index: 1;
+            background: radial-gradient(circle at 50% 50%, rgba(0, 119, 182, 0.1) 0%, transparent 50%);
         }
 
         .hero-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
             text-align: center;
-            animation: heroFadeIn 1.5s ease-out;
-            z-index: 2;
-            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 120px 20px 50px;
+            animation: fadeInUp 1s ease-out;
         }
 
-        @keyframes heroFadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .hero-title {
-            font-size: 4rem;
+        .hero h1 {
+            font-size: 5rem;
             font-weight: 700;
-            line-height: 1.1;
-            margin-bottom: 2rem;
-            background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-cyan) 100%);
-            background-clip: text;
+            margin-bottom: 25px;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-light-blue), var(--accent-blue));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            position: relative;
+            background-clip: text;
+            animation: glow 3s ease-in-out infinite alternate;
         }
 
-        /* Subtle glitch effect on title */
-        .hero-title::before {
-            content: attr(data-text);
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: var(--text-primary);
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+            line-height: 1.8;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan));
+            color: white;
+            padding: 18px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 18px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 10px 30px rgba(0, 119, 182, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::before {
+            content: '';
             position: absolute;
             top: 0;
-            left: 0;
-            color: rgba(0, 102, 255, 0.1);
-            animation: glitchTitle 10s infinite;
-            z-index: -1;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
         }
 
-        @keyframes glitchTitle {
-            0%, 90%, 100% { transform: translate(0); opacity: 0; }
-            95% { transform: translate(2px, 0); opacity: 1; }
+        .cta-button:hover::before {
+            left: 100%;
         }
 
-        .hero-description {
-            font-size: 1.3rem;
-            color: var(--text-secondary);
-            line-height: 1.6;
-            max-width: 600px;
-            margin: 0 auto 3rem;
-            animation: fadeInUp 1.5s ease-out 0.3s both;
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 180, 216, 0.4);
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 20px rgba(0, 180, 216, 0.5); }
+            to { text-shadow: 0 0 30px rgba(0, 180, 216, 0.8), 0 0 40px rgba(72, 202, 228, 0.3); }
         }
 
         @keyframes fadeInUp {
             from {
                 opacity: 0;
-                transform: translateY(20px);
+                transform: translateY(50px);
             }
             to {
                 opacity: 1;
@@ -419,314 +291,195 @@
             }
         }
 
-        /* Section Styling */
-        .section {
-            padding: 6rem 2rem;
-            max-width: 1200px;
+        /* Stats Section */
+        .stats-section {
+            padding: 80px 0;
+            background: linear-gradient(180deg, transparent 0%, rgba(0, 119, 182, 0.05) 50%, transparent 100%);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            max-width: 1000px;
             margin: 0 auto;
-            position: relative;
-            z-index: 1;
+            padding: 0 20px;
         }
 
-        .section-header {
+        .stat-card {
             text-align: center;
-            margin-bottom: 4rem;
+            padding: 30px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 29, 61, 0.3);
         }
 
-        .section-number {
+        .stat-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent-blue);
+            box-shadow: 0 20px 40px rgba(0, 119, 182, 0.2);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--accent-cyan);
+            margin-bottom: 10px;
             font-family: var(--mono);
-            font-size: 0.9rem;
-            color: var(--accent-blue);
-            margin-bottom: 1rem;
-            opacity: 0.8;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 120px 0;
         }
 
         .section-title {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-            color: var(--text-primary);
-        }
-
-        .section-description {
-            font-size: 1.1rem;
-            color: var(--text-secondary);
-            line-height: 1.6;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        /* How It Works Grid */
-        .steps-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .step-card {
-            background: var(--bg-card);
-            padding: 2.5rem;
-            border-radius: 16px;
-            border: 1px solid var(--border);
             text-align: center;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            cursor: pointer;
-        }
-
-        .step-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(0, 102, 255, 0.1);
-            border-color: var(--accent-blue);
-            background: rgba(0, 102, 255, 0.05);
-        }
-
-        .step-number {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-cyan) 100%);
-            color: white;
-            border-radius: 50%;
-            font-size: 1.5rem;
+            font-size: 3.5rem;
             font-weight: 700;
-            margin-bottom: 1.5rem;
-            transition: all 0.3s ease;
-        }
-
-        .step-card:hover .step-number {
-            transform: scale(1.1);
-            box-shadow: 0 0 20px rgba(0, 102, 255, 0.5);
-        }
-
-        .step-title {
-            font-size: 1.3rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
+            margin-bottom: 25px;
             color: var(--text-primary);
+            position: relative;
         }
 
-        .step-description {
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-blue));
+            border-radius: 2px;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.3rem;
             color: var(--text-secondary);
+            margin-bottom: 80px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
             line-height: 1.6;
         }
 
-        /* Features Grid */
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
         }
 
-        .feature-item {
-            text-align: center;
-            padding: 2rem;
-            border-radius: 12px;
-            transition: all 0.3s ease;
-            position: relative;
-            cursor: pointer;
-        }
-
-        .feature-item:hover {
-            transform: translateY(-5px);
-            background: rgba(0, 102, 255, 0.05);
-        }
-
-        .feature-icon {
-            font-size: 3rem;
-            margin-bottom: 1.5rem;
-            transition: all 0.3s ease;
-        }
-
-        .feature-item:hover .feature-icon {
-            transform: scale(1.1);
-            filter: drop-shadow(0 0 10px rgba(0, 102, 255, 0.3));
-        }
-
-        .feature-title {
-            font-size: 1.3rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            color: var(--text-primary);
-        }
-
-        .feature-description {
-            color: var(--text-secondary);
-            line-height: 1.6;
-        }
-
-        /* CTA Section */
-        .cta-section {
+        .feature-card {
             background: var(--bg-card);
-            padding: 4rem 2rem;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 50px 40px;
             text-align: center;
-            border-top: 1px solid var(--border);
+            transition: all 0.5s ease;
             position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 29, 61, 0.3);
         }
 
-        .cta-section::before {
+        .feature-card::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, var(--accent-blue), transparent);
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0, 119, 182, 0.05), rgba(0, 180, 216, 0.05));
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
 
-        .cta-title {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent-blue);
+            box-shadow: 0 25px 50px rgba(0, 119, 182, 0.2);
+        }
+
+        .feature-icon {
+            font-size: 4rem;
+            margin-bottom: 25px;
+            color: var(--accent-cyan);
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover .feature-icon {
+            transform: scale(1.1);
+            filter: drop-shadow(0 0 20px var(--accent-cyan));
+        }
+
+        .feature-card h3 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 20px;
             color: var(--text-primary);
         }
 
-        .cta-description {
+        .feature-card p {
+            color: var(--text-secondary);
+            line-height: 1.8;
             font-size: 1.1rem;
-            color: var(--text-secondary);
-            margin-bottom: 3rem;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
         }
 
-        /* Main CTA Button */
-        .start-search-btn {
-            display: inline-flex;
-            align-items: center;
-            padding: 1.5rem 3rem;
-            background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-cyan) 100%);
-            color: white;
-            border: none;
-            border-radius: 12px;
-            font-weight: 600;
-            font-size: 1.2rem;
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 8px 30px rgba(0, 102, 255, 0.3);
-            gap: 0.75rem;
-            font-family: var(--sans);
-            position: relative;
-        }
-
-        .start-search-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(0, 102, 255, 0.4);
-        }
-
-        /* Footer */
-        .footer {
-            background: var(--bg-dark);
-            padding: 3rem 2rem;
-            border-top: 1px solid var(--border);
-            text-align: center;
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .footer-text {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            line-height: 1.6;
-        }
-
-        /* FORM PAGE STYLES - COMPACT OPTIMIZED */
-        .form-page {
-            min-height: 100vh;
-            padding-top: 80px;
-            position: relative;
-            z-index: 1;
+        /* Form Section */
+        .form-section {
+            padding: 120px 0;
+            background: radial-gradient(circle at center, rgba(0, 119, 182, 0.05) 0%, transparent 70%);
         }
 
         .form-container {
-            max-width: 1000px;
+            max-width: 700px;
             margin: 0 auto;
-            padding: 1rem;
-        }
-
-        .form-welcome {
-            text-align: center;
-            margin-bottom: 2rem;
-            animation: fadeInUp 1s ease-out;
-        }
-
-        .form-icon {
-            font-size: 3rem;
-            margin-bottom: 0.5rem;
-            animation: bounceIn 1s ease-out;
-        }
-
-        @keyframes bounceIn {
-            0% { opacity: 0; transform: scale(0.3); }
-            50% { opacity: 1; transform: scale(1.1); }
-            100% { opacity: 1; transform: scale(1); }
-        }
-
-        .form-title {
-            font-size: 2.2rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-cyan) 100%);
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .form-subtitle {
-            color: var(--text-secondary);
-            font-size: 1rem;
-            max-width: 600px;
-            margin: 0 auto;
-            line-height: 1.6;
-        }
-
-        .progress-container {
-            margin: 2rem 0;
-            text-align: center;
-        }
-
-        .progress-bar {
-            width: 100%;
-            max-width: 400px;
-            height: 6px;
-            background: var(--border);
-            border-radius: 4px;
-            margin: 1rem auto;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 25px;
+            padding: 50px;
+            box-shadow: 0 25px 50px rgba(0, 29, 61, 0.3);
+            position: relative;
             overflow: hidden;
         }
 
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-cyan) 100%);
-            width: 0%;
-            transition: width 0.5s ease;
-            border-radius: 4px;
-        }
-
-        .progress-text {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            margin-top: 0.5rem;
+        .form-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-blue));
         }
 
         .form-step {
             display: none;
-            animation: slideInRight 0.5s ease-out;
+            animation: slideIn 0.5s ease-out;
         }
 
         .form-step.active {
             display: block;
         }
 
-        @keyframes slideInRight {
+        @keyframes slideIn {
             from {
                 opacity: 0;
                 transform: translateX(30px);
@@ -737,340 +490,178 @@
             }
         }
 
-        .step-header {
-            text-align: center;
-            margin-bottom: 1.5rem;
-        }
-
-        .step-title {
-            font-size: 1.6rem;
-            font-weight: 600;
+        .form-step h3 {
+            font-size: 2rem;
+            margin-bottom: 30px;
             color: var(--text-primary);
-            margin-bottom: 0.5rem;
+            text-align: center;
+            font-weight: 600;
         }
 
-        .step-description {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-        }
-
-        /* COMPACT FORM OPTIONS - MAIN IMPROVEMENT */
-        .form-options {
+        .options-grid {
             display: grid;
-            gap: 0.75rem;
-            margin: 1.5rem 0;
-            max-width: 900px;
-            margin-left: auto;
-            margin-right: auto;
+            gap: 20px;
+            margin-bottom: 40px;
         }
 
-        /* Income options - 2 columns on desktop, 1 on mobile */
-        .income-options {
-            grid-template-columns: repeat(2, 1fr);
-        }
-
-        /* Category options - 2 columns on desktop */
-        .category-options {
-            grid-template-columns: repeat(2, 1fr);
-        }
-
-        /* Age options - 3 columns to fit all on one screen */
-        .age-options {
-            grid-template-columns: repeat(3, 1fr);
-        }
-
-        /* COMPACT OPTION CARDS */
         .option-card {
-            background: var(--bg-card);
-            border: 2px solid var(--border);
-            border-radius: 8px;
-            padding: 0.75rem 1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            text-align: center;
-            min-height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .option-card:hover {
-            border-color: var(--accent-blue);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(0, 102, 255, 0.15);
-            background: rgba(0, 102, 255, 0.05);
-        }
-
-        .option-card.selected {
-            border-color: var(--accent-blue);
-            background: rgba(0, 102, 255, 0.1);
-        }
-
-        .option-card h3 {
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: var(--text-primary);
-            margin: 0;
-            line-height: 1.3;
-        }
-
-        /* COMPACT CATEGORY CARDS */
-        .category-card {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            text-align: left;
-            width: 100%;
-        }
-
-        .category-icon {
-            font-size: 1.5rem;
-            transition: transform 0.3s ease;
-            flex-shrink: 0;
-        }
-
-        .option-card:hover .category-icon {
-            transform: scale(1.1);
-        }
-
-        .category-content h3 {
-            color: var(--text-primary);
-            font-size: 1rem;
-            font-weight: 600;
-            margin-bottom: 0.25rem;
-            line-height: 1.2;
-        }
-
-        .category-content p {
-            color: var(--text-secondary);
-            font-size: 0.8rem;
-            line-height: 1.3;
-            margin: 0;
-        }
-
-        .form-actions {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-top: 2rem;
-        }
-
-        .btn {
-            padding: 0.9rem 2rem;
-            border: none;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-family: var(--sans);
-            font-size: 1rem;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-cyan) 100%);
-            color: white;
-            box-shadow: 0 4px 15px rgba(0, 102, 255, 0.3);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0, 102, 255, 0.4);
-        }
-
-        .btn-primary:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        /* Results Section */
-        .results-section {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-
-        .results-header {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-
-        .results-title {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--accent-blue);
-            margin-bottom: 1rem;
-        }
-
-        .user-profile {
-            background: var(--bg-card);
-            padding: 2rem;
-            border-radius: 16px;
-            border: 1px solid var(--border);
-            margin-bottom: 2rem;
-        }
-
-        .profile-title {
-            color: var(--text-primary);
-            font-size: 1.3rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-        }
-
-        .profile-details {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-        }
-
-        .profile-item {
-            color: var(--text-secondary);
-        }
-
-        .profile-item strong {
-            color: var(--text-primary);
-        }
-
-        .card-recommendations {
-            display: grid;
-            gap: 2rem;
-        }
-
-        .card-result {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 2rem;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .card-result:hover {
-            border-color: var(--accent-blue);
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0, 102, 255, 0.1);
-        }
-
-        .card-rank {
-            display: inline-block;
-            background: var(--accent-blue);
-            color: white;
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-        }
-
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: start;
-            margin-bottom: 1rem;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-
-        .card-info h3 {
-            color: var(--text-primary);
-            font-size: 1.4rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-
-        .card-bank {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-
-        .card-fee {
-            text-align: right;
-            flex-shrink: 0;
-        }
-
-        .fee-label {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-
-        .fee-amount {
-            color: var(--accent-cyan);
-            font-weight: 600;
-            font-size: 1.2rem;
-        }
-
-        .card-benefits {
-            color: var(--text-secondary);
-            line-height: 1.6;
-            margin-bottom: 1.5rem;
-        }
-
-        .card-actions {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .btn-apply {
-            flex: 1;
-            background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-cyan) 100%);
-            color: white;
-            padding: 0.75rem 1.5rem;
-            border: none;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .btn-apply:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0, 102, 255, 0.4);
-        }
-
-        .btn-secondary {
             background: transparent;
-            color: var(--accent-blue);
-            border: 1px solid var(--accent-blue);
-            padding: 0.75rem 1.5rem;
-            border-radius: 8px;
-            font-weight: 600;
+            border: 2px solid var(--border);
+            border-radius: 15px;
+            padding: 25px;
             cursor: pointer;
             transition: all 0.3s ease;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
         }
 
-        .btn-secondary:hover {
-            background: var(--accent-blue);
-            color: white;
-        }
-
-        /* Loading Animation */
-        .loading-screen {
-            display: none;
-            position: fixed;
+        .option-card::before {
+            content: '';
+            position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: var(--bg-dark);
-            z-index: 9999;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
+            background: linear-gradient(135deg, rgba(0, 119, 182, 0.05), rgba(0, 180, 216, 0.05));
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
 
-        .loading-screen.active {
+        .option-card:hover::before {
+            opacity: 1;
+        }
+
+        .option-card:hover {
+            border-color: var(--accent-blue);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 119, 182, 0.1);
+        }
+
+        .option-card.selected {
+            border-color: var(--accent-cyan);
+            background: linear-gradient(135deg, rgba(0, 119, 182, 0.1), rgba(0, 180, 216, 0.1));
+            box-shadow: 0 10px 30px rgba(0, 180, 216, 0.2);
+        }
+
+        .option-card h4 {
+            color: var(--text-primary);
+            margin-bottom: 8px;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .option-card p {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        .form-buttons {
             display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
         }
 
-        .loader {
-            width: 60px;
-            height: 60px;
+        .btn {
+            padding: 15px 30px;
+            border-radius: 50px;
+            border: none;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-secondary);
+            border: 2px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--accent-blue);
+            color: var(--accent-cyan);
+            transform: translateY(-2px);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan));
+            color: white;
+            box-shadow: 0 5px 15px rgba(0, 119, 182, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 180, 216, 0.4);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 50px;
+        }
+
+        .loading.active {
+            display: block;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .spinner-container {
+            position: relative;
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 30px;
+        }
+
+        .spinner {
+            width: 80px;
+            height: 80px;
             border: 4px solid var(--border);
-            border-top: 4px solid var(--accent-blue);
+            border-top: 4px solid var(--accent-cyan);
             border-radius: 50%;
             animation: spin 1s linear infinite;
-            margin-bottom: 2rem;
+        }
+
+        .spinner-glow {
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0, 180, 216, 0.2) 0%, transparent 70%);
+            animation: pulse 2s ease-in-out infinite;
         }
 
         @keyframes spin {
@@ -1078,1289 +669,1224 @@
             100% { transform: rotate(360deg); }
         }
 
-        .loading-text {
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.1); }
+        }
+
+        .loading h3 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
             color: var(--text-primary);
-            font-size: 1.2rem;
-            text-align: center;
         }
 
-        .loading-progress {
+        .loading p {
             color: var(--text-secondary);
-            font-size: 0.9rem;
-            margin-top: 0.5rem;
+            font-size: 1.1rem;
         }
 
-        
-        /* Supported Cards Overview Section */
-        .supported-cards-preview {
-            text-align: center;
+        /* Results Section */
+        .results {
+            display: none;
+            padding: 50px;
+            animation: slideInUp 0.8s ease-out;
         }
 
-        .banks-showcase {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 2rem;
-            margin: 3rem 0;
-            max-width: 1000px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .bank-preview {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 2rem 1rem;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .bank-preview:hover {
-            transform: translateY(-8px);
-            border-color: var(--accent-blue);
-            box-shadow: 0 15px 30px rgba(0, 102, 255, 0.15);
-            background: rgba(0, 102, 255, 0.03);
-        }
-
-        .bank-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            transition: transform 0.3s ease;
-        }
-
-        .bank-preview:hover .bank-icon {
-            transform: scale(1.1);
-        }
-
-        .bank-preview h3 {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 0.5rem;
-        }
-
-        .bank-preview p {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-
-        .cards-stats {
-            display: flex;
-            justify-content: center;
-            gap: 3rem;
-            margin: 3rem 0;
-            flex-wrap: wrap;
-        }
-
-        .stat-highlight {
-            text-align: center;
-        }
-
-        .stat-highlight .stat-number {
+        .results.active {
             display: block;
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--accent-blue);
-            margin-bottom: 0.5rem;
         }
 
-        .stat-highlight .stat-label {
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .results h3 {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            color: var(--text-primary);
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .user-profile-card {
+            background: linear-gradient(135deg, rgba(0, 119, 182, 0.1), rgba(0, 180, 216, 0.1));
+            border: 1px solid var(--accent-blue);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(0, 119, 182, 0.1);
+        }
+
+        .user-profile-card h4 {
+            margin-bottom: 20px;
+            color: var(--text-primary);
+            font-size: 1.3rem;
+            text-align: center;
+        }
+
+        .profile-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+        }
+
+        .profile-item {
+            text-align: center;
+            padding: 15px;
+            background: rgba(0, 119, 182, 0.05);
+            border-radius: 10px;
+        }
+
+        .profile-label {
             color: var(--text-secondary);
             font-size: 0.9rem;
-            font-weight: 500;
+            margin-bottom: 5px;
         }
 
-        .section-cta {
-            margin-top: 3rem;
-        }
-
-        .explore-cards-btn {
-            display: inline-flex;
-            align-items: center;
-            padding: 1rem 2rem;
-            background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-cyan) 100%);
-            color: white;
-            border: none;
-            border-radius: 8px;
+        .profile-value {
+            color: var(--text-primary);
             font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .recommendations {
+            display: grid;
+            gap: 25px;
+            margin-top: 40px;
+        }
+
+        .recommendation-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 30px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 29, 61, 0.3);
+        }
+
+        .recommendation-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-blue));
+        }
+
+        .recommendation-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-blue);
+            box-shadow: 0 20px 40px rgba(0, 119, 182, 0.2);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 20px;
+        }
+
+        .card-name {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .card-bank {
+            background: var(--accent-blue);
+            color: white;
+            padding: 6px 15px;
+            border-radius: 25px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .match-percentage {
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+            color: white;
+            padding: 8px 16px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+
+        .card-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .detail-item {
+            text-align: center;
+            padding: 15px;
+            background: rgba(0, 119, 182, 0.05);
+            border-radius: 10px;
+        }
+
+        .detail-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 5px;
+        }
+
+        .detail-value {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .card-features {
+            margin-bottom: 25px;
+        }
+
+        .card-features h4 {
             font-size: 1rem;
+            color: var(--text-secondary);
+            margin-bottom: 10px;
+        }
+
+        .card-features p {
+            color: var(--text-primary);
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .apply-btn {
+            width: 100%;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan));
+            color: white;
+            padding: 15px;
+            border-radius: 50px;
+            border: none;
+            font-weight: 600;
+            font-size: 1.1rem;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0, 102, 255, 0.3);
-        }
-
-        .explore-cards-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0, 102, 255, 0.4);
-        }
-
-        /* Supported Cards Full Page Styles */
-        .supported-cards-container {
-            margin: 2rem 0;
-        }
-
-        .bank-section {
-            background: var(--bg-card);
-            border-radius: 16px;
-            border: 1px solid var(--border);
-            margin-bottom: 2rem;
+            position: relative;
             overflow: hidden;
         }
 
-        .bank-header {
-            background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-cyan) 100%);
-            color: white;
-            padding: 1.5rem 2rem;
+        .apply-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .apply-btn:hover::before {
+            left: 100%;
+        }
+
+        .apply-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 180, 216, 0.3);
+        }
+
+        /* All Cards Section */
+        .all-cards-section {
+            display: none;
+            padding: 120px 0;
+            animation: fadeIn 0.5s ease-out;
+            background: linear-gradient(180deg, transparent 0%, rgba(0, 119, 182, 0.03) 50%, transparent 100%);
+        }
+
+        .all-cards-section.active {
+            display: block;
+        }
+
+        .bank-tabs {
             display: flex;
-            align-items: center;
-            gap: 1rem;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 50px;
+            justify-content: center;
+            padding: 0 20px;
         }
 
-        .bank-logo {
-            font-size: 2rem;
-            font-weight: bold;
+        .bank-tab {
+            padding: 12px 25px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 25px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
         }
 
-        .bank-info h2 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 0.25rem;
-        }
-
-        .bank-info p {
-            opacity: 0.9;
-            font-size: 0.9rem;
+        .bank-tab:hover,
+        .bank-tab.active {
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan));
+            color: white;
+            border-color: var(--accent-blue);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 119, 182, 0.3);
         }
 
         .cards-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 1.5rem;
-            padding: 2rem;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 25px;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
         }
 
-        .supported-card-item {
-            background: rgba(0, 102, 255, 0.02);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 1.5rem;
-            transition: all 0.3s ease;
-        }
-
-        .supported-card-item:hover {
-            border-color: var(--accent-blue);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0, 102, 255, 0.1);
-        }
-
-        .card-title {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 0.5rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: start;
-        }
-
-        .card-category {
-            display: inline-block;
-            background: var(--accent-blue);
-            color: white;
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
-            font-size: 0.7rem;
-            font-weight: 600;
-        }
-
-        .card-fee {
-            color: var(--accent-cyan);
-            font-weight: 600;
-            font-size: 1rem;
-            margin-bottom: 0.75rem;
-        }
-
-        .card-benefits {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            line-height: 1.5;
-            margin-bottom: 1rem;
-        }
-
-        .card-income-brackets {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-        }
-
-        .income-bracket {
-            background: rgba(0, 102, 255, 0.1);
-            color: var(--accent-blue);
-            padding: 0.25rem 0.5rem;
-            border-radius: 6px;
-            font-size: 0.8rem;
-            font-weight: 500;
-        }
-
-        .stats-summary {
+        .card-mini {
             background: var(--bg-card);
-            border-radius: 12px;
             border: 1px solid var(--border);
-            padding: 2rem;
-            margin-bottom: 2rem;
+            border-radius: 20px;
+            padding: 25px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 29, 61, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-mini::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-blue));
+        }
+
+        .card-mini:hover {
+            border-color: var(--accent-blue);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 119, 182, 0.2);
+        }
+
+        .card-mini .card-name {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .card-mini .card-details {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .card-mini .detail-item {
+            padding: 10px;
+            font-size: 0.9rem;
+        }
+
+        .card-mini .card-features {
+            margin-bottom: 20px;
+        }
+
+        .card-mini .card-features p {
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, var(--bg-card), var(--bg-accent));
+            border-top: 1px solid var(--border);
+            padding: 60px 0 30px;
             text-align: center;
+            position: relative;
         }
 
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 2rem;
-            margin-top: 1rem;
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-blue));
         }
 
-        .stat-item {
-            text-align: center;
+        footer p {
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+            font-size: 1rem;
         }
 
-        .stat-number {
+        .footer-logo {
+            font-family: var(--mono);
             font-size: 2rem;
             font-weight: 700;
-            color: var(--accent-blue);
-            display: block;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
         }
 
-        .stat-label {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            margin-top: 0.5rem;
-        }
-
+        /* Responsive Design */
         @media (max-width: 768px) {
-            .banks-showcase {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 1rem;
+            .hero h1 {
+                font-size: 3rem;
             }
 
-            .cards-stats {
-                gap: 2rem;
+            .section-title {
+                font-size: 2.5rem;
             }
 
-            .stat-highlight .stat-number {
-                font-size: 2rem;
+            .nav-links {
+                display: none;
             }
 
-            .cards-grid {
+            .form-container {
+                margin: 20px;
+                padding: 30px 20px;
+            }
+
+            .features-grid {
                 grid-template-columns: 1fr;
-                padding: 1rem;
-            }
-
-            .bank-header {
-                padding: 1rem;
-                flex-direction: column;
-                text-align: center;
-                gap: 0.5rem;
             }
 
             .stats-grid {
                 grid-template-columns: repeat(2, 1fr);
-                gap: 1rem;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
             }
         }
 
         @media (max-width: 480px) {
-            .banks-showcase {
-                grid-template-columns: 1fr;
-            }
-
-            .cards-stats {
-                flex-direction: column;
-                gap: 1rem;
-            }
-        }
-
-        /* Responsive Design */
-        @media (max-width: 1024px) {
-            .hero-title {
-                font-size: 3rem;
-            }
-
-            .form-title {
-                font-size: 2rem;
-            }
-
-            .income-options {
-                grid-template-columns: 1fr;
-            }
-
-            .category-options {
-                grid-template-columns: 1fr;
-            }
-
-            .age-options {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media (max-width: 768px) {
-            .hero-title {
+            .hero h1 {
                 font-size: 2.5rem;
             }
 
-            .hero-description {
-                font-size: 1.1rem;
+            .hero-subtitle {
+                font-size: 1.2rem;
             }
 
-            .form-title {
-                font-size: 1.8rem;
-            }
-
-            .nav-container {
-                padding: 1rem;
-            }
-
-            .nav-left {
-                gap: 1rem;
-            }
-
-            .logo {
-                font-size: 1.5rem;
-            }
-
-            .nav-menu {
-                display: none;
-            }
-
-            .header-cta-btn {
-                padding: 0.6rem 1rem;
-                font-size: 0.8rem;
-            }
-
-            .section {
-                padding: 4rem 1rem;
-            }
-
-            .income-options,
-            .category-options {
+            .stats-grid {
                 grid-template-columns: 1fr;
-            }
-
-            .age-options {
-                grid-template-columns: 1fr;
-            }
-
-            .card-header {
-                flex-direction: column;
-                align-items: start;
-            }
-
-            .card-fee {
-                text-align: left;
-            }
-
-            .card-actions {
-                flex-direction: column;
-            }
-
-            /* Hide matrix effects on mobile for performance */
-            .matrix-background {
-                display: none;
-            }
-
-            /* Hide card hints on mobile for performance */
-            .card-hints {
-                display: none;
             }
         }
 
-        @media (max-width: 480px) {
-            .nav-container {
-                flex-direction: column;
-                gap: 1rem;
-                padding: 0.75rem 1rem;
-            }
+        /* Smooth Scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
 
-            .nav-left {
-                justify-content: center;
-            }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
 
-            .header-cta-btn {
-                width: 100%;
-                justify-content: center;
-            }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-dark);
+        }
 
-            .hero-title {
-                font-size: 2rem;
-            }
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent-blue);
+            border-radius: 4px;
+        }
 
-            .form-title {
-                font-size: 1.6rem;
-            }
-
-            .form-container {
-                padding: 0.5rem;
-            }
-
-            .option-card {
-                padding: 0.5rem;
-                min-height: 50px;
-            }
-
-            .option-card h3 {
-                font-size: 0.85rem;
-            }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-cyan);
         }
     </style>
 </head>
 <body>
-<!-- Simple Static Background -->
-<div class="static-background"></div>
-<!-- Matrix/Glitch Background (Homepage Only) -->
-<div class="matrix-background">
-<!-- Matrix Rain -->
-<div class="matrix-rain">01001100 01101111 01110110 01100101</div>
-<div class="matrix-rain">01000011 01110010 01100101 01100100</div>
-<div class="matrix-rain">01011000 11000000 10101010 01010101</div>
-<div class="matrix-rain">01000001 01001001 00100000 01000011</div>
-<div class="matrix-rain">01000010 01101100 01110101 01100101</div>
-<div class="matrix-rain">01010000 01101100 01100001 01110100</div>
-<div class="matrix-rain">01000110 01101001 01101110 01100001</div>
-<div class="matrix-rain">01000011 01100001 01110010 01100100</div>
-<div class="matrix-rain">01000100 01100001 01110100 01100001</div>
-<div class="matrix-rain">01000010 01100001 01101110 01101011</div>
-<!-- Glitch Lines -->
-<div class="glitch-line"></div>
-<div class="glitch-line"></div>
-<div class="glitch-line"></div>
-<!-- Floating Code -->
-<div class="code-float">function findCard() {</div>
-<div class="code-float">if (user.income &gt; 500000) {</div>
-<div class="code-float">return bestMatch;</div>
-<div class="code-float">} else { continue; }</div>
-<div class="code-float">const creditScore = 750;</div>
-</div>
-<!-- Credit Card Hints (Homepage Only) -->
-<div class="card-hints">
-<!-- Floating Credit Cards -->
-<div class="card-float"></div>
-<div class="card-float"></div>
-<div class="card-float"></div>
-<div class="card-float"></div>
-<div class="card-float"></div>
-<div class="card-float"></div>
-<div class="card-float"></div>
-<div class="card-float"></div>
-</div>
-<!-- Loading Screen -->
-<div class="loading-screen" id="loadingScreen">
-<div class="loader"></div>
-<div class="loading-text">Finding Your Perfect Credit Cards...</div>
-<div class="loading-progress" id="loadingProgress">Analyzing your profile...</div>
-</div>
-<!-- Navigation -->
-<nav>
-<div class="nav-container" id="navContainer">
-<div class="nav-left">
-<div class="logo" onclick="showPage('homepage')"><img alt="" class="credx-logo" src="https://github.com/DhruvR123/CredX/blob/main/Screenshot%202025-09-23%20093013.png?raw=true" style="width:84px; height:84px; object-fit:contain; margin-right:8px;"/></div>
-<ul class="nav-menu" id="navMenu">
-<li><button onclick="scrollToSection('features')">Features</button></li>
-<li><button onclick="scrollToSection('supported-cards')">Supported Cards</button></li>
-<li><button onclick="scrollToSection('how-it-works')">How It Works</button></li>
-<li><button onclick="scrollToSection('about')">About</button></li>
-</ul>
-</div>
-<!-- Header CTA Button -->
-<button class="header-cta-btn" id="headerCTA" onclick="startFormProcess()">
-                Find Cards
-            </button>
-</div>
-</nav>
-<!-- HOMEPAGE -->
-<div class="page active homepage" id="homepage">
-<!-- Hero Section -->
-<section class="hero" id="heroSection">
-<div class="hero-content">
-<h1 class="hero-title" data-text="Find Your Perfect Credit Card">Find Your Perfect Credit Card</h1>
-<p class="hero-description">
-                    CredX is our most advanced credit card discovery platform. Using AI-powered matching algorithms, we analyze your spending patterns, income profile, and financial goals to recommend the perfect credit cards from leading banks like HDFC, SBI, ICICI, Axis Bank, and more.
-                </p>
-</div>
-</section>
-<!-- Features Section -->
-<section class="section" id="features">
-<div class="section-header">
-<div class="section-number">.01</div>
-<h2 class="section-title">WHY CHOOSE CREDX</h2>
-<p class="section-description">
-                    Discover the advantages that make CredX the most trusted credit card recommendation platform in India.
-                </p>
-</div>
-<div class="features-grid">
-<div class="feature-item">
-<div class="feature-icon">🔒</div>
-<h3 class="feature-title">100% Secure</h3>
-<p class="feature-description">
-                        Your data is encrypted and protected. We never store sensitive information and maintain complete privacy.
-                    </p>
-</div>
-<div class="feature-item">
-<div class="feature-icon">⚡</div>
-<h3 class="feature-title">Instant Results</h3>
-<p class="feature-description">
-                        Get personalized recommendations in under 30 seconds. No waiting, no delays - just fast, accurate matches.
-                    </p>
-</div>
-<div class="feature-item">
-<div class="feature-icon">🏦</div>
-<h3 class="feature-title">Support for Major Banks </h3>
-<p class="feature-description">
-                        We support and collect data from leading banks like SBI, HDFC, AXIS BANK, American Express and more!
-                    </p>
-</div>
-<div class="feature-item">
-<div class="feature-icon">🆓</div>
-<h3 class="feature-title">Completely Free</h3>
-<p class="feature-description">
-                        CredX is 100% free for users. No hidden charges, no subscription fees - just honest recommendations.
-                    </p>
-</div>
-<div class="feature-item">
-<div class="feature-icon">📊</div>
-<h3 class="feature-title">Real-time Offers</h3>
-<p class="feature-description">
-                        Access to the latest offers, promotional rates, and limited-time bonuses updated in real-time.
-                    </p>
-</div>
-<div class="feature-item">
-<div class="feature-icon">🎯</div>
-<h3 class="feature-title">Personalized Matching</h3>
-<p class="feature-description">
-                        Unlike generic comparison sites, we provide truly personalized recommendations based on your profile.
-                    </p>
-</div>
-</div>
-</section>
-<!-- Supported Cards Section -->
-<section class="section" id="supported-cards">
-<div class="section-header">
-<div class="section-number">.02</div>
-<h2 class="section-title">SUPPORTED CARDS</h2>
-<p class="section-description">
-                    Browse our comprehensive database of 29+ credit cards from leading banks including HDFC, SBI, ICICI, Axis Bank, and American Express. Each card is carefully analyzed for rewards, benefits, and eligibility criteria.
-                </p>
-</div>
-<div class="supported-cards-preview">
-<div class="banks-showcase">
-<div class="bank-preview">
-<div class="bank-icon">🏦</div>
-<h3>HDFC Bank</h3>
-<p>7 cards available</p>
-</div>
-<div class="bank-preview">
-<div class="bank-icon">🏛️</div>
-<h3>SBI Card</h3>
-<p>6 cards available</p>
-</div>
-<div class="bank-preview">
-<div class="bank-icon">🏢</div>
-<h3>ICICI Bank</h3>
-<p>5 cards available</p>
-</div>
-<div class="bank-preview">
-<div class="bank-icon">🏪</div>
-<h3>Axis Bank</h3>
-<p>4 cards available</p>
-</div>
-<div class="bank-preview">
-<div class="bank-icon">💳</div>
-<h3>American Express</h3>
-<p>7 cards available</p>
-</div>
-</div>
-<div class="cards-stats">
-<div class="stat-highlight">
-<span class="stat-number">29+</span>
-<span class="stat-label">Credit Cards</span>
-</div>
-<div class="stat-highlight">
-<span class="stat-number">5</span>
-<span class="stat-label">Major Banks</span>
-</div>
-<div class="stat-highlight">
-<span class="stat-number">6</span>
-<span class="stat-label">Free Cards</span>
-</div>
-</div>
-<div class="section-cta">
-<button class="explore-cards-btn" onclick="showPage('supported-cards-full')">
-                        Explore All Cards
-                    </button>
-</div>
-</div>
-</section>
-<!-- How It Works Section -->
-<section class="section" id="how-it-works">
-<div class="section-header">
-<div class="section-number">.03</div>
-<h2 class="section-title">HOW IT WORKS</h2>
-<p class="section-description">
-                    Our intelligent matching process analyzes your profile to deliver personalized recommendations in three simple steps.
-                </p>
-</div>
-<div class="steps-grid">
-<div class="step-card">
-<div class="step-number">1</div>
-<h3 class="step-title">Share Your Profile</h3>
-<p class="step-description">
-                        Share your income, spending categories, and preferences. Our secure system analyzes this data to understand your financial profile.
-                    </p>
-</div>
-<div class="step-card">
-<div class="step-number">2</div>
-<h3 class="step-title">AI-Powered Analysis</h3>
-<p class="step-description">
-                        Our advanced algorithm compares your profile against 500+ credit cards, analyzing rewards, fees, eligibility, and benefits.
-                    </p>
-</div>
-<div class="step-card">
-<div class="step-number">3</div>
-<h3 class="step-title">Get Personalized Matches</h3>
-<p class="step-description">
-                        Receive personalized card recommendations ranked by suitability, with detailed comparisons and application links.
-                    </p>
-</div>
-</div>
-</section>
-<!-- About Section -->
-<section class="section" id="about">
-<div class="section-header">
-<div class="section-number">.04</div>
-<h2 class="section-title">ABOUT CREDX</h2>
-<p class="section-description">
-                    CredX revolutionizes credit card discovery in India by leveraging machine learning and big data analytics. Our platform processes thousands of card offers, terms, and benefits to provide personalized recommendations.
-                </p>
-</div>
-</section>
-<!-- CTA Section -->
-<section class="cta-section">
-<h2 class="cta-title">Ready to Find Your Perfect Credit Card?</h2>
-<p class="cta-description">
-                Join thousands of satisfied users who found their ideal credit cards through CredX. 
-                Start your personalized search now and discover cards that truly match your lifestyle.
-            </p>
-<button class="start-search-btn" onclick="startFormProcess()">
-                Start Card Search
-            </button>
-</section>
-<!-- Footer -->
-<footer class="footer">
-<div class="footer-content">
-<p class="footer-text">
-                    © 2025 CredX. All rights reserved. | Privacy Policy | Terms of Service<br/>
-                    CredX is a credit card recommendation platform. We are not a bank or financial institution.
-                </p>
-</div>
-</footer>
-</div>
-<!-- FORM PAGE -->
-<div class="page" id="form">
-<div class="form-page">
-<!-- Simplified Header - No back button -->
-<nav>
-<div class="nav-container">
-<div class="form-header">
-<div class="logo" onclick="showPage('homepage')">CredX</div>
-</div>
-</div>
-</nav>
-<div class="form-container">
-<!-- Welcome Section -->
-<div class="form-welcome">
-<div class="form-icon">🎯</div>
-<h1 class="form-title">Find Your Perfect Credit Card</h1>
-<p class="form-subtitle">
-                        Answer a few quick questions to get personalized credit card recommendations tailored to your lifestyle and financial profile.
-                    </p>
-</div>
-<!-- Progress Indicator -->
-<div class="progress-container">
-<div class="progress-bar">
-<div class="progress-fill" id="progressFill"></div>
-</div>
-<div class="progress-text" id="progressText">Step 1 of 3</div>
-</div>
-<!-- Form Steps -->
-<div class="form-step active" id="step1">
-<div class="step-header">
-<h2 class="step-title">Annual Income</h2>
-<p class="step-description">Select your yearly income range</p>
-</div>
-<div class="form-options income-options">
-<div class="option-card" onclick="selectOption(this, '4-8')">
-<h3>₹4,00,000 - ₹8,00,000 LPA</h3>
-</div>
-<div class="option-card" onclick="selectOption(this, '8-15')">
-<h3>₹8,00,000 - ₹15,00,000 LPA</h3>
-</div>
-<div class="option-card" onclick="selectOption(this, '15-25')">
-<h3>₹15,00,000 - ₹25,00,000 LPA</h3>
-</div>
-<div class="option-card" onclick="selectOption(this, '25-50')">
-<h3>₹25,00,000 - ₹50,00,000 LPA</h3>
-</div>
-<div class="option-card" onclick="selectOption(this, '50-75')">
-<h3>₹50,00,000 - ₹75,00,000 LPA</h3>
-</div>
-<div class="option-card" onclick="selectOption(this, '75-125')">
-<h3>₹75,00,000 - ₹1,25,00,000 LPA</h3>
-</div>
-<div class="option-card" onclick="selectOption(this, '125-200')">
-<h3>₹1,25,00,000 - ₹2,00,00,000 LPA</h3>
-</div>
-<div class="option-card" onclick="selectOption(this, '200+')">
-<h3>₹2,00,00,000+ LPA</h3>
-</div>
-</div>
-<div class="form-actions">
-<button class="btn btn-primary" disabled="" id="step1Next" onclick="nextStep()">Next Step</button>
-</div>
-</div>
-<div class="form-step" id="step2">
-<div class="step-header">
-<h2 class="step-title">Spending Priority</h2>
-<p class="step-description">What matters most to you?</p>
-</div>
-<div class="form-options category-options">
-<div class="option-card" onclick="selectOption(this, 'CASHBACK')">
-<div class="category-card">
-<div class="category-icon">💰</div>
-<div class="category-content">
-<h3>Cashback</h3>
-<p>Instant rewards on everyday purchases</p>
-</div>
-</div>
-</div>
-<div class="option-card" onclick="selectOption(this, 'TRAVEL')">
-<div class="category-card">
-<div class="category-icon">✈️</div>
-<div class="category-content">
-<h3>Travel Rewards</h3>
-<p>Miles, lounge access, travel benefits</p>
-</div>
-</div>
-</div>
-<div class="option-card" onclick="selectOption(this, 'PREMIUM')">
-<div class="category-card">
-<div class="category-icon">👑</div>
-<div class="category-content">
-<h3>Premium Lifestyle</h3>
-<p>Luxury benefits and concierge services</p>
-</div>
-</div>
-</div>
-<div class="option-card" onclick="selectOption(this, 'BUSINESS')">
-<div class="category-card">
-<div class="category-icon">💼</div>
-<div class="category-content">
-<h3>Business</h3>
-<p>Corporate benefits and expense tools</p>
-</div>
-</div>
-</div>
-<div class="option-card" onclick="selectOption(this, 'FUEL')">
-<div class="category-card">
-<div class="category-icon">⛽</div>
-<div class="category-content">
-<h3>Fuel &amp; Utility</h3>
-<p>High rewards on fuel and bills</p>
-</div>
-</div>
-</div>
-<div class="option-card" onclick="selectOption(this, 'STUDENT')">
-<div class="category-card">
-<div class="category-icon">🎓</div>
-<div class="category-content">
-<h3>Student &amp; Starter</h3>
-<p>Low fees and entry-level benefits</p>
-</div>
-</div>
-</div>
-</div>
-<div class="form-actions">
-<button class="btn btn-primary" disabled="" id="step2Next" onclick="nextStep()">Next Step</button>
-</div>
-</div>
-<div class="form-step" id="step3">
-<div class="step-header">
-<h2 class="step-title">Age Group</h2>
-<p class="step-description">Select your age range</p>
-</div>
-<div class="form-options age-options">
-<div class="option-card" onclick="selectOption(this, '18-24')">
-<h3>18 - 24 years</h3>
-</div>
-<div class="option-card" onclick="selectOption(this, '25-30')">
-<h3>25 - 30 years</h3>
-</div>
-<div class="option-card" onclick="selectOption(this, '30-40')">
-<h3>30 - 40 years</h3>
-</div>
-<div class="option-card" onclick="selectOption(this, '40-60')">
-<h3>40 - 60 years</h3>
-</div>
-<div class="option-card" onclick="selectOption(this, '60+')">
-<h3>60+ years</h3>
-</div>
-</div>
-<div class="form-actions">
-<button class="btn btn-primary" disabled="" id="step3Next" onclick="findCards()">Find My Perfect Cards</button>
-</div>
-</div>
-</div>
-</div>
-</div>
-<!-- RESULTS PAGE -->
-<div class="page" id="results">
-<div class="form-page">
-<nav>
-<div class="nav-container">
-<div class="form-header">
-<div class="logo" onclick="showPage('homepage')">CredX</div>
-</div>
-</div>
-</nav>
-<div class="results-section">
-<div class="results-header">
-<h1 class="results-title">🎯 Your Perfect Card Matches</h1>
-</div>
-<div class="user-profile" id="userProfile">
-<h3 class="profile-title">Your Profile:</h3>
-<div class="profile-details" id="profileDetails">
-<!-- Profile details will be populated by JavaScript -->
-</div>
-</div>
-<div class="card-recommendations" id="cardRecommendations">
-<!-- Card recommendations will be populated by JavaScript -->
-</div>
-<div class="form-actions" style="margin-top: 3rem;">
-<button class="btn btn-secondary" onclick="startFormProcess()">Search Again</button>
-<button class="btn btn-primary" onclick="showPage('homepage')">Back to Home</button>
-</div>
-</div>
-</div>
-</div>
-<!-- SUPPORTED CARDS FULL PAGE -->
-<div class="page" id="supported-cards-full">
-<div class="form-page">
-<nav>
-<div class="nav-container">
-<div class="form-header">
-<div class="logo" onclick="showPage('homepage')">CredX</div>
-</div>
-</div>
-</nav>
-<div class="form-container" style="max-width: 1200px;">
-<div class="form-welcome">
-<div class="form-icon">🏦</div>
-<h1 class="form-title">All Supported Credit Cards</h1>
-<p class="form-subtitle">
-                        CredX supports 29+ credit cards from leading banks and financial institutions. Here are all the cards currently in our recommendation database, organized by bank.
-                    </p>
-</div>
-<div class="supported-cards-container" id="supportedCardsList">
-<!-- Will be populated by JavaScript -->
-</div>
-<div class="form-actions" style="margin-top: 3rem;">
-<button class="btn btn-primary" onclick="showPage('homepage')">Back to Home</button>
-<button class="btn btn-secondary" onclick="startFormProcess()">Find My Cards</button>
-</div>
-</div>
-</div>
-</div>
-<script>
+    <!-- Animated Background -->
+    <div class="bg-animation">
+        <div class="floating-shapes">
+            <div class="shape"></div>
+            <div class="shape"></div>
+            <div class="shape"></div>
+            <div class="shape"></div>
+        </div>
+    </div>
 
-        // Generate supported cards page
-        function generateSupportedCardsPage() {
-            const cardsByBank = {};
-            creditCards.forEach(card => {
-                if (!cardsByBank[card.bank]) {
-                    cardsByBank[card.bank] = [];
-                }
-                cardsByBank[card.bank].push(card);
-            });
+    <nav id="navbar">
+        <div class="nav-container">
+            <div class="logo" onclick="scrollToSection('hero')">
+                <span class="logo-text">CredX</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#hero" onclick="scrollToSection('hero')" class="active">Home</a></li>
+                <li><a href="#features" onclick="scrollToSection('features')">Features</a></li>
+                <li><a href="#form" onclick="scrollToSection('form')">Find Card</a></li>
+                <li><a href="#all-cards" onclick="showAllCards()">All Cards</a></li>
+            </ul>
+        </div>
+    </nav>
 
-            const bankLogos = {
-                'HDFC Bank': '🏦',
-                'SBI Card': '🏛️',
-                'ICICI Bank': '🏢',
-                'Axis Bank': '🏪',
-                'American Express': '💳'
-            };
+    <section id="hero" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Find Your Perfect Credit Card</h1>
+                <div class="hero-subtitle">Smart Credit Card Discovery Platform</div>
+                <p>India's most advanced AI-powered credit card recommendation platform. We analyze your spending patterns, income profile, and financial goals to recommend the perfect credit cards from 72+ options across 10 major banks.</p>
+                <button class="cta-button" onclick="scrollToSection('form')">Find My Perfect Card</button>
+            </div>
+        </div>
+    </section>
 
-            const bankDescriptions = {
-                'HDFC Bank': `${cardsByBank['HDFC Bank']?.length || 0} cards available`,
-                'SBI Card': `${cardsByBank['SBI Card']?.length || 0} cards available`,
-                'ICICI Bank': `${cardsByBank['ICICI Bank']?.length || 0} cards available`,
-                'Axis Bank': `${cardsByBank['Axis Bank']?.length || 0} cards available`,
-                'American Express': `${cardsByBank['American Express']?.length || 0} cards available`
-            };
+    <section class="stats-section">
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number">72+</div>
+                <div class="stat-label">Credit Cards</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">10</div>
+                <div class="stat-label">Major Banks</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">30s</div>
+                <div class="stat-label">Quick Matching</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">100%</div>
+                <div class="stat-label">Free Service</div>
+            </div>
+        </div>
+    </section>
 
-            const incomeLabels = {
-                '4-8': '₹4-8L', '8-15': '₹8-15L', '15-25': '₹15-25L', '25-50': '₹25-50L',
-                '50-75': '₹50-75L', '75-125': '₹75-125L', '125-200': '₹125-200L', '200+': '₹200L+'
-            };
+    <section id="features" class="features">
+        <div class="container">
+            <h2 class="section-title">Why Choose CredX?</h2>
+            <p class="section-subtitle">Discover the advantages that make CredX the most trusted and advanced credit card recommendation platform in India.</p>
 
-            const categoryColors = {
-                'CASHBACK': '#28a745', 'TRAVEL': '#007bff', 'PREMIUM': '#6f42c1',
-                'BUSINESS': '#fd7e14', 'FUEL': '#dc3545', 'STUDENT': '#17a2b8'
-            };
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3>Secure & Private</h3>
+                    <p>Your data is encrypted and protected with bank-grade security. We never store sensitive information and maintain complete privacy throughout the process.</p>
+                </div>
 
-            const totalCards = creditCards.length;
-            const totalBanks = Object.keys(cardsByBank).length;
-            const freeCards = creditCards.filter(card => card.fee === 0).length;
-            const premiumCards = creditCards.filter(card => card.category === 'PREMIUM').length;
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Lightning Fast AI</h3>
+                    <p>Get personalized recommendations in under 30 seconds using our advanced AI algorithms. No waiting, no delays - just fast, accurate matches.</p>
+                </div>
 
-            let html = `
-                <div class="stats-summary">
-                    <h3 style="color: var(--text-primary); margin-bottom: 1rem;">Database Statistics</h3>
-                    <div class="stats-grid">
-                        <div class="stat-item">
-                            <span class="stat-number">${totalCards}</span>
-                            <div class="stat-label">Total Cards</div>
+                <div class="feature-card">
+                    <div class="feature-icon">🏦</div>
+                    <h3>72+ Cards from 10 Banks</h3>
+                    <p>Comprehensive coverage including HDFC, SBI, ICICI, Axis, American Express, Standard Chartered, Citi, Yes Bank, HSBC, and Kotak Mahindra.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">💯</div>
+                    <h3>100% Free Platform</h3>
+                    <p>CredX is completely free for users. No hidden charges, no subscription fees, no commission bias - just honest, transparent recommendations.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3>AI-Powered Matching</h3>
+                    <p>Unlike generic comparison sites, our AI analyzes multiple factors including income, spending patterns, and preferences for truly personalized matches.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Real-time Database</h3>
+                    <p>Access to the latest card features, offers, promotional rates, and limited-time bonuses updated in real-time from official bank sources.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="form" class="form-section">
+        <div class="container">
+            <h2 class="section-title">Find Your Perfect Card</h2>
+            <p class="section-subtitle">Answer a few quick questions and let our AI find the best credit cards tailored to your unique financial profile and lifestyle.</p>
+
+            <div class="form-container">
+                <!-- Step 1: Income -->
+                <div class="form-step active" id="step-1">
+                    <h3>What's your yearly income?</h3>
+                    <div class="options-grid">
+                        <div class="option-card" onclick="selectOption('income', 'below-3', this)">
+                            <h4>Below ₹3 Lakhs</h4>
+                            <p>Entry level income bracket - Student & entry-level professional cards</p>
                         </div>
-                        <div class="stat-item">
-                            <span class="stat-number">${totalBanks}</span>
-                            <div class="stat-label">Banks</div>
+                        <div class="option-card" onclick="selectOption('income', '3-5', this)">
+                            <h4>₹3-5 Lakhs</h4>
+                            <p>Lower middle income - Good cashback & basic reward cards</p>
                         </div>
-                        <div class="stat-item">
-                            <span class="stat-number">${freeCards}</span>
-                            <div class="stat-label">Free Cards</div>
+                        <div class="option-card" onclick="selectOption('income', '5-10', this)">
+                            <h4>₹5-10 Lakhs</h4>
+                            <p>Middle income - Premium features & higher reward rates</p>
                         </div>
-                        <div class="stat-item">
-                            <span class="stat-number">${premiumCards}</span>
-                            <div class="stat-label">Premium Cards</div>
+                        <div class="option-card" onclick="selectOption('income', '10-25', this)">
+                            <h4>₹10-25 Lakhs</h4>
+                            <p>Upper middle income - Travel benefits & premium perks</p>
+                        </div>
+                        <div class="option-card" onclick="selectOption('income', 'above-25', this)">
+                            <h4>Above ₹25 Lakhs</h4>
+                            <p>High income - Ultra-premium cards & exclusive benefits</p>
                         </div>
                     </div>
+                    <div class="form-buttons">
+                        <button class="btn btn-secondary" style="visibility: hidden;">Previous</button>
+                        <button class="btn btn-primary" onclick="nextStep()" disabled id="next-1">Next Step</button>
+                    </div>
                 </div>
-            `;
 
-            const sortedBanks = Object.keys(cardsByBank).sort();
-
-            sortedBanks.forEach(bank => {
-                const cards = cardsByBank[bank];
-                const logo = bankLogos[bank] || '🏦';
-                const description = bankDescriptions[bank] || `${cards.length} cards available`;
-
-                html += `
-                    <div class="bank-section">
-                        <div class="bank-header">
-                            <div class="bank-logo">${logo}</div>
-                            <div class="bank-info">
-                                <h2>${bank}</h2>
-                                <p>${description}</p>
-                            </div>
+                <!-- Step 2: Priority -->
+                <div class="form-step" id="step-2">
+                    <h3>What matters most to you?</h3>
+                    <div class="options-grid">
+                        <div class="option-card" onclick="selectOption('priority', 'cashback', this)">
+                            <h4>Cashback</h4>
+                            <p>Get money back on every purchase - Perfect for daily spending</p>
                         </div>
-                        <div class="cards-grid">
-                `;
-
-                cards.sort((a, b) => a.name.localeCompare(b.name)).forEach(card => {
-                    const feeText = card.fee === 0 ? 'FREE' : `₹${card.fee.toLocaleString()}`;
-                    const categoryColor = categoryColors[card.category] || '#6c757d';
-
-                    html += `
-                        <div class="supported-card-item">
-                            <div class="card-title">
-                                <span>${card.name}</span>
-                                <span class="card-category" style="background: ${categoryColor}">${card.category}</span>
-                            </div>
-                            <div class="card-fee">Annual Fee: ${feeText}</div>
-                            <div class="card-benefits">${card.benefits}</div>
-                            <div class="card-income-brackets">
-                                ${card.income_brackets.map(bracket => 
-                                    `<span class="income-bracket">${incomeLabels[bracket]}</span>`
-                                ).join('')}
-                            </div>
+                        <div class="option-card" onclick="selectOption('priority', 'rewards', this)">
+                            <h4>Reward Points</h4>
+                            <p>Earn points for flexible redemption - Shopping, travel, or cash</p>
                         </div>
-                    `;
-                });
+                        <div class="option-card" onclick="selectOption('priority', 'travel', this)">
+                            <h4>Travel Benefits</h4>
+                            <p>Airport lounge access, miles, and travel insurance</p>
+                        </div>
+                        <div class="option-card" onclick="selectOption('priority', 'fuel', this)">
+                            <h4>Fuel Savings</h4>
+                            <p>Save on petrol and diesel with fuel surcharge waivers</p>
+                        </div>
+                        <div class="option-card" onclick="selectOption('priority', 'premium', this)">
+                            <h4>Premium Benefits</h4>
+                            <p>Luxury services, concierge, golf privileges & exclusive perks</p>
+                        </div>
+                        <div class="option-card" onclick="selectOption('priority', 'business', this)">
+                            <h4>Business Expenses</h4>
+                            <p>Business-focused rewards and expense management tools</p>
+                        </div>
+                    </div>
+                    <div class="form-buttons">
+                        <button class="btn btn-secondary" onclick="prevStep()">Previous</button>
+                        <button class="btn btn-primary" onclick="nextStep()" disabled id="next-2">Next Step</button>
+                    </div>
+                </div>
 
-                html += `</div></div>`;
-            });
+                <!-- Step 3: Age -->
+                <div class="form-step" id="step-3">
+                    <h3>What's your age group?</h3>
+                    <div class="options-grid">
+                        <div class="option-card" onclick="selectOption('age', '18-25', this)">
+                            <h4>18-25 years</h4>
+                            <p>Young professional - Digital-first cards with modern features</p>
+                        </div>
+                        <div class="option-card" onclick="selectOption('age', '26-35', this)">
+                            <h4>26-35 years</h4>
+                            <p>Established professional - Balance of rewards and premium benefits</p>
+                        </div>
+                        <div class="option-card" onclick="selectOption('age', '36-50', this)">
+                            <h4>36-50 years</h4>
+                            <p>Senior professional - Premium lifestyle and travel benefits</p>
+                        </div>
+                        <div class="option-card" onclick="selectOption('age', 'above-50', this)">
+                            <h4>Above 50 years</h4>
+                            <p>Experienced professional - Luxury perks and exclusive services</p>
+                        </div>
+                    </div>
+                    <div class="form-buttons">
+                        <button class="btn btn-secondary" onclick="prevStep()">Previous</button>
+                        <button class="btn btn-primary" onclick="findCards()" disabled id="next-3">Find My Cards</button>
+                    </div>
+                </div>
 
-            document.getElementById('supportedCardsList').innerHTML = html;
-        }
+                <!-- Loading -->
+                <div class="loading" id="loading">
+                    <div class="spinner-container">
+                        <div class="spinner-glow"></div>
+                        <div class="spinner"></div>
+                    </div>
+                    <h3>Finding your perfect credit cards...</h3>
+                    <p>Our AI is analyzing your profile across 72+ cards from 10 major banks to find your best matches.</p>
+                </div>
 
-        // Form state
-        let currentStep = 1;
+                <!-- Results -->
+                <div class="results" id="results">
+                    <h3>Your Personalized Recommendations</h3>
+                    <div id="user-profile"></div>
+                    <div class="recommendations" id="recommendations-list">
+                        <!-- Recommendations will be populated here -->
+                    </div>
+                    <div style="text-align: center; margin-top: 40px;">
+                        <button class="btn btn-secondary" onclick="resetForm()" style="margin-right: 20px;">Start Over</button>
+                        <button class="btn btn-primary" onclick="showAllCards()">Browse All Cards</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- All Cards Section -->
+    <section id="all-cards" class="all-cards-section">
+        <div class="container">
+            <h2 class="section-title">Browse All Credit Cards</h2>
+            <p class="section-subtitle">Explore our complete database of 72+ credit cards from 10 major banks with detailed information and instant application links.</p>
+
+            <div class="bank-tabs" id="bank-tabs">
+                <div class="bank-tab active" onclick="filterAllCards('all')">All Cards (72+)</div>
+            </div>
+
+            <div class="cards-grid" id="all-cards-grid">
+                <!-- All cards will be populated here -->
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-logo">CredX</div>
+            <p>&copy; 2024 CredX - Smart Credit Card Discovery Platform</p>
+            <p>Empowering smart financial decisions across India with AI-powered recommendations</p>
+            <p>Comprehensive database • Real-time updates • 100% Free</p>
+        </div>
+    </footer>
+
+    <script>
         let formData = {
-            income: '',
-            category: '',
-            age: ''
+            income: null,
+            priority: null,
+            age: null
         };
 
-        // Enhanced Credit card database with AmEx
-        const creditCards = [
-            // American Express
-            {bank: "American Express", name: "AmEx Membership Rewards Credit Card", category: "CASHBACK", income_brackets: ["8-15", "15-25"], fee: 1000, benefits: "1.5 MR points per ₹50, flexible redemption, no preset limit"},
-            {bank: "American Express", name: "AmEx SmartEarn Credit Card", category: "CASHBACK", income_brackets: ["4-8", "8-15"], fee: 495, benefits: "2.5% cashback on online, 0.5% on offline, welcome bonus"},
-            {bank: "American Express", name: "AmEx Gold Credit Card", category: "TRAVEL", income_brackets: ["15-25", "25-50"], fee: 4500, benefits: "4X points dining/international, airport lounge, travel insurance"},
-            {bank: "American Express", name: "AmEx Platinum Travel Credit Card", category: "TRAVEL", income_brackets: ["25-50", "50-75"], fee: 3500, benefits: "5X points travel, 2X dining, lounge access, hotel benefits"},
-            {bank: "American Express", name: "AmEx Platinum Card", category: "PREMIUM", income_brackets: ["50-75", "75-125", "125-200", "200+"], fee: 60000, benefits: "Unlimited airport lounge, hotel elite status, concierge, insurance"},
-            {bank: "American Express", name: "AmEx Centurion Card", category: "PREMIUM", income_brackets: ["200+"], fee: 300000, benefits: "Invite-only, unlimited benefits, personal concierge, exclusive events"},
-            {bank: "American Express", name: "AmEx Business Gold Card", category: "BUSINESS", income_brackets: ["15-25", "25-50", "50-75"], fee: 4000, benefits: "Business rewards, expense management, travel benefits, insurance"},
+        let currentStep = 1;
+        let allCardsData = {};
 
-            // Axis Bank
-            {bank: "Axis Bank", name: "IndianOil Easy", category: "FUEL", income_brackets: ["4-8", "8-15"], fee: 0, benefits: "4% value back on fuel, 1250 EDGE rewards welcome"},
-            {bank: "Axis Bank", name: "Neo Credit Card", category: "STUDENT", income_brackets: ["4-8"], fee: 0, benefits: "Digital-first card, basic rewards, mobile app integration"},
-            {bank: "Axis Bank", name: "Flipkart Credit Card", category: "CASHBACK", income_brackets: ["4-8", "8-15"], fee: 500, benefits: "5% unlimited cashback on Flipkart, 4% on Myntra/Jabong"},
-            {bank: "Axis Bank", name: "Magnus Credit Card", category: "PREMIUM", income_brackets: ["15-25", "25-50", "50-75"], fee: 12500, benefits: "24 RP per ₹200, airport lounge access, golf privileges"},
+        // Comprehensive credit card database with 72+ cards from 10 major banks
+        const comprehensiveCreditCards = {
+            'HDFC': [
+                { name: "HDFC Regalia Gold", annual_fee: 2500, joining_fee: 2500, min_income: 300000, reward_rate: 4.0, category: "rewards", features: "4 reward points per ₹150, Airport lounge access, Dining privileges", pros: "High reward rate, Premium benefits, Global acceptance", cons: "High annual fee, Income requirements", best_for: "Premium spenders, Frequent travelers", application_link: "https://hdfc.com/regalia" },
+                { name: "HDFC MoneyBack", annual_fee: 500, joining_fee: 500, min_income: 180000, reward_rate: 2.5, category: "cashback", features: "2% cashback on online spends, 1% on others", pros: "Good cashback rate, Low annual fee, Easy approval", cons: "Limited premium benefits", best_for: "Online shoppers, Young professionals", application_link: "https://hdfc.com/moneyback" },
+                { name: "HDFC Millennia", annual_fee: 1000, joining_fee: 1000, min_income: 200000, reward_rate: 5.0, category: "cashback", features: "5% cashback on online spends up to ₹1000/month, 1% on others", pros: "High online cashback, Popular among youth", cons: "Monthly cashback cap, Limited offline benefits", best_for: "Digital natives, E-commerce users", application_link: "https://hdfc.com/millennia" },
+                { name: "HDFC Infinia", annual_fee: 12500, joining_fee: 12500, min_income: 2500000, reward_rate: 5.0, category: "premium", features: "Unlimited airport lounge access, 5 reward points per ₹150, Concierge services", pros: "Ultra-premium benefits, No spending caps", cons: "Very high fees, Strict eligibility", best_for: "Ultra HNI, Luxury spenders", application_link: "https://hdfc.com/infinia" },
+                { name: "HDFC Flipkart", annual_fee: 500, joining_fee: 500, min_income: 150000, reward_rate: 4.0, category: "cashback", features: "4% cashback on Flipkart, 2% on grocery/bill payments", pros: "High Flipkart rewards, E-commerce focused", cons: "Limited to specific platforms", best_for: "Flipkart shoppers, Online buyers", application_link: "https://hdfc.com/flipkart" },
+                { name: "HDFC Business MoneyBack", annual_fee: 2000, joining_fee: 1000, min_income: 300000, reward_rate: 2.0, category: "business", features: "2% cashback on business spends, Fuel surcharge waiver", pros: "Business-focused rewards, Expense management", cons: "Requires business proof", best_for: "Business owners, Entrepreneurs", application_link: "https://hdfc.com/business-moneyback" },
+                { name: "HDFC Freedom", annual_fee: 500, joining_fee: 500, min_income: 120000, reward_rate: 1.5, category: "fuel", features: "2.5% cashback on fuel, 1% on others", pros: "Good fuel benefits, Low fees", cons: "Low general reward rate", best_for: "Frequent travelers, Fuel users", application_link: "https://hdfc.com/freedom" },
+                { name: "HDFC Diners Club Premium", annual_fee: 2500, joining_fee: 2500, min_income: 500000, reward_rate: 3.0, category: "premium", features: "Airport lounge access, Golf privileges, Fine dining", pros: "Premium lifestyle benefits", cons: "High annual fee, Limited acceptance", best_for: "Affluent professionals", application_link: "https://hdfc.com/diners-premium" },
+                { name: "HDFC Shoppers Stop", annual_fee: 500, joining_fee: 500, min_income: 200000, reward_rate: 3.0, category: "rewards", features: "5% rewards on Shoppers Stop, 2% on others", pros: "High shopping rewards", cons: "Limited to specific stores", best_for: "Fashion enthusiasts", application_link: "https://hdfc.com/shoppers-stop" },
+                { name: "HDFC Tata Neu Infinity", annual_fee: 1500, joining_fee: 1500, min_income: 300000, reward_rate: 1.5, category: "rewards", features: "5% NeuCoins on Tata ecosystem, 1% on others", pros: "Tata ecosystem benefits", cons: "Limited to Tata products", best_for: "Tata ecosystem users", application_link: "https://hdfc.com/tata-neu" }
+            ],
+            'SBI': [
+                { name: "SBI SimplyCLICK", annual_fee: 499, joining_fee: 499, min_income: 180000, reward_rate: 5.0, category: "cashback", features: "5% cashback on online spends up to ₹1000/month, 1% on others", pros: "High online cashback, Wide acceptance", cons: "Monthly cashback limit", best_for: "Online shoppers, Students", application_link: "https://sbicard.com/simplyclick" },
+                { name: "SBI Cashback", annual_fee: 999, joining_fee: 999, min_income: 200000, reward_rate: 5.0, category: "cashback", features: "5% cashback on online spends, 1% on others", pros: "Excellent cashback rate", cons: "Higher annual fee", best_for: "Heavy online users", application_link: "https://sbicard.com/cashback" },
+                { name: "SBI Prime", annual_fee: 2999, joining_fee: 2999, min_income: 300000, reward_rate: 3.0, category: "rewards", features: "5 reward points per ₹100, Airport lounge access, Golf privileges", pros: "Premium benefits, High reward rate", cons: "High annual fee", best_for: "Premium customers, Travelers", application_link: "https://sbicard.com/prime" },
+                { name: "SBI BPCL", annual_fee: 499, joining_fee: 499, min_income: 150000, reward_rate: 4.0, category: "fuel", features: "4% value back on BPCL fuel, 1% on others, Fuel surcharge waiver", pros: "Excellent fuel benefits", cons: "Limited to BPCL stations", best_for: "BPCL customers, Daily commuters", application_link: "https://sbicard.com/bpcl" },
+                { name: "SBI Pulse", annual_fee: 1499, joining_fee: 1499, min_income: 250000, reward_rate: 2.0, category: "rewards", features: "10X rewards on weekend dining & movies, 5X on weekdays", pros: "Entertainment focused, Weekend bonuses", cons: "Limited reward categories", best_for: "Entertainment lovers, Young professionals", application_link: "https://sbicard.com/pulse" },
+                { name: "SBI Elite", annual_fee: 4999, joining_fee: 4999, min_income: 500000, reward_rate: 3.5, category: "premium", features: "Unlimited domestic airport lounge access, Golf privileges", pros: "Premium airport benefits, Luxury perks", cons: "Very high annual fee", best_for: "Frequent flyers, Business travelers", application_link: "https://sbicard.com/elite" },
+                { name: "SBI Air India Signature", annual_fee: 4999, joining_fee: 4999, min_income: 600000, reward_rate: 2.5, category: "travel", features: "Air India miles, Priority check-in, Extra baggage", pros: "Airline-specific benefits", cons: "Limited to Air India", best_for: "Air India frequent flyers", application_link: "https://sbicard.com/airindia" },
+                { name: "SBI Vistara Prime", annual_fee: 3000, joining_fee: 3000, min_income: 400000, reward_rate: 3.0, category: "travel", features: "Vistara CV points, Free tickets, Priority boarding", pros: "Vistara ecosystem benefits", cons: "Limited to Vistara", best_for: "Vistara frequent travelers", application_link: "https://sbicard.com/vistara" },
+                { name: "SBI SimplySAVE", annual_fee: 499, joining_fee: 99, min_income: 120000, reward_rate: 1.5, category: "fuel", features: "10X reward points on fuel, 5X on grocery & dining", pros: "Low fees, Good category rewards", cons: "Low base reward rate", best_for: "Budget-conscious users", application_link: "https://sbicard.com/simplysave" },
+                { name: "SBI Platinum", annual_fee: 0, joining_fee: 0, min_income: 120000, reward_rate: 1.0, category: "basic", features: "1 reward point per ₹100, Fuel surcharge waiver", pros: "No annual fee, Basic rewards", cons: "Very low reward rate", best_for: "First-time users, Students", application_link: "https://sbicard.com/platinum" }
+            ],
+            'ICICI': [
+                { name: "ICICI Amazon Pay", annual_fee: 500, joining_fee: 500, min_income: 180000, reward_rate: 5.0, category: "cashback", features: "5% cashback on Amazon, 2% on others, Prime membership benefits", pros: "High Amazon rewards, Prime perks", cons: "Limited to Amazon ecosystem", best_for: "Amazon Prime users, E-commerce shoppers", application_link: "https://icicibank.com/amazonpay" },
+                { name: "ICICI Coral", annual_fee: 500, joining_fee: 500, min_income: 200000, reward_rate: 2.0, category: "rewards", features: "2 reward points per ₹100, No annual fee for first year", pros: "Free first year, Wide acceptance", cons: "Low reward rate after first year", best_for: "First-time credit card users", application_link: "https://icicibank.com/coral" },
+                { name: "ICICI Sapphiro", annual_fee: 3500, joining_fee: 3500, min_income: 600000, reward_rate: 3.5, category: "premium", features: "Airport lounge access, Golf privileges, Concierge services", pros: "Premium lifestyle benefits, Global acceptance", cons: "High annual fee", best_for: "Affluent customers, Frequent travelers", application_link: "https://icicibank.com/sapphiro" },
+                { name: "ICICI Platinum", annual_fee: 199, joining_fee: 199, min_income: 150000, reward_rate: 2.5, category: "rewards", features: "2 reward points per ₹100, Fuel surcharge waiver", pros: "Very low annual fee, Basic benefits", cons: "Limited premium features", best_for: "Budget-conscious users", application_link: "https://icicibank.com/platinum" },
+                { name: "ICICI MMT Signature", annual_fee: 2999, joining_fee: 2999, min_income: 400000, reward_rate: 4.0, category: "travel", features: "4% value back on MMT bookings, Travel insurance", pros: "Excellent travel benefits", cons: "Limited to MMT platform", best_for: "Travel enthusiasts, Frequent bookers", application_link: "https://icicibank.com/mmt" },
+                { name: "ICICI Emeralde", annual_fee: 12000, joining_fee: 12000, min_income: 2500000, reward_rate: 4.5, category: "premium", features: "Unlimited lounge access, Private banking, Concierge", pros: "Ultra-premium benefits, Exclusive services", cons: "Very high fees and eligibility", best_for: "Ultra HNI customers", application_link: "https://icicibank.com/emeralde" },
+                { name: "ICICI Rubyx", annual_fee: 3000, joining_fee: 3000, min_income: 500000, reward_rate: 3.0, category: "premium", features: "Movie vouchers, Dining discounts, Airport lounge", pros: "Entertainment benefits, Lifestyle perks", cons: "High annual fee", best_for: "Entertainment lovers, Professionals", application_link: "https://icicibank.com/rubyx" },
+                { name: "ICICI HPCL Super Saver", annual_fee: 500, joining_fee: 500, min_income: 150000, reward_rate: 3.0, category: "fuel", features: "5% cashback on HPCL fuel, 2% on grocery", pros: "Good fuel rewards", cons: "Limited to HPCL", best_for: "HPCL customers", application_link: "https://icicibank.com/hpcl" },
+                { name: "ICICI Instant Platinum", annual_fee: 199, joining_fee: 199, min_income: 120000, reward_rate: 1.5, category: "basic", features: "1.5% reward points, Instant approval", pros: "Quick approval, Low fees", cons: "Basic features only", best_for: "Quick card requirement", application_link: "https://icicibank.com/instant" },
+                { name: "ICICI Student Travel", annual_fee: 199, joining_fee: 99, min_income: 100000, reward_rate: 2.0, category: "travel", features: "Travel insurance, Forex benefits, Student discounts", pros: "Student-friendly, Travel focus", cons: "Age-limited, Low credit limit", best_for: "Students, Young travelers", application_link: "https://icicibank.com/student" }
+            ],
+            'Axis': [
+                { name: "Axis Magnus", annual_fee: 12500, joining_fee: 12500, min_income: 1500000, reward_rate: 4.8, category: "premium", features: "Unlimited airport lounge access, 25 Edge Miles per ₹200, Transfer partners", pros: "Ultra-premium benefits, Great transfer ratios", cons: "Very high fees", best_for: "Ultra HNI, Miles collectors", application_link: "https://axisbank.com/magnus" },
+                { name: "Axis Flipkart", annual_fee: 500, joining_fee: 500, min_income: 180000, reward_rate: 4.0, category: "cashback", features: "4% unlimited cashback on Flipkart, 1.5% on others", pros: "Unlimited Flipkart cashback, No caps", cons: "Limited to e-commerce", best_for: "Heavy Flipkart users", application_link: "https://axisbank.com/flipkart" },
+                { name: "Axis ACE", annual_fee: 499, joining_fee: 499, min_income: 150000, reward_rate: 5.0, category: "cashback", features: "5% cashback on bill payments via Google Pay, 2% on online spends", pros: "High utility cashback, Google Pay integration", cons: "Platform-specific benefits", best_for: "Bill payers, Google Pay users", application_link: "https://axisbank.com/ace" },
+                { name: "Axis Vistara Signature", annual_fee: 2999, joining_fee: 2999, min_income: 300000, reward_rate: 3.0, category: "travel", features: "Vistara club membership, 3 CV points per ₹100, Free tickets", pros: "Airline-specific benefits, Status benefits", cons: "Limited to Vistara ecosystem", best_for: "Vistara frequent flyers", application_link: "https://axisbank.com/vistara" },
+                { name: "Axis Select", annual_fee: 3000, joining_fee: 3000, min_income: 800000, reward_rate: 3.5, category: "rewards", features: "10X Edge rewards on dining, 5X on online shopping", pros: "High category rewards, Premium benefits", cons: "High annual fee", best_for: "Dining enthusiasts, Online shoppers", application_link: "https://axisbank.com/select" },
+                { name: "Axis My Zone", annual_fee: 500, joining_fee: 500, min_income: 180000, reward_rate: 2.0, category: "rewards", features: "2X rewards on chosen categories, Flexible redemption", pros: "Customizable categories, Flexible rewards", cons: "Moderate reward rates", best_for: "Category-specific spenders", application_link: "https://axisbank.com/myzone" },
+                { name: "Axis Neo", annual_fee: 199, joining_fee: 199, min_income: 150000, reward_rate: 1.5, category: "basic", features: "1.5% cashback on all spends, Simple rewards", pros: "Low fees, Straightforward rewards", cons: "Basic features only", best_for: "Simple reward seekers", application_link: "https://axisbank.com/neo" },
+                { name: "Axis Priority", annual_fee: 5000, joining_fee: 5000, min_income: 1000000, reward_rate: 3.5, category: "premium", features: "Airport lounge access, Golf privileges, Priority banking", pros: "Premium banking benefits", cons: "Very high fees", best_for: "Priority banking customers", application_link: "https://axisbank.com/priority" },
+                { name: "Axis Bank Burgundy", annual_fee: 0, joining_fee: 0, min_income: 3000000, reward_rate: 2.5, category: "premium", features: "Complimentary for Burgundy customers, Premium services", pros: "No fees for eligible customers", cons: "Very high income requirement", best_for: "Burgundy banking customers", application_link: "https://axisbank.com/burgundy" },
+                { name: "Axis Indian Oil", annual_fee: 500, joining_fee: 500, min_income: 150000, reward_rate: 3.5, category: "fuel", features: "4% value back on Indian Oil fuel, Fuel surcharge waiver", pros: "Excellent fuel benefits", cons: "Limited to Indian Oil", best_for: "Indian Oil customers", application_link: "https://axisbank.com/indianoil" }
+            ],
+            'Amex': [
+                { name: "American Express Gold", annual_fee: 4500, joining_fee: 4500, min_income: 600000, reward_rate: 4.5, category: "premium", features: "4X rewards on dining, 2X on other spends, Travel insurance", pros: "Excellent dining rewards, Premium services", cons: "Limited merchant acceptance", best_for: "Fine dining lovers, Premium users", application_link: "https://americanexpress.com/gold" },
+                { name: "American Express Platinum Travel", annual_fee: 3500, joining_fee: 3500, min_income: 500000, reward_rate: 3.0, category: "travel", features: "4X rewards on flights & hotels, Travel insurance", pros: "Great travel rewards, Comprehensive insurance", cons: "High annual fee, Limited acceptance", best_for: "Business travelers, Frequent flyers", application_link: "https://americanexpress.com/platinum-travel" },
+                { name: "American Express SmartEarn", annual_fee: 495, joining_fee: 495, min_income: 180000, reward_rate: 2.5, category: "cashback", features: "5% cashback on utility bills, 1.5% on others", pros: "Good utility rewards, Entry-level Amex", cons: "Limited high-reward categories", best_for: "Utility bill payers, Amex newcomers", application_link: "https://americanexpress.com/smartearn" },
+                { name: "American Express Membership Rewards", annual_fee: 1500, joining_fee: 1500, min_income: 250000, reward_rate: 3.0, category: "rewards", features: "1000 bonus points monthly, Flexible redemption options", pros: "Flexible reward redemption, Bonus points", cons: "Complex point system", best_for: "Reward optimizers, Frequent users", application_link: "https://americanexpress.com/membership-rewards" },
+                { name: "American Express Platinum Charge", annual_fee: 60000, joining_fee: 60000, min_income: 2500000, reward_rate: 3.5, category: "premium", features: "Unlimited airport lounge access, Hotel elite status, Concierge", pros: "Ultra-premium benefits, No preset spending limit", cons: "Extremely high fees", best_for: "Ultra affluent, Luxury spenders", application_link: "https://americanexpress.com/platinum-charge" },
+                { name: "American Express Green", annual_fee: 1000, joining_fee: 1000, min_income: 200000, reward_rate: 2.0, category: "basic", features: "1X rewards on all spends, Basic Amex benefits", pros: "Entry-level Amex, Global acceptance", cons: "Low reward rates", best_for: "Amex beginners, International users", application_link: "https://americanexpress.com/green" },
+                { name: "American Express MRCC", annual_fee: 1500, joining_fee: 750, min_income: 300000, reward_rate: 1.0, category: "rewards", features: "1000 bonus points on monthly target, 4X on online spends", pros: "Monthly bonus opportunities", cons: "Low base reward rate", best_for: "Strategic spenders, Bonus hunters", application_link: "https://americanexpress.com/mrcc" },
+                { name: "American Express Travel Gold", annual_fee: 1500, joining_fee: 1500, min_income: 400000, reward_rate: 2.5, category: "travel", features: "3X rewards on travel bookings, Travel insurance", pros: "Travel-focused rewards", cons: "Limited to travel category", best_for: "Frequent travelers, Travel bookers", application_link: "https://americanexpress.com/travel-gold" }
+            ],
+            'Standard Chartered': [
+                { name: "Standard Chartered Ultimate", annual_fee: 3500, joining_fee: 3500, min_income: 500000, reward_rate: 3.5, category: "premium", features: "Unlimited airport lounge access, 5X rewards on dining", pros: "Premium benefits, High dining rewards", cons: "High annual fee", best_for: "Premium diners, Travelers", application_link: "https://sc.com/ultimate" },
+                { name: "Standard Chartered Manhattan", annual_fee: 1000, joining_fee: 1000, min_income: 300000, reward_rate: 2.5, category: "rewards", features: "2X rewards on all spends, No foreign exchange markup", pros: "Simple rewards structure, Forex benefits", cons: "Moderate reward rates", best_for: "International travelers, Simple users", application_link: "https://sc.com/manhattan" },
+                { name: "Standard Chartered EaseMyTrip", annual_fee: 999, joining_fee: 999, min_income: 200000, reward_rate: 4.0, category: "travel", features: "4% value back on EaseMyTrip, Travel insurance", pros: "High travel platform rewards", cons: "Limited to EaseMyTrip", best_for: "EaseMyTrip users, Travel bookers", application_link: "https://sc.com/easemytrip" },
+                { name: "Standard Chartered Platinum Rewards", annual_fee: 750, joining_fee: 750, min_income: 250000, reward_rate: 2.0, category: "rewards", features: "2X rewards on weekend spends, Dining privileges", pros: "Weekend bonuses, Dining benefits", cons: "Limited high-reward periods", best_for: "Weekend spenders, Diners", application_link: "https://sc.com/platinum-rewards" },
+                { name: "Standard Chartered Super Value Titanium", annual_fee: 750, joining_fee: 750, min_income: 150000, reward_rate: 1.5, category: "basic", features: "1X rewards on all spends, Basic benefits", pros: "Low fees, Simple structure", cons: "Low reward rates", best_for: "Basic users, Low spenders", application_link: "https://sc.com/super-value" },
+                { name: "Standard Chartered DigiSmart", annual_fee: 499, joining_fee: 499, min_income: 200000, reward_rate: 5.0, category: "cashback", features: "5% cashback on online spends, Digital-first features", pros: "High online rewards, Digital features", cons: "Online-focused benefits only", best_for: "Digital natives, Online shoppers", application_link: "https://sc.com/digismart" }
+            ],
+            'Citi': [
+                { name: "Citi Rewards", annual_fee: 1000, joining_fee: 1000, min_income: 300000, reward_rate: 2.0, category: "rewards", features: "2X rewards on all spends, No expiry points", pros: "No points expiry, Simple structure", cons: "Moderate reward rates", best_for: "Consistent spenders, Reward accumulators", application_link: "https://citibank.com/rewards" },
+                { name: "Citi Cashback", annual_fee: 500, joining_fee: 500, min_income: 200000, reward_rate: 5.0, category: "cashback", features: "5% cashback on online spends, 1% on others", pros: "High online cashback", cons: "Limited high-reward categories", best_for: "Online shoppers, Cashback lovers", application_link: "https://citibank.com/cashback" },
+                { name: "Citi Prestige", annual_fee: 20000, joining_fee: 20000, min_income: 1500000, reward_rate: 4.0, category: "premium", features: "Unlimited airport lounge access, Golf privileges, 4th night free hotels", pros: "Ultra-premium travel benefits", cons: "Extremely high fees", best_for: "Luxury travelers, Ultra affluent", application_link: "https://citibank.com/prestige" },
+                { name: "Citi Premier Miles", annual_fee: 3000, joining_fee: 3000, min_income: 600000, reward_rate: 3.0, category: "travel", features: "Travel miles, No foreign exchange markup, Travel insurance", pros: "Miles-focused, International benefits", cons: "High annual fee", best_for: "Frequent international travelers", application_link: "https://citibank.com/premier-miles" },
+                { name: "Citi Indian Oil", annual_fee: 499, joining_fee: 499, min_income: 150000, reward_rate: 3.5, category: "fuel", features: "4% value back on Indian Oil fuel, Fuel surcharge waiver", pros: "Excellent fuel benefits", cons: "Limited to Indian Oil", best_for: "Indian Oil customers, Daily commuters", application_link: "https://citibank.com/indianoil" }
+            ],
+            'Yes Bank': [
+                { name: "Yes First Exclusive", annual_fee: 2999, joining_fee: 2999, min_income: 600000, reward_rate: 3.0, category: "premium", features: "Airport lounge access, Golf privileges, Concierge services", pros: "Premium lifestyle benefits", cons: "High annual fee", best_for: "Premium customers, Travelers", application_link: "https://yesbank.com/first-exclusive" },
+                { name: "Yes First Preferred", annual_fee: 499, joining_fee: 499, min_income: 250000, reward_rate: 2.0, category: "rewards", features: "2X rewards on all spends, Dining discounts", pros: "Simple rewards, Dining benefits", cons: "Moderate reward rates", best_for: "Consistent spenders, Diners", application_link: "https://yesbank.com/first-preferred" },
+                { name: "Yes Prosperity Rewards", annual_fee: 500, joining_fee: 500, min_income: 180000, reward_rate: 1.5, category: "rewards", features: "1.5X rewards on all spends, Basic benefits", pros: "Low fees, Simple structure", cons: "Low reward rates", best_for: "Basic users, Entry-level", application_link: "https://yesbank.com/prosperity" },
+                { name: "Yes Karna", annual_fee: 2500, joining_fee: 2500, min_income: 500000, reward_rate: 2.5, category: "premium", features: "Movie vouchers, Dining privileges, Travel benefits", pros: "Entertainment focus, Lifestyle perks", cons: "High annual fee for benefits", best_for: "Entertainment lovers", application_link: "https://yesbank.com/karna" },
+                { name: "Yes Elite", annual_fee: 1000, joining_fee: 1000, min_income: 300000, reward_rate: 2.0, category: "rewards", features: "2X rewards on weekends, Fuel surcharge waiver", pros: "Weekend bonuses", cons: "Limited high-reward periods", best_for: "Weekend spenders", application_link: "https://yesbank.com/elite" }
+            ],
+            'HSBC': [
+                { name: "HSBC Cashback", annual_fee: 999, joining_fee: 999, min_income: 300000, reward_rate: 1.5, category: "cashback", features: "1.5% cashback on all spends, No caps", pros: "Unlimited cashback, Simple structure", cons: "Low cashback rate", best_for: "Consistent spenders, Simplicity seekers", application_link: "https://hsbc.com/cashback" },
+                { name: "HSBC Platinum", annual_fee: 750, joining_fee: 750, min_income: 250000, reward_rate: 2.0, category: "rewards", features: "2X rewards on dining & fuel, Travel insurance", pros: "Category bonuses, Insurance benefits", cons: "Limited high-reward categories", best_for: "Category spenders", application_link: "https://hsbc.com/platinum" },
+                { name: "HSBC Premier", annual_fee: 5000, joining_fee: 5000, min_income: 1000000, reward_rate: 3.0, category: "premium", features: "Airport lounge access, Premier banking benefits", pros: "Premium banking perks", cons: "Very high fees and eligibility", best_for: "Premier banking customers", application_link: "https://hsbc.com/premier" },
+                { name: "HSBC Smart Value", annual_fee: 499, joining_fee: 499, min_income: 200000, reward_rate: 1.0, category: "basic", features: "1X rewards on all spends, Basic benefits", pros: "Low fees, Simple rewards", cons: "Very low reward rates", best_for: "Entry-level users", application_link: "https://hsbc.com/smart-value" }
+            ],
+            'Kotak': [
+                { name: "Kotak Urbane Gold", annual_fee: 999, joining_fee: 999, min_income: 300000, reward_rate: 2.0, category: "rewards", features: "2X rewards on all spends, Movie vouchers", pros: "Simple rewards, Entertainment perks", cons: "Moderate fees and rewards", best_for: "Movie lovers, Consistent spenders", application_link: "https://kotak.com/urbane-gold" },
+                { name: "Kotak Royale Signature", annual_fee: 8999, joining_fee: 8999, min_income: 1200000, reward_rate: 4.0, category: "premium", features: "Unlimited airport lounge access, Golf privileges, Concierge", pros: "Ultra-premium benefits", cons: "Very high annual fee", best_for: "Ultra affluent customers", application_link: "https://kotak.com/royale-signature" },
+                { name: "Kotak Aqua Gold", annual_fee: 500, joining_fee: 500, min_income: 200000, reward_rate: 1.5, category: "basic", features: "1.5X rewards on all spends, Fuel benefits", pros: "Low fees, Basic rewards", cons: "Low reward rates", best_for: "Budget-conscious users", application_link: "https://kotak.com/aqua-gold" },
+                { name: "Kotak White Reserve", annual_fee: 2999, joining_fee: 2999, min_income: 600000, reward_rate: 3.5, category: "premium", features: "Airport lounge access, Dining privileges, Golf benefits", pros: "Premium lifestyle benefits", cons: "High annual fee", best_for: "Premium lifestyle enthusiasts", application_link: "https://kotak.com/white-reserve" }
+            ]
+        };
 
-            // HDFC Bank
-            {bank: "HDFC Bank", name: "MoneyBack+", category: "CASHBACK", income_brackets: ["4-8", "8-15"], fee: 500, benefits: "Cashback on multiple categories, online spending rewards"},
-            {bank: "HDFC Bank", name: "Swiggy Credit Card", category: "FUEL", income_brackets: ["4-8", "8-15"], fee: 500, benefits: "BOGO BookMyShow, 5X on Swiggy/Zomato, dining rewards"},
-            {bank: "HDFC Bank", name: "6E Rewards Indigo", category: "TRAVEL", income_brackets: ["4-8", "8-15"], fee: 500, benefits: "IndiGo vouchers, travel rewards, flight benefits"},
-            {bank: "HDFC Bank", name: "Bharat Credit Card", category: "STUDENT", income_brackets: ["4-8"], fee: 500, benefits: "Basic cashback, low fees, entry-level benefits"},
-            {bank: "HDFC Bank", name: "Business Moneyback", category: "BUSINESS", income_brackets: ["4-8", "8-15"], fee: 500, benefits: "Business expense tracking, corporate benefits, cashback"},
-            {bank: "HDFC Bank", name: "Regalia Gold", category: "PREMIUM", income_brackets: ["8-15", "15-25"], fee: 2500, benefits: "4 RP per ₹150, airport lounge, premium dining"},
-            {bank: "HDFC Bank", name: "Diners Club Black", category: "PREMIUM", income_brackets: ["25-50", "50-75", "75-125"], fee: 10000, benefits: "10 RP per ₹150, unlimited lounge access, golf"},
-
-            // ICICI Bank
-            {bank: "ICICI Bank", name: "Amazon Pay Credit Card", category: "CASHBACK", income_brackets: ["4-8", "8-15"], fee: 0, benefits: "5% cashback on Amazon, 2% on bill payments, 1% on others"},
-            {bank: "ICICI Bank", name: "MakeMyTrip Platinum", category: "TRAVEL", income_brackets: ["4-8", "8-15"], fee: 500, benefits: "Travel rewards, MakeMyTrip benefits, airport privileges"},
-            {bank: "ICICI Bank", name: "Instant Platinum", category: "STUDENT", income_brackets: ["4-8"], fee: 0, benefits: "Against FD, no income proof required, basic rewards"},
-            {bank: "ICICI Bank", name: "Sapphiro Credit Card", category: "PREMIUM", income_brackets: ["15-25", "25-50"], fee: 3500, benefits: "2 RP per ₹100, international lounge, insurance"},
-            {bank: "ICICI Bank", name: "Emeralde Credit Card", category: "PREMIUM", income_brackets: ["50-75", "75-125", "125-200"], fee: 12000, benefits: "4 RP per ₹100, unlimited lounge, concierge"},
-
-            // SBI Card
-            {bank: "SBI Card", name: "CASHBACK SBI Card", category: "CASHBACK", income_brackets: ["4-8", "8-15"], fee: 999, benefits: "5% cashback online, 1% offline, fuel surcharge waiver"},
-            {bank: "SBI Card", name: "SimplySAVE", category: "FUEL", income_brackets: ["4-8", "8-15"], fee: 499, benefits: "10 RP per ₹150 dining/grocery, fuel surcharge waiver"},
-            {bank: "SBI Card", name: "PRIME", category: "TRAVEL", income_brackets: ["4-8", "8-15", "15-25"], fee: 2999, benefits: "Airport lounge access, dining rewards, travel insurance"},
-            {bank: "SBI Card", name: "PULSE", category: "PREMIUM", income_brackets: ["4-8", "8-15"], fee: 1499, benefits: "Smartwatch worth ₹7999, fitness membership, health benefits"},
-            {bank: "SBI Card", name: "Titan Credit Card", category: "PREMIUM", income_brackets: ["4-8", "8-15"], fee: 999, benefits: "Titan vouchers, jewelry benefits, lifestyle rewards"},
-            {bank: "SBI Card", name: "Elite Credit Card", category: "PREMIUM", income_brackets: ["25-50", "50-75"], fee: 4999, benefits: "5 RP per ₹100, priority customer service, insurance"}
-        ];
-
-        // Form reset function
-        function resetForm() {
-            currentStep = 1;
-            formData = {
-                income: '',
-                category: '',
-                age: ''
-            };
-
-            document.querySelectorAll('.form-step').forEach(step => {
-                step.classList.remove('active');
-            });
-            document.getElementById('step1').classList.add('active');
-
-            document.getElementById('progressFill').style.width = '33.33%';
-            document.getElementById('progressText').textContent = 'Step 1 of 3';
-
-            document.querySelectorAll('.option-card').forEach(option => {
-                option.classList.remove('selected');
-            });
-
-            document.getElementById('step1Next').disabled = true;
-            document.getElementById('step2Next').disabled = true;
-            document.getElementById('step3Next').disabled = true;
-        }
-
-        function startFormProcess() {
-            resetForm();
-            showPage('form');
-        }
-
-        function showPage(pageId) {
-            const pages = document.querySelectorAll('.page');
-            pages.forEach(page => page.classList.remove('active'));
-
-            document.getElementById(pageId).classList.add('active');
-
-            if (pageId === 'homepage') {
-                document.getElementById('navMenu').style.display = 'flex';
-                document.getElementById('headerCTA').style.display = 'flex';
+        // Navigation scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 100) {
+                navbar.classList.add('scrolled');
             } else {
-                document.getElementById('navMenu').style.display = 'none';
-                document.getElementById('headerCTA').style.display = 'none';
+                navbar.classList.remove('scrolled');
             }
+        });
 
-            if (pageId === 'supported-cards-full') {
-                generateSupportedCardsPage();
-            }
+        function selectOption(type, value, element) {
+            // Remove selected class from all options in this step
+            const stepElement = element.closest('.form-step');
+            const options = stepElement.querySelectorAll('.option-card');
+            options.forEach(opt => opt.classList.remove('selected'));
 
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        function scrollToSection(sectionId) {
-            const section = document.getElementById(sectionId);
-            if (section) {
-                section.scrollIntoView({ behavior: 'smooth' });
-            }
-        }
-
-        function selectOption(element, value) {
-            const currentStepElement = document.querySelector('.form-step.active');
-            const options = currentStepElement.querySelectorAll('.option-card');
-            options.forEach(option => option.classList.remove('selected'));
-
+            // Add selected class to clicked option
             element.classList.add('selected');
 
-            if (currentStep === 1) {
-                formData.income = value;
-                document.getElementById('step1Next').disabled = false;
-            } else if (currentStep === 2) {
-                formData.category = value;
-                document.getElementById('step2Next').disabled = false;
-            } else if (currentStep === 3) {
-                formData.age = value;
-                document.getElementById('step3Next').disabled = false;
-            }
+            // Store the selection
+            formData[type] = value;
+
+            // Enable next button
+            const nextBtn = stepElement.querySelector('.btn-primary');
+            nextBtn.disabled = false;
         }
 
         function nextStep() {
-            document.getElementById(`step${currentStep}`).classList.remove('active');
+            document.getElementById(`step-${currentStep}`).classList.remove('active');
             currentStep++;
-            document.getElementById(`step${currentStep}`).classList.add('active');
-            updateProgress();
+            document.getElementById(`step-${currentStep}`).classList.add('active');
         }
 
-        function updateProgress() {
-            const progress = (currentStep / 3) * 100;
-            document.getElementById('progressFill').style.width = progress + '%';
-            document.getElementById('progressText').textContent = `Step ${currentStep} of 3`;
+        function prevStep() {
+            document.getElementById(`step-${currentStep}`).classList.remove('active');
+            currentStep--;
+            document.getElementById(`step-${currentStep}`).classList.add('active');
+        }
+
+        function scrollToSection(sectionId) {
+            // Hide all cards section
+            document.getElementById('all-cards').classList.remove('active');
+
+            // Show main sections
+            ['hero', 'features', 'form'].forEach(id => {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.style.display = id === sectionId ? 'block' : 'block';
+                }
+            });
+
+            document.getElementById(sectionId).scrollIntoView({ 
+                behavior: 'smooth' 
+            });
+
+            // Update active navigation
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.classList.remove('active');
+            });
+
+            const activeLink = document.querySelector(`[onclick="scrollToSection('${sectionId}')"]`);
+            if (activeLink) {
+                activeLink.classList.add('active');
+            }
+        }
+
+        async function showAllCards() {
+            // Hide other sections
+            ['hero', 'features', 'form'].forEach(id => {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.style.display = 'none';
+                }
+            });
+
+            // Show all cards section
+            document.getElementById('all-cards').classList.add('active');
+
+            // Update navigation
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.classList.remove('active');
+            });
+
+            // Load and display all cards
+            allCardsData = comprehensiveCreditCards;
+            displayAllCards(allCardsData);
+
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+
+        function displayAllCards(cardsByBank) {
+            // Create bank tabs
+            const bankTabs = document.getElementById('bank-tabs');
+            bankTabs.innerHTML = `<div class="bank-tab active" onclick="filterAllCards('all')">All Cards (72+)</div>`;
+
+            Object.keys(cardsByBank).forEach(bank => {
+                const tab = document.createElement('div');
+                tab.className = 'bank-tab';
+                tab.textContent = `${bank} (${cardsByBank[bank].length})`;
+                tab.onclick = () => filterAllCards(bank);
+                bankTabs.appendChild(tab);
+            });
+
+            // Display all cards initially
+            filterAllCards('all');
+        }
+
+        function filterAllCards(selectedBank) {
+            const cardsGrid = document.getElementById('all-cards-grid');
+            cardsGrid.innerHTML = '';
+
+            // Update tab selection
+            document.querySelectorAll('.bank-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            if (selectedBank === 'all') {
+                document.querySelector('.bank-tab').classList.add('active');
+                // Display all cards
+                Object.entries(allCardsData).forEach(([bank, cards]) => {
+                    cards.forEach(card => {
+                        cardsGrid.appendChild(createCardElement(card, bank));
+                    });
+                });
+            } else {
+                // Find and activate the selected tab
+                document.querySelectorAll('.bank-tab').forEach(tab => {
+                    if (tab.textContent.includes(selectedBank)) {
+                        tab.classList.add('active');
+                    }
+                });
+
+                // Display cards from selected bank
+                if (allCardsData[selectedBank]) {
+                    allCardsData[selectedBank].forEach(card => {
+                        cardsGrid.appendChild(createCardElement(card, selectedBank));
+                    });
+                }
+            }
+        }
+
+        function createCardElement(card, bank) {
+            const cardElement = document.createElement('div');
+            cardElement.className = 'card-mini';
+            cardElement.innerHTML = `
+                <div class="card-header">
+                    <div class="card-name">${card.name}</div>
+                    <div class="card-bank">${bank}</div>
+                </div>
+                <div class="card-details">
+                    <div class="detail-item">
+                        <div class="detail-label">Annual Fee</div>
+                        <div class="detail-value">₹${card.annual_fee.toLocaleString()}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Reward Rate</div>
+                        <div class="detail-value">${card.reward_rate}%</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Category</div>
+                        <div class="detail-value">${card.category}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Income Req.</div>
+                        <div class="detail-value">₹${(card.min_income/100000).toFixed(1)}L</div>
+                    </div>
+                </div>
+                <div class="card-features">
+                    <h4>Key Features</h4>
+                    <p>${card.features}</p>
+                </div>
+                <div class="card-features">
+                    <h4>Best For</h4>
+                    <p>${card.best_for}</p>
+                </div>
+                <button class="apply-btn" onclick="applyForCard('${card.application_link}')">
+                    Apply Now
+                </button>
+            `;
+            return cardElement;
         }
 
         function findCards() {
-            showLoading();
+            // Show loading
+            document.getElementById(`step-${currentStep}`).classList.remove('active');
+            document.getElementById('loading').classList.add('active');
 
+            // Simulate processing time and display results
             setTimeout(() => {
-                hideLoading();
-                generateRecommendations();
-                showPage('results');
+                const recommendations = getRecommendationsFromData(formData.income, formData.priority, formData.age);
+                const data = {
+                    status: 'success',
+                    recommendations: recommendations,
+                    user_profile: formData
+                };
+                displayResults(data);
             }, 3000);
         }
 
-        function showLoading() {
-            document.getElementById('loadingScreen').classList.add('active');
+        function getRecommendationsFromData(income, priority, age) {
+            const incomeMapping = {
+                "below-3": 250000,
+                "3-5": 400000, 
+                "5-10": 750000,
+                "10-25": 1750000,
+                "above-25": 3000000
+            };
 
-            const messages = [
-                "Analyzing your profile...",
-                "Comparing available credit cards...",
-                "Finding the best matches...",
-                "Almost ready..."
-            ];
+            const userIncome = incomeMapping[income] || 300000;
 
-            let messageIndex = 0;
-            const loadingInterval = setInterval(() => {
-                if (messageIndex < messages.length - 1) {
-                    messageIndex++;
-                    document.getElementById('loadingProgress').textContent = messages[messageIndex];
-                } else {
-                    clearInterval(loadingInterval);
-                }
-            }, 750);
-        }
-
-        function hideLoading() {
-            document.getElementById('loadingScreen').classList.remove('active');
-        }
-
-        function generateRecommendations() {
-            let matchingCards = creditCards.filter(card => {
-                return card.category === formData.category && 
-                       card.income_brackets.includes(formData.income);
+            let allCards = [];
+            Object.entries(comprehensiveCreditCards).forEach(([bank, cards]) => {
+                cards.forEach(card => {
+                    allCards.push({
+                        ...card,
+                        bank: bank
+                    });
+                });
             });
 
-            if (matchingCards.length === 0) {
-                matchingCards = creditCards.filter(card => {
-                    return card.category === formData.category;
-                }).slice(0, 3);
-            }
+            // Filter eligible cards
+            let eligibleCards = allCards.filter(card => 
+                card.min_income <= userIncome
+            );
 
-            matchingCards = matchingCards.sort((a, b) => a.fee - b.fee).slice(0, 5);
+            // Sort by priority match, then by reward rate, then by annual fee
+            eligibleCards.sort((a, b) => {
+                // Priority match
+                const aPriorityMatch = a.category === priority ? 10 : (
+                    (priority === 'cashback' && a.category === 'rewards') ||
+                    (priority === 'rewards' && a.category === 'cashback') ||
+                    (priority === 'premium' && a.category === 'travel') ||
+                    (priority === 'travel' && a.category === 'premium')
+                ) ? 5 : 1;
 
-            displayUserProfile();
-            displayRecommendations(matchingCards);
+                const bPriorityMatch = b.category === priority ? 10 : (
+                    (priority === 'cashback' && b.category === 'rewards') ||
+                    (priority === 'rewards' && b.category === 'cashback') ||
+                    (priority === 'premium' && b.category === 'travel') ||
+                    (priority === 'travel' && b.category === 'premium')
+                ) ? 5 : 1;
+
+                if (aPriorityMatch !== bPriorityMatch) {
+                    return bPriorityMatch - aPriorityMatch;
+                }
+
+                // Higher reward rate first
+                if (a.reward_rate !== b.reward_rate) {
+                    return b.reward_rate - a.reward_rate;
+                }
+
+                // Lower annual fee first
+                return a.annual_fee - b.annual_fee;
+            });
+
+            // Add match percentages
+            return eligibleCards.slice(0, 5).map((card, index) => ({
+                ...card,
+                match_percentage: Math.max(75, 95 - index * 3)
+            }));
         }
 
-        function displayUserProfile() {
-            const incomeLabels = {
-                '4-8': '₹4,00,000 - ₹8,00,000 LPA',
-                '8-15': '₹8,00,000 - ₹15,00,000 LPA',
-                '15-25': '₹15,00,000 - ₹25,00,000 LPA',
-                '25-50': '₹25,00,000 - ₹50,00,000 LPA',
-                '50-75': '₹50,00,000 - ₹75,00,000 LPA',
-                '75-125': '₹75,00,000 - ₹1,25,00,000 LPA',
-                '125-200': '₹1,25,00,000 - ₹2,00,00,000 LPA',
-                '200+': '₹2,00,00,000+ LPA'
+        function displayResults(data) {
+            // Hide loading
+            document.getElementById('loading').classList.remove('active');
+
+            // Show results
+            document.getElementById('results').classList.add('active');
+
+            // Display user profile
+            const profile = data.user_profile;
+            const incomeText = {
+                'below-3': 'Below ₹3 Lakhs',
+                '3-5': '₹3-5 Lakhs',
+                '5-10': '₹5-10 Lakhs',
+                '10-25': '₹10-25 Lakhs',
+                'above-25': 'Above ₹25 Lakhs'
             };
 
-            const categoryLabels = {
-                'CASHBACK': 'Cashback Cards',
-                'TRAVEL': 'Travel Rewards',
-                'PREMIUM': 'Premium Lifestyle',
-                'BUSINESS': 'Business Cards',
-                'FUEL': 'Fuel & Utility',
-                'STUDENT': 'Student & Starter'
+            const priorityText = {
+                'cashback': 'Cashback',
+                'rewards': 'Reward Points',
+                'travel': 'Travel Benefits',
+                'fuel': 'Fuel Savings',
+                'premium': 'Premium Benefits',
+                'business': 'Business Expenses'
             };
 
-            document.getElementById('profileDetails').innerHTML = `
-                <div class="profile-item">
-                    <strong>Income:</strong> ${incomeLabels[formData.income]}
-                </div>
-                <div class="profile-item">
-                    <strong>Priority:</strong> ${categoryLabels[formData.category]}
-                </div>
-                <div class="profile-item">
-                    <strong>Age:</strong> ${formData.age} years
-                </div>
-            `;
-        }
+            const ageText = {
+                '18-25': '18-25 years',
+                '26-35': '26-35 years',
+                '36-50': '36-50 years',
+                'above-50': 'Above 50 years'
+            };
 
-        function displayRecommendations(cards) {
-            let html = '';
-
-            cards.forEach((card, index) => {
-                const rank = index + 1;
-                const feeText = card.fee === 0 ? 'FREE' : `₹${card.fee.toLocaleString()}`;
-
-                html += `
-                    <div class="card-result">
-                        <div class="card-rank">#${rank} MATCH</div>
-                        <div class="card-header">
-                            <div class="card-info">
-                                <h3>${card.name}</h3>
-                                <div class="card-bank">${card.bank}</div>
-                            </div>
-                            <div class="card-fee">
-                                <div class="fee-label">Annual Fee</div>
-                                <div class="fee-amount">${feeText}</div>
-                            </div>
+            document.getElementById('user-profile').innerHTML = `
+                <div class="user-profile-card">
+                    <h4>Your Profile Summary</h4>
+                    <div class="profile-grid">
+                        <div class="profile-item">
+                            <div class="profile-label">Annual Income</div>
+                            <div class="profile-value">${incomeText[profile.income]}</div>
                         </div>
-                        <div class="card-benefits">${card.benefits}</div>
-                        <div class="card-actions">
-                            <button class="btn-apply" onclick="applyForCard('${card.bank}', '${card.name}')">
-                                Apply for ${card.name}
-                            </button>
+                        <div class="profile-item">
+                            <div class="profile-label">Priority</div>
+                            <div class="profile-value">${priorityText[profile.priority]}</div>
+                        </div>
+                        <div class="profile-item">
+                            <div class="profile-label">Age Group</div>
+                            <div class="profile-value">${ageText[profile.age]}</div>
+                        </div>
+                        <div class="profile-item">
+                            <div class="profile-label">Cards Found</div>
+                            <div class="profile-value">${data.recommendations.length} matches</div>
                         </div>
                     </div>
+                </div>
+            `;
+
+            // Display recommendations
+            const recommendationsList = document.getElementById('recommendations-list');
+            recommendationsList.innerHTML = '';
+
+            if (data.recommendations.length === 0) {
+                recommendationsList.innerHTML = '<p style="text-align: center; color: var(--text-secondary);">No suitable cards found for your profile. Please try adjusting your criteria.</p>';
+                return;
+            }
+
+            data.recommendations.forEach((card, index) => {
+                const cardElement = document.createElement('div');
+                cardElement.className = 'recommendation-card';
+                cardElement.innerHTML = `
+                    <div class="card-header">
+                        <div>
+                            <div class="card-name">${card.name}</div>
+                        </div>
+                        <div>
+                            <span class="card-bank">${card.bank}</span>
+                            <span class="match-percentage">${card.match_percentage}% Match</span>
+                        </div>
+                    </div>
+                    <div class="card-details">
+                        <div class="detail-item">
+                            <div class="detail-label">Annual Fee</div>
+                            <div class="detail-value">₹${card.annual_fee.toLocaleString()}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Joining Fee</div>
+                            <div class="detail-value">₹${card.joining_fee.toLocaleString()}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Reward Rate</div>
+                            <div class="detail-value">${card.reward_rate}%</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Category</div>
+                            <div class="detail-value">${card.category}</div>
+                        </div>
+                    </div>
+                    <div class="card-features">
+                        <h4>Key Features</h4>
+                        <p>${card.features}</p>
+                    </div>
+                    <div class="card-features">
+                        <h4>Pros</h4>
+                        <p>${card.pros}</p>
+                    </div>
+                    <div class="card-features">
+                        <h4>Best For</h4>
+                        <p>${card.best_for}</p>
+                    </div>
+                    <button class="apply-btn" onclick="applyForCard('${card.application_link}')">
+                        Apply Now
+                    </button>
                 `;
+                recommendationsList.appendChild(cardElement);
+            });
+        }
+
+        function applyForCard(link) {
+            window.open(link, '_blank');
+        }
+
+        function resetForm() {
+            // Reset form data
+            formData = {
+                income: null,
+                priority: null,
+                age: null
+            };
+
+            // Reset step
+            currentStep = 1;
+
+            // Hide all sections
+            document.querySelectorAll('.form-step, .loading, .results').forEach(el => {
+                el.classList.remove('active');
             });
 
-            document.getElementById('cardRecommendations').innerHTML = html;
+            // Show first step
+            document.getElementById('step-1').classList.add('active');
+
+            // Reset selections
+            document.querySelectorAll('.option-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+
+            // Disable next buttons
+            document.querySelectorAll('.btn-primary').forEach(btn => {
+                btn.disabled = true;
+            });
         }
 
-        function applyForCard(bank, cardName) {
-            alert(`🎉 Great choice!\n\nYou're about to apply for ${cardName} from ${bank}.\n\nIn a real application, this would redirect you to the bank's application page.\n\nFor now, this is a demo of the CredX platform!`);
-        }
-
-        // Initialize the app
+        // Initialize the page
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('🚀 CredX Platform Loaded - Compact Form Version!');
-            showPage('homepage');
-            updateProgress();
+            // Set home as active by default
+            const homeLink = document.querySelector(`[onclick="scrollToSection('hero')"]`);
+            if (homeLink) {
+                homeLink.classList.add('active');
+            }
         });
     </script>
 </body>
 </html>
-
